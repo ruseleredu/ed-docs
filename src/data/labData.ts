@@ -15,7 +15,7 @@ export type LabRow = {
 export const labData: LabRow[] = [
     {
         tarefa: "LAB00",
-        hrefi: "/lab/LAB00", // internal page
+        hrefi: "/lab/lab00", // internal page
         hrefe: "https://moodle.utfpr.edu.br/course/section.php?id=384200", // external
         start: "11-03-2026",
         end: "18-03-2026",
@@ -23,7 +23,7 @@ export const labData: LabRow[] = [
     },
     {
         tarefa: "LAB01",
-        hrefi: "/lab/LAB01",
+        hrefi: "/lab/lab01",
         hrefe: "https://moodle.utfpr.edu.br/course/section.php?id=384201", // external
 
         start: "18-03-2026",
@@ -32,7 +32,7 @@ export const labData: LabRow[] = [
     },
     {
         tarefa: "LAB02",
-        hrefi: "/lab/LAB02",
+        hrefi: "/lab/lab02",
         hrefe: "https://moodle.utfpr.edu.br/course/section.php?id=380901", // external
 
         start: "25-03-2026",
@@ -41,7 +41,7 @@ export const labData: LabRow[] = [
     },
     {
         tarefa: "LAB03",
-        hrefi: "/lab/LAB03",
+        hrefi: "/lab/lab03",
         hrefe: "https://moodle.utfpr.edu.br/course/section.php?id=380902", // external
 
         start: "01-Apr-2026",
@@ -50,7 +50,7 @@ export const labData: LabRow[] = [
     },
     {
         tarefa: "LAB04",
-        hrefi: "/lab/LAB04",
+        hrefi: "/lab/lab04",
         hrefe: "https://moodle.utfpr.edu.br/course/section.php?id=380903", // external
 
         start: "08-04-2026",
@@ -60,7 +60,7 @@ export const labData: LabRow[] = [
     },
     {
         tarefa: "LAB05",
-        hrefi: "/lab/LAB05",
+        hrefi: "/lab/lab05",
         hrefe: "hhttps://moodle.utfpr.edu.br/course/section.php?id=387986", // external
 
         start: "15-04-2026",
@@ -70,7 +70,7 @@ export const labData: LabRow[] = [
     },
     {
         tarefa: "LAB06",
-        hrefi: "/lab/LAB06",
+        hrefi: "/lab/lab06",
         hrefe: "https://moodle.utfpr.edu.br/course/section.php?id=387992", // external
 
         start: "22-04-2026",
@@ -79,7 +79,7 @@ export const labData: LabRow[] = [
     },
     {
         tarefa: "LAB07",
-        hrefi: "/lab/LAB07",
+        hrefi: "/lab/lab07",
         hrefe: "https://moodle.utfpr.edu.br/course/section.php?id=387993", // external
 
         start: "29-04-2026",
@@ -88,7 +88,7 @@ export const labData: LabRow[] = [
     },
     {
         tarefa: "LAB08",
-        hrefi: "/lab/LAB08",
+        hrefi: "/lab/lab08",
         hrefe: "https://moodle.utfpr.edu.br/course/section.php?id=392012", // external
 
         start: "06-05-2026",
@@ -98,7 +98,7 @@ export const labData: LabRow[] = [
     },
     {
         tarefa: "LAB09",
-        hrefi: "/lab/LAB09",
+        hrefi: "/lab/lab09",
         hrefe: "https://moodle.utfpr.edu.br/course/section.php?id=392440", // external
 
         start: "13-05-2026",
@@ -109,7 +109,7 @@ export const labData: LabRow[] = [
     },
     {
         tarefa: "LAB10",
-        hrefi: "/lab/LAB10",
+        hrefi: "/lab/lab10",
         hrefe: "https://moodle.utfpr.edu.br/course/section.php?id=387994", // external
 
         start: "20-05-2026",
