@@ -1,0 +1,86 @@
+---
+title: 74HC14 — 6 inversores Schmitt trigger
+sidebar_label: 74HC14
+description: Ficha técnica resumida do 74HC14 (6 inversores Schmitt trigger) para as atividades de laboratório de Eletrônica Digital.
+slug: /datasheets/74HC14
+---
+
+# 74HC14 — 6 inversores Schmitt trigger
+
+## Descrição
+
+Contém seis inversores com entrada Schmitt trigger. A saída muda em tensões de entrada diferentes na subida e na descida do sinal (histerese), o que permite receber sinais lentos ou ruidosos e construir osciladores simples com um resistor e um capacitor.
+
+**Função**: $Y = \overline{A}$
+
+## Pinagem
+
+![Pinagem do 74HC14](https://kroki.io/graphviz/svg/eNqdlNtqgzAYx-_7FB_Z9bAe1m7MBDzVCqLFyko3duE0awNOi7oONvYce6C92NIDPYyJ05uQL-af_L6fkIQtimi1BBs-egBPizhP8wKjtyWrKLqFLE8oPJTLaEXxKo1YBs95VmXRC8VoTNM1rVgcoe1iyd4pFsXHW35OzOAhjZ5oilU11HTXAt0PTCvAqI_AsFz3VzmdaIbj2RhJu3qimea2lhHhx6lhQNTQJKqwGc4mI98LYeI7Xng5de4tjG4QWbOyiqB8XdGC5YUqbPb8lRV2Q3ByBWiuY3sYBY49DhERNf5lv__QgohAtw3f9fn8IomThPKVmWOGY86v8NAhEfgz3hk_bngakZ7lgdI_RESxj_Z97Hfs5BNVJ0NlbIiKKui8CIS_ux3A9xewbE2LMi9gGi9fWFVBVbDFgh6bP3Pw_1aUQ2QvxrVG3AvAnWEc_dXIm3eQJ7VnlOsYB1oTotTl_8rtEaVaxHkjYheLSntEsQ7xqtGi3MXiVXvEfi1io0W5i8VB68RNHaHSKNH2zA6Iw9aJ61rE-fmDKGwfbkL4g_7Z-wG7G5hi)
+
+**Figura 1** — Pinagem do 74HC14 (vista superior). Barra sobre o nome indica sinal ativo em nível baixo; nas tabelas, a barra é escrita como **/** antes do nome.
+
+| Pino | Sinal | Função                |
+| :--: | :---: | :-------------------- |
+|  1   |  1A   | entrada do inversor 1 |
+|  2   |  1Y   | saída do inversor 1   |
+|  3   |  2A   | entrada do inversor 2 |
+|  4   |  2Y   | saída do inversor 2   |
+|  5   |  3A   | entrada do inversor 3 |
+|  6   |  3Y   | saída do inversor 3   |
+|  9   |  4A   | entrada do inversor 4 |
+|  8   |  4Y   | saída do inversor 4   |
+|  11  |  5A   | entrada do inversor 5 |
+|  10  |  5Y   | saída do inversor 5   |
+|  13  |  6A   | entrada do inversor 6 |
+|  12  |  6Y   | saída do inversor 6   |
+|  14  |  VCC  | alimentação positiva  |
+|  7   |  GND  | referência (0 V)      |
+
+## Tabela de funcionamento
+
+X = irrelevante; ↑ = borda de subida; ↓ = borda de descida.
+
+|        Entrada A        | Saída Y |
+| :---------------------: | :-----: |
+| subindo, abaixo de VT+  |    1    |
+|  subindo, acima de VT+  |    0    |
+| descendo, acima de VT−  |    0    |
+| descendo, abaixo de VT− |    1    |
+
+### Limiares típicos
+
+Com alimentação de 4,5 V, os limiares típicos são da ordem de $V_{T+} \approx 2{,}4$ V e $V_{T-} \approx 1{,}4$ V, com histerese próxima de 1 V. Os valores variam de CI para CI; consulte os limites na folha de dados do fabricante.
+
+## Características elétricas (resumo)
+
+| Parâmetro                      |      Valor      | Condição                                     |
+| :----------------------------- | :-------------: | :------------------------------------------- |
+| Tensão de alimentação $V_{CC}$ |    2 V a 6 V    | 5 V nos roteiros                             |
+| $V_{IH}$ mínima                |     3,15 V      | $V_{CC}$ = 4,5 V (cerca de 70 % de $V_{CC}$) |
+| $V_{IL}$ máxima                |     1,35 V      | $V_{CC}$ = 4,5 V (cerca de 30 % de $V_{CC}$) |
+| $V_{OH}$ mínima                |      4,4 V      | $V_{CC}$ = 4,5 V, saída fornecendo 20 µA     |
+| $V_{OL}$ máxima                |      0,1 V      | $V_{CC}$ = 4,5 V, saída drenando 20 µA       |
+| Corrente de saída recomendada  |    até 4 mA     | $V_{CC}$ = 4,5 V, saídas padrão              |
+| Corrente de entrada            | no máximo ±1 µA | entrada em $V_{CC}$ ou GND                   |
+| Temperatura de operação        | −40 °C a +85 °C | versões comerciais                           |
+
+:::note
+
+Valores de referência da família 74HC, comuns aos principais fabricantes. Atrasos de propagação, frequência máxima de clock e limites absolutos variam conforme o fabricante e devem ser consultados na folha de dados original.
+
+:::
+
+## Notas de uso
+
+- A pinagem é idêntica à do 74HC04.
+- Oscilador de relaxação: resistor da saída para a entrada e capacitor da entrada para GND.
+- Ligue sempre VCC e GND e não deixe entradas abertas.
+
+## Onde é usado
+
+[Lab 13](../lab13.mdx).
+
+## Folha de dados do fabricante
+
+- [SN74HC14 — Texas Instruments](https://www.ti.com/product/SN74HC14)
+- No Tinkercad, localize o componente digitando `74HC14` na busca da lista de componentes.

@@ -1,0 +1,86 @@
+---
+title: 74HC93 — Contador binário assíncrono de 4 bits
+sidebar_label: 74HC93
+description: Ficha técnica resumida do 74HC93 (Contador binário assíncrono de 4 bits) para as atividades de laboratório de Eletrônica Digital.
+slug: /datasheets/74HC93
+---
+
+# 74HC93 — Contador binário assíncrono de 4 bits
+
+## Descrição
+
+Contador assíncrono formado por um divisor por 2 (clock CP0, saída Q0) e um divisor por 8 (clock CP1, saídas Q1, Q2 e Q3), ambos sensíveis à **borda de descida**. Ligando Q0 a CP1 obtém-se um contador de 0 a 15. As entradas MR1 e MR2, simultaneamente em nível 1, zeram as saídas de forma assíncrona.
+
+## Pinagem
+
+![Pinagem do 74HC93](https://kroki.io/graphviz/svg/eNq1lN9umzAUxu_zFEfedQUGmiwKthQMJUgMGEWr1KoXBNzGEoUIWCe16sPsWfZic_6INVNQSqTeWD7G3_Hv-5BOLh7rdL0CF15HAMvHrCqqmqBfK9FyNIOyyjncNat0zcm6SEUJD1XZlukTJ2jBi2feiixF28NGvHCC8f1M9skE3BXpkhfENJO55TtghbHtxASpCJjj-_-V19GceYFLkLaro7ltb2sdUdnOTGJqJjY1lc1ysLkKgwSi0AuSi2vv1iFoiuizaNoUmp9rXouqNpXNnWNaZbfE756Aue-5AUGx5y4SRFmE5ae9oPOAEVguC_1Q7r_kWZ5zeXLj2clCGjAQxZ0iDm-kNdlv8l6iPehjQ-0kGKtob2R_Y5c-NS06MRZsqpuKJYtYOW43k-GneVXDUpR_fkvLIP-ZIau26bwfRPBxI0Yn2efiO1cyFgAWqf_iO57dt_ic7LThkHofZMBOM2pnMOrDGbU-xu8ncwzYGYjGcETci6ifQvzBzmG8HM6o9jG6gf0pOY4HK6a9MeJPIZwMVnztJdQOR6KyHd2UypH-NvoLgWiY8Q==)
+
+**Figura 1** — Pinagem do 74HC93 (vista superior). Barra sobre o nome indica sinal ativo em nível baixo; nas tabelas, a barra é escrita como **/** antes do nome.
+
+|    Pino     |   Sinal    | Função                                                  |
+| :---------: | :--------: | :------------------------------------------------------ |
+|     14      |    CP0     | clock do divisor por 2                                  |
+|      1      |    CP1     | clock do divisor por 8                                  |
+|    2, 3     |  MR1, MR2  | reset assíncrono (ativo com as duas em 1)               |
+|     12      |     Q0     | saída do divisor por 2 (bit menos significativo)        |
+|  9, 8, 11   | Q1, Q2, Q3 | saídas do divisor por 8 (Q3 é o bit mais significativo) |
+| 4, 6, 7, 13 |     NC     | sem ligação interna                                     |
+|      5      |    VCC     | alimentação positiva (**pino 5**)                       |
+|     10      |    GND     | referência (**pino 10**)                                |
+
+## Tabela de funcionamento
+
+X = irrelevante; ↑ = borda de subida; ↓ = borda de descida.
+
+| MR1 | MR2 | Clock |   Saídas   |
+| :-: | :-: | :---: | :--------: |
+|  1  |  1  |   X   | todas em 0 |
+|  0  |  X  |   ↓   |   conta    |
+|  X  |  0  |   ↓   |   conta    |
+
+### Módulos de contagem (com Q0 ligado a CP1)
+
+| Contagem | MR1 | MR2 |
+| :------: | :-: | :-: |
+|  0 a 15  | GND | GND |
+|  0 a 9   | Q1  | Q3  |
+|  0 a 5   | Q1  | Q2  |
+|  0 a 11  | Q2  | Q3  |
+
+![Formas de onda dos três primeiros estágios (QA, QB e QC correspondem a Q0, Q1 e Q2)](https://kroki.io/wavedrom/svg/eNpdj80KwjAMgF8l5KQwyub8AcGD7qgXz7JDXMMcbC2sRYWxR_IpfDEXmT9bSr4m4QulDboiN1TiGk4NGqq4qzA57DEAvNH13RrVB7YB_Kzj9l8Ko_6MpN1AUpF650hKhpLqFNVLAzGxxlPO1b---YQMNXmSv2AoXSSYCWLBXLAQLAUrQYhpm3b3hUl3iw16vvvvU9rWQM49HyarrbGQ1ewyNp5BM8RwLryDSaGZygAcV0C-JmfdFNv2BbUrXGM=)
+
+**Figura 2** — Formas de onda dos três primeiros estágios (QA, QB e QC correspondem a Q0, Q1 e Q2)
+
+## Características elétricas (resumo)
+
+| Parâmetro                      |      Valor      | Condição                                     |
+| :----------------------------- | :-------------: | :------------------------------------------- |
+| Tensão de alimentação $V_{CC}$ |    2 V a 6 V    | 5 V nos roteiros                             |
+| $V_{IH}$ mínima                |     3,15 V      | $V_{CC}$ = 4,5 V (cerca de 70 % de $V_{CC}$) |
+| $V_{IL}$ máxima                |     1,35 V      | $V_{CC}$ = 4,5 V (cerca de 30 % de $V_{CC}$) |
+| $V_{OH}$ mínima                |      4,4 V      | $V_{CC}$ = 4,5 V, saída fornecendo 20 µA     |
+| $V_{OL}$ máxima                |      0,1 V      | $V_{CC}$ = 4,5 V, saída drenando 20 µA       |
+| Corrente de saída recomendada  |    até 4 mA     | $V_{CC}$ = 4,5 V, saídas padrão              |
+| Corrente de entrada            | no máximo ±1 µA | entrada em $V_{CC}$ ou GND                   |
+| Temperatura de operação        | −40 °C a +85 °C | versões comerciais                           |
+
+:::note
+
+Valores de referência da família 74HC, comuns aos principais fabricantes. Atrasos de propagação, frequência máxima de clock e limites absolutos variam conforme o fabricante e devem ser consultados na folha de dados original.
+
+:::
+
+## Notas de uso
+
+- **Alimentação fora do padrão**: VCC no pino 5 e GND no pino 10.
+- Por ser assíncrono, as saídas não mudam todas no mesmo instante.
+- Ligue sempre VCC e GND e não deixe entradas abertas.
+
+## Onde é usado
+
+[Lab 11](../lab11.mdx).
+
+## Folha de dados do fabricante
+
+- [CD74HC93 — Texas Instruments](https://www.ti.com/product/CD74HC93)
+- No Tinkercad, localize o componente digitando `74HC93` na busca da lista de componentes.

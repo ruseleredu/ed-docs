@@ -1,0 +1,84 @@
+---
+title: 74HC04 — 6 inversores
+sidebar_label: 74HC04
+description: Ficha técnica resumida do 74HC04 (6 inversores) para as atividades de laboratório de Eletrônica Digital.
+slug: /datasheets/74HC04
+---
+
+# 74HC04 — 6 inversores
+
+## Descrição
+
+Contém seis inversores independentes. A saída é o complemento da entrada.
+
+**Função**: $Y = \overline{A}$
+
+![Símbolo lógico](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVopU0lGIVqoDkkqOSrGxsbUAk2QIwA==)
+
+**Figura 1** — Símbolo lógico de uma das portas
+
+## Pinagem
+
+![Pinagem do 74HC04](https://kroki.io/graphviz/svg/eNqdlNtqg0AURd_zFYfpc_GapCHOgLcYQTRYaUlDH2ycJgNWg6YptPQ7-kH9sU4upEmJWH0Z5oxnn1l7C5OwRRGvluDARwfgaTHP07zA6G3J1hQNIcsTCrNyGa8oXqUxy-A5z9ZZ_EIxGtN0Q9dsHqPdYcneKZakxyGfM2cwS-MnmmJNi3TDs8EIQssOMRIRmLbn_SlvJ7rp-g5G8r6e6Ja1qxVE-DgtCokWWUQTtsvZZhT4EUwC14-ub90HG6MBIhtWrmMoX1e0YHmhCdueS1phv4QnV4DuuY6PUeg64wgRSedfDv1HCxICwzEDL-D7q2SeJJSf3LtWNOb8KhcdFWFwz53xcf1Tifys9FTxKJEkER18HDr24RPNIH11bIqqJhi8CIXLbnvw_QUs29CiPDF75vn_6OpRcgjCs0c8B4A70_zNqyKsaYuw5OaMShVjT69DlNv8T6U5olyJOK1FbJOi2hxRqkLs1qaotEmx2xxRrESsTVFpk2KvsWJQRajWhuj4VgvEfmPFTSXi9PwBFHYPNSH8Af_s_ACBbJJR)
+
+**Figura 2** — Pinagem do 74HC04 (vista superior). Barra sobre o nome indica sinal ativo em nível baixo; nas tabelas, a barra é escrita como **/** antes do nome.
+
+| Pino | Sinal | Função                |
+| :--: | :---: | :-------------------- |
+|  1   |  1A   | entrada do inversor 1 |
+|  2   |  1Y   | saída do inversor 1   |
+|  3   |  2A   | entrada do inversor 2 |
+|  4   |  2Y   | saída do inversor 2   |
+|  5   |  3A   | entrada do inversor 3 |
+|  6   |  3Y   | saída do inversor 3   |
+|  9   |  4A   | entrada do inversor 4 |
+|  8   |  4Y   | saída do inversor 4   |
+|  11  |  5A   | entrada do inversor 5 |
+|  10  |  5Y   | saída do inversor 5   |
+|  13  |  6A   | entrada do inversor 6 |
+|  12  |  6Y   | saída do inversor 6   |
+|  14  |  VCC  | alimentação positiva  |
+|  7   |  GND  | referência (0 V)      |
+
+## Tabela de funcionamento
+
+X = irrelevante; ↑ = borda de subida; ↓ = borda de descida.
+
+|  A  |  Y  |
+| :-: | :-: |
+|  0  |  1  |
+|  1  |  0  |
+
+## Características elétricas (resumo)
+
+| Parâmetro                      |      Valor      | Condição                                     |
+| :----------------------------- | :-------------: | :------------------------------------------- |
+| Tensão de alimentação $V_{CC}$ |    2 V a 6 V    | 5 V nos roteiros                             |
+| $V_{IH}$ mínima                |     3,15 V      | $V_{CC}$ = 4,5 V (cerca de 70 % de $V_{CC}$) |
+| $V_{IL}$ máxima                |     1,35 V      | $V_{CC}$ = 4,5 V (cerca de 30 % de $V_{CC}$) |
+| $V_{OH}$ mínima                |      4,4 V      | $V_{CC}$ = 4,5 V, saída fornecendo 20 µA     |
+| $V_{OL}$ máxima                |      0,1 V      | $V_{CC}$ = 4,5 V, saída drenando 20 µA       |
+| Corrente de saída recomendada  |    até 4 mA     | $V_{CC}$ = 4,5 V, saídas padrão              |
+| Corrente de entrada            | no máximo ±1 µA | entrada em $V_{CC}$ ou GND                   |
+| Temperatura de operação        | −40 °C a +85 °C | versões comerciais                           |
+
+:::note
+
+Valores de referência da família 74HC, comuns aos principais fabricantes. Atrasos de propagação, frequência máxima de clock e limites absolutos variam conforme o fabricante e devem ser consultados na folha de dados original.
+
+:::
+
+## Notas de uso
+
+- Ligue a GND as entradas dos inversores não utilizados.
+- A transição da saída ocorre com a entrada próxima da metade da tensão de alimentação.
+- Ligue sempre VCC e GND e não deixe entradas abertas.
+
+## Onde é usado
+
+[Lab 01](../lab01.mdx), [Lab 03](../lab03.mdx), [Lab 05](../lab05.mdx), [Lab 06](../lab06.mdx), [Lab 07](../lab07.mdx), [Lab 08](../lab08.mdx), [Lab 10](../lab10.mdx), [Lab 13](../lab13.mdx).
+
+## Folha de dados do fabricante
+
+- [SN74HC04 — Texas Instruments](https://www.ti.com/product/SN74HC04)
+- No Tinkercad, localize o componente digitando `74HC04` na busca da lista de componentes.

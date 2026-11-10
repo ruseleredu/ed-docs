@@ -1,0 +1,46 @@
+---
+id: ELT82F-ds-index
+title: Folhas de dados dos circuitos integrados
+sidebar_label: Visão geral
+sidebar_position: 0
+description: Fichas técnicas resumidas dos circuitos integrados usados no laboratório de Eletrônica Digital.
+slug: /datasheets
+---
+
+# Folhas de dados dos circuitos integrados
+
+Fichas técnicas resumidas, em português, dos CIs usados nos roteiros. Cada página traz descrição, pinagem, tabela de funcionamento, características elétricas de referência e notas de uso. Elas **não substituem** a folha de dados do fabricante, indicada ao final de cada página.
+
+| CI                         | Função                                                         | Labs                           |
+| :------------------------- | :------------------------------------------------------------- | :----------------------------- |
+| [74HC00](./74HC00.mdx)     | 4 portas NAND de 2 entradas                                    | 02, 03, 04, 09, 11             |
+| [74HC02](./74HC02.mdx)     | 4 portas NOR de 2 entradas                                     | 02, 03                         |
+| [74HC04](./74HC04.mdx)     | 6 inversores                                                   | 01, 03, 05, 06, 07, 08, 10, 13 |
+| [74HC08](./74HC08.mdx)     | 4 portas AND de 2 entradas                                     | 01, 03, 04, 05, 06, 07, 08, 12 |
+| [74HC10](./74HC10.mdx)     | 3 portas NAND de 3 entradas                                    | 04                             |
+| [74HC11](./74HC11.mdx)     | 3 portas AND de 3 entradas                                     | 07                             |
+| [74HC14](./74HC14.mdx)     | 6 inversores Schmitt trigger                                   | 13                             |
+| [74HC32](./74HC32.mdx)     | 4 portas OR de 2 entradas                                      | 01, 03, 04, 05, 06, 07, 08     |
+| [74HC86](./74HC86.mdx)     | 4 portas XOR de 2 entradas                                     | 02, 04, 08, 12                 |
+| [74HC73](./74HC73.mdx)     | 2 flip-flops JK com reset                                      | 09, 11, 12                     |
+| [74HC74](./74HC74.mdx)     | 2 flip-flops D com preset e clear                              | 09, 10                         |
+| [74HC93](./74HC93.mdx)     | Contador binário assíncrono de 4 bits                          | 11                             |
+| [74HC283](./74HC283.mdx)   | Somador completo de 4 bits                                     | 08                             |
+| [74HC595](./74HC595.mdx)   | Registrador de deslocamento de 8 bits com registrador de saída | 10                             |
+| [74HC4017](./74HC4017.mdx) | Contador Johnson de década com 10 saídas decodificadas         | 11                             |
+| [CD4511](./CD4511.mdx)     | Decodificador BCD para 7 segmentos com latch                   | 06, 11, 12                     |
+
+## Características comuns da família 74HC
+
+| Parâmetro                      |      Valor      | Condição                                     |
+| :----------------------------- | :-------------: | :------------------------------------------- |
+| Tensão de alimentação $V_{CC}$ |    2 V a 6 V    | 5 V nos roteiros                             |
+| $V_{IH}$ mínima                |     3,15 V      | $V_{CC}$ = 4,5 V (cerca de 70 % de $V_{CC}$) |
+| $V_{IL}$ máxima                |     1,35 V      | $V_{CC}$ = 4,5 V (cerca de 30 % de $V_{CC}$) |
+| $V_{OH}$ mínima                |      4,4 V      | $V_{CC}$ = 4,5 V, saída fornecendo 20 µA     |
+| $V_{OL}$ máxima                |      0,1 V      | $V_{CC}$ = 4,5 V, saída drenando 20 µA       |
+| Corrente de saída recomendada  |    até 4 mA     | $V_{CC}$ = 4,5 V, saídas padrão              |
+| Corrente de entrada            | no máximo ±1 µA | entrada em $V_{CC}$ ou GND                   |
+| Temperatura de operação        | −40 °C a +85 °C | versões comerciais                           |
+
+Em 5 V, considere nível 0 válido abaixo de 1,5 V e nível 1 válido acima de 3,5 V.

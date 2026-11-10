@@ -1,0 +1,84 @@
+---
+title: 74HC11 — 3 portas AND de 3 entradas
+sidebar_label: 74HC11
+description: Ficha técnica resumida do 74HC11 (3 portas AND de 3 entradas) para as atividades de laboratório de Eletrônica Digital.
+slug: /datasheets/74HC11
+---
+
+# 74HC11 — 3 portas AND de 3 entradas
+
+## Descrição
+
+Contém três portas AND independentes de 3 entradas. A saída vai a nível 1 somente quando as três entradas estão em nível 1.
+
+**Função**: $Y = A \cdot B \cdot C$
+
+![Símbolo lógico](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVopU0lGIVlIDkkqOIMIJRDgrxcbG1gIA42QKDQ==)
+
+**Figura 1** — Símbolo lógico de uma das portas
+
+## Pinagem
+
+![Pinagem do 74HC11](https://kroki.io/graphviz/svg/eNqdlN9OgzAUxu99ipN6bVgBN5fRJvyTkRBYkGjm4kUd1ZEgLIAz0fgcPpAvZt0WdGYE4abpKec7_L6P0Dh5LNh6BQ68nQDcPy7zNC8IelklFUcTyPKYw6JcsTUn65QlGTzkWZWxJ07QlKcbXiVLhraHZfLKCcZ3EzFnmcAiZfc8JZoW6YZngxGElh0SNEBg2p73p7ya6abrOwTJu3qmW9a2VhAV47QopFpkUU36Xg42l4EfwSxw_ejsyr21CRojuknKikH5vOZFkhea9N1zTCvtlvDXK0D3XMcnKHSdaYQo1sWTfX9tASMwHDPwArE_jZdxzMXJjWtFU8GvClGtCIMb4UyMG_2WyA_KUB3UEowHaO9j37ELn2oGHalTE4t5hihC6bhbBT4_QPctUIBnVcFiVtaWD5z_34BaS_ZxePalSAPg2jR_UmuIzOgRmdydUWlixK2Icp-vqnRHlBsR562IfVJUuyPiJkSlPUWzB-J5d8RBI6LRijjvgTjsrBg3EupthI74b7sjjjorLhoR54fXoLS9rikV1_j7yRdw4pMb)
+
+**Figura 2** — Pinagem do 74HC11 (vista superior). Barra sobre o nome indica sinal ativo em nível baixo; nas tabelas, a barra é escrita como **/** antes do nome.
+
+|   Pino    |   Sinal    | Função               |
+| :-------: | :--------: | :------------------- |
+| 1, 2, 13  | 1A, 1B, 1C | entradas da porta 1  |
+|    12     |     1Y     | saída da porta 1     |
+|  3, 4, 5  | 2A, 2B, 2C | entradas da porta 2  |
+|     6     |     2Y     | saída da porta 2     |
+| 9, 10, 11 | 3A, 3B, 3C | entradas da porta 3  |
+|     8     |     3Y     | saída da porta 3     |
+|    14     |    VCC     | alimentação positiva |
+|     7     |    GND     | referência (0 V)     |
+
+## Tabela de funcionamento
+
+X = irrelevante; ↑ = borda de subida; ↓ = borda de descida.
+
+|  A  |  B  |  C  |  Y  |
+| :-: | :-: | :-: | :-: |
+|  0  |  0  |  0  |  0  |
+|  0  |  0  |  1  |  0  |
+|  0  |  1  |  0  |  0  |
+|  0  |  1  |  1  |  0  |
+|  1  |  0  |  0  |  0  |
+|  1  |  0  |  1  |  0  |
+|  1  |  1  |  0  |  0  |
+|  1  |  1  |  1  |  1  |
+
+## Características elétricas (resumo)
+
+| Parâmetro                      |      Valor      | Condição                                     |
+| :----------------------------- | :-------------: | :------------------------------------------- |
+| Tensão de alimentação $V_{CC}$ |    2 V a 6 V    | 5 V nos roteiros                             |
+| $V_{IH}$ mínima                |     3,15 V      | $V_{CC}$ = 4,5 V (cerca de 70 % de $V_{CC}$) |
+| $V_{IL}$ máxima                |     1,35 V      | $V_{CC}$ = 4,5 V (cerca de 30 % de $V_{CC}$) |
+| $V_{OH}$ mínima                |      4,4 V      | $V_{CC}$ = 4,5 V, saída fornecendo 20 µA     |
+| $V_{OL}$ máxima                |      0,1 V      | $V_{CC}$ = 4,5 V, saída drenando 20 µA       |
+| Corrente de saída recomendada  |    até 4 mA     | $V_{CC}$ = 4,5 V, saídas padrão              |
+| Corrente de entrada            | no máximo ±1 µA | entrada em $V_{CC}$ ou GND                   |
+| Temperatura de operação        | −40 °C a +85 °C | versões comerciais                           |
+
+:::note
+
+Valores de referência da família 74HC, comuns aos principais fabricantes. Atrasos de propagação, frequência máxima de clock e limites absolutos variam conforme o fabricante e devem ser consultados na folha de dados original.
+
+:::
+
+## Notas de uso
+
+- **Atenção à porta 1**: as entradas estão nos pinos 1, 2 e 13 e a saída no pino 12.
+- Para usar como AND de 2 entradas, ligue a entrada livre a +5 V.
+- Ligue sempre VCC e GND e não deixe entradas abertas.
+
+## Onde é usado
+
+[Lab 07](../lab07.mdx).
+
+## Folha de dados do fabricante
+
+- [SN74HC11 — Texas Instruments](https://www.ti.com/product/SN74HC11)
+- No Tinkercad, localize o componente digitando `74HC11` na busca da lista de componentes.

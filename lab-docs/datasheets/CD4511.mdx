@@ -1,0 +1,91 @@
+---
+title: CD4511 — Decodificador BCD para 7 segmentos com latch
+sidebar_label: CD4511
+description: Ficha técnica resumida do CD4511 (Decodificador BCD para 7 segmentos com latch) para as atividades de laboratório de Eletrônica Digital.
+slug: /datasheets/CD4511
+---
+
+# CD4511 — Decodificador BCD para 7 segmentos com latch
+
+## Descrição
+
+Recebe um dígito em BCD (D C B A, com D o bit mais significativo) e aciona os segmentos **a** a **g** de um display de **catodo comum**. As saídas são ativas em nível alto e fornecem corrente suficiente para os segmentos, que devem ter resistores em série. Possui latch de entrada (LE), teste de lâmpadas (/LT) e apagamento (/BL). Os códigos de 10 a 15 apagam o display.
+
+## Pinagem
+
+![Pinagem do CD4511](https://kroki.io/graphviz/svg/eNqdld9qgzAUxu_3FIfselhb-48lATXWClKLlRVWdmE1bQWnpboONna7B9gj7kmWtcWto-L0JuTE8x1_3weaMFrv_O0GTHi9AliugzROdwQ9b6Kco1tI0pDDItv4W062sR8lsEqTPPEfOUFjHu95HgU-Ohxm0QsnsvxwK-YEESxif8ljgrGnarYBmuMywyWohUA3bPtPOZuqujUxCWof66nK2KHuICrGYc-l2GMUS9_L2WbkTDyYOtbEu5lZ9wZBQ0T3UZb7kD1t-S5Kd1j67rmklY6L--sVoNqWOSHItcyxh6gmHpzaCwcyAs3UHdsR--swCEMuTuYW88YCX0FULhSuMxfGxLTBb0l71ekprUIiyy10snHqOGZPsUZ1pnRlMU8ThStdNqvpDD7fP6APGV8_8iRPs8LxmfH_G-gVklMatjESYQDcMfYT2uXE9AaJtesjdssQV1WA2KG2hyWHNgDt1AdVykDX_wDV7IagSn3QThmoXwUqvu76hN36hO0ywmUVIWsA2KsPKJcBBlWAagPAfn3AVhlgWAV4N5s1QBzUVgzLCPn531o63CqUitvm7eoLheK_MA==)
+
+**Figura 1** — Pinagem do CD4511 (vista superior). Barra sobre o nome indica sinal ativo em nível baixo; nas tabelas, a barra é escrita como **/** antes do nome.
+
+|           Pino            |        Sinal        | Função                                                                         |
+| :-----------------------: | :-----------------: | :----------------------------------------------------------------------------- |
+|        7, 1, 2, 6         |     A, B, C, D      | entradas BCD (A é o bit menos significativo)                                   |
+| 13, 12, 11, 10, 9, 15, 14 | a, b, c, d, e, f, g | saídas para os segmentos, ativas em 1                                          |
+|             3             |         /LT         | teste: em 0 acende todos os segmentos                                          |
+|             4             |         /BL         | apagamento: em 0 apaga todos os segmentos                                      |
+|             5             |         LE          | latch: em 0 as saídas acompanham as entradas; em 1 o último dígito fica retido |
+|            16             |         VDD         | alimentação positiva                                                           |
+|             8             |         VSS         | referência (0 V)                                                               |
+
+## Tabela de funcionamento
+
+X = irrelevante; ↑ = borda de subida; ↓ = borda de descida.
+
+| /LT | /BL | LE  |   D C B A   |         Display          |
+| :-: | :-: | :-: | :---------: | :----------------------: |
+|  0  |  X  |  X  |      X      |  8 (todos os segmentos)  |
+|  1  |  0  |  X  |      X      |         apagado          |
+|  1  |  1  |  0  | 0000 a 1001 |     dígito de 0 a 9      |
+|  1  |  1  |  0  | 1010 a 1111 |         apagado          |
+|  1  |  1  |  1  |      X      | mantém o dígito anterior |
+
+### Segmentos acesos por dígito
+
+| Dígito | Segmentos     |
+| :----: | :------------ |
+|   0    | a b c d e f   |
+|   1    | b c           |
+|   2    | a b d e g     |
+|   3    | a b c d g     |
+|   4    | b c f g       |
+|   5    | a c d f g     |
+|   6    | c d e f g     |
+|   7    | a b c         |
+|   8    | a b c d e f g |
+|   9    | a b c f g     |
+
+![Identificação dos segmentos do display](https://kroki.io/graphviz/svg/eNrFk9Fqg0AQRd_zFcP0A4xpSQPZXVDXqiAx2IU-hD6sulHBqiTSQkv_vVstRSyBFtrmce7O3jNzYbIyP8i2AA9eZgBJnjZVc6D4VJSdwjXUTaZgdyxkq2hbybKGfVN3tXxQFH1VPaquTCX24rF8VtRc3K-1Twa7SiaqooQIyw5dsKOYuzHFOYLjhuGkvN1aTrDxKF4O9dbivK8XyLQbETEjgo9MGDEEHzTPicJIixdqdWWaK4S7gAuf4rX29t3A8wVFc6l_3EQbAR_Nw3qM2EwSw9Zu748j0ynI0BOMBzkF1aBP6HJ-Err_FvQXQMkX0HSTP4g0P0ek6r8iTc8RafajSI3-5hjTp_g6ewPSSgDb)
+
+**Figura 2** — Identificação dos segmentos do display
+
+## Características elétricas (resumo)
+
+| Parâmetro                      |      Valor      | Condição                                  |
+| :----------------------------- | :-------------: | :---------------------------------------- |
+| Tensão de alimentação $V_{DD}$ |   3 V a 18 V    | 5 V nos roteiros                          |
+| $V_{IH}$ mínima                |      3,5 V      | $V_{DD}$ = 5 V                            |
+| $V_{IL}$ máxima                |      1,5 V      | $V_{DD}$ = 5 V                            |
+| Corrente de saída por segmento |    até 25 mA    | saídas em nível alto, fornecendo corrente |
+| Corrente de entrada            | no máximo ±1 µA | entrada em $V_{DD}$ ou $V_{SS}$           |
+
+:::note
+
+Valores de referência da família CMOS 4000B, comuns aos principais fabricantes. Atrasos de propagação, frequência máxima de clock e limites absolutos variam conforme o fabricante e devem ser consultados na folha de dados original.
+
+:::
+
+## Notas de uso
+
+- Operação normal: /LT e /BL em +5 V e LE em GND.
+- Use um resistor (330 Ω em 5 V) em série com **cada** segmento.
+- Os dígitos 6 e 9 são exibidos sem a "cauda" (segmentos a e d, respectivamente).
+- Ligue sempre VDD e VSS e não deixe entradas abertas.
+
+## Onde é usado
+
+[Lab 06](../lab06.mdx), [Lab 11](../lab11.mdx), [Lab 12](../lab12.mdx).
+
+## Folha de dados do fabricante
+
+- [CD4511B — Texas Instruments](https://www.ti.com/product/CD4511B)
+- No Tinkercad, localize o componente digitando `CD4511` na busca da lista de componentes.

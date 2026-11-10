@@ -1,0 +1,77 @@
+---
+title: 74HC283 — Somador completo de 4 bits
+sidebar_label: 74HC283
+description: Ficha técnica resumida do 74HC283 (Somador completo de 4 bits) para as atividades de laboratório de Eletrônica Digital.
+slug: /datasheets/74HC283
+---
+
+# 74HC283 — Somador completo de 4 bits
+
+## Descrição
+
+Soma dois números binários de 4 bits (A4 a A1 e B4 a B1) e o vai-um de entrada (C0), fornecendo a soma (Σ4 a Σ1) e o vai-um de saída (C4). O vai-um é gerado internamente por antecipação (_carry look-ahead_). O índice 1 indica o bit menos significativo.
+
+**Função**: $C_4\,\Sigma_4\Sigma_3\Sigma_2\Sigma_1 = A + B + C_0$
+
+## Pinagem
+
+![Pinagem do 74HC283](https://kroki.io/graphviz/svg/eNqdld1qgzAYhs93FR_Z8fB3_aEm4F-tIFqcrLCyA1uzNeBqUbfBxq6m99NrWtYW146K05OQL-ZNnvdNMAl7zuPNChz4vAJYPC-zNMsxel-xkqIRrLOEwrxYxRuKN2nM1vCUrct1_EIxmtD0jZZsGaP9YME-KJakxxFfZ8lgnsYLmmJNi3TDs8EIQssOMRIRmLbn_Snvprrp-g5G8qGe6pa1rxVE-HJaFBItsogm_DRnnXHgRzANXD-6uXMfbIyGiLyxooyheN3QnGW5JvzMuaQVDk14sgXonuv4GIWuM4kQ2W1l_ukoqDxICAzHDLyA96-TZZJQPjJzrWjCDaiISJUiDGbcGl9vcCqRn5SeKlYSSRLR0chxxiF9ohmkr05MeaBogsGrULjst8he4iTLgR-VCgtWFpXlM-f_5-9VkmMcnj3maQDcm-ZvapcjM7okJrdnvK1jNJQmRL0LotIeUa1D1BsRd1upA6PanlGpY9xtm3PswnjbnlGuzVFtvI1dEHvtEaXa29iIaIodEPvtEcX6k25kdHyrA-SgtWJYx2iq539rYf-qEMJfm6-rb8ylwDI=)
+
+**Figura 1** — Pinagem do 74HC283 (vista superior). Barra sobre o nome indica sinal ativo em nível baixo; nas tabelas, a barra é escrita como **/** antes do nome.
+
+|     Pino     |     Sinal      | Função                                     |
+| :----------: | :------------: | :----------------------------------------- |
+| 5, 3, 14, 12 | A1, A2, A3, A4 | parcela A (A1 é o bit menos significativo) |
+| 6, 2, 15, 11 | B1, B2, B3, B4 | parcela B                                  |
+|      7       |       C0       | vai-um de entrada                          |
+| 4, 1, 13, 10 | Σ1, Σ2, Σ3, Σ4 | soma                                       |
+|      9       |       C4       | vai-um de saída                            |
+|      16      |      VCC       | alimentação positiva                       |
+|      8       |      GND       | referência (0 V)                           |
+
+## Tabela de funcionamento
+
+X = irrelevante; ↑ = borda de subida; ↓ = borda de descida.
+
+| A (decimal) | B (decimal) | C0  | C4  | Σ4 Σ3 Σ2 Σ1 |
+| :---------: | :---------: | :-: | :-: | :---------: |
+|      3      |      2      |  0  |  0  |    0101     |
+|      9      |      6      |  0  |  0  |    1111     |
+|     15      |      1      |  0  |  1  |    0000     |
+|      8      |      8      |  0  |  1  |    0000     |
+|      5      |      5      |  1  |  0  |    1011     |
+
+## Características elétricas (resumo)
+
+| Parâmetro                      |      Valor      | Condição                                     |
+| :----------------------------- | :-------------: | :------------------------------------------- |
+| Tensão de alimentação $V_{CC}$ |    2 V a 6 V    | 5 V nos roteiros                             |
+| $V_{IH}$ mínima                |     3,15 V      | $V_{CC}$ = 4,5 V (cerca de 70 % de $V_{CC}$) |
+| $V_{IL}$ máxima                |     1,35 V      | $V_{CC}$ = 4,5 V (cerca de 30 % de $V_{CC}$) |
+| $V_{OH}$ mínima                |      4,4 V      | $V_{CC}$ = 4,5 V, saída fornecendo 20 µA     |
+| $V_{OL}$ máxima                |      0,1 V      | $V_{CC}$ = 4,5 V, saída drenando 20 µA       |
+| Corrente de saída recomendada  |    até 4 mA     | $V_{CC}$ = 4,5 V, saídas padrão              |
+| Corrente de entrada            | no máximo ±1 µA | entrada em $V_{CC}$ ou GND                   |
+| Temperatura de operação        | −40 °C a +85 °C | versões comerciais                           |
+
+:::note
+
+Valores de referência da família 74HC, comuns aos principais fabricantes. Atrasos de propagação, frequência máxima de clock e limites absolutos variam conforme o fabricante e devem ser consultados na folha de dados original.
+
+:::
+
+## Notas de uso
+
+- Para somas sem vai-um de entrada, ligue C0 a GND.
+- Subtração em complemento de 2: inverta B com portas XOR e aplique 1 em C0.
+- Para 8 bits, ligue C4 do primeiro CI a C0 do segundo.
+- Ligue sempre VCC e GND e não deixe entradas abertas.
+
+## Onde é usado
+
+[Lab 08](../lab08.mdx).
+
+## Folha de dados do fabricante
+
+- [CD74HC283 — Texas Instruments](https://www.ti.com/product/CD74HC283)
+- No Tinkercad, localize o componente digitando `74HC283` na busca da lista de componentes.

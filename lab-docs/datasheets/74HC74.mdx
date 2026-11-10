@@ -1,0 +1,80 @@
+---
+title: 74HC74 — 2 flip-flops D com preset e clear
+sidebar_label: 74HC74
+description: Ficha técnica resumida do 74HC74 (2 flip-flops D com preset e clear) para as atividades de laboratório de Eletrônica Digital.
+slug: /datasheets/74HC74
+---
+
+# 74HC74 — 2 flip-flops D com preset e clear
+
+## Descrição
+
+Contém dois flip-flops D independentes, sensíveis à **borda de subida** do clock, cada um com entradas assíncronas de preset e de clear ativas em nível baixo e saídas complementares.
+
+## Pinagem
+
+![Pinagem do 74HC74](https://kroki.io/graphviz/svg/eNqdlN9OwjAUxu95ipN6bUbHBAltE_bHsbhsUBdNNF5MVqTJZAsgJhqfwwfyxSywTDEgbjdNT9Ov-33f6ZrIx3mcT8GFtwbAw-M4S7M5RS9TuRSoB7MsEXC3mMa5oHkayxlMstlyFj8JigYiXYmlHMdos7iQr4JifN9T54wl3KXxg0gpIVHf9B0wQ247nKImAsvx_V_l1bBveYFLkb6th33b3tQtxNRxJOKMRDYj2nrYmVyEQQTD0Aui0yvv1qGoi9hKLpYxLJ5zMZfZnGjrPfu02nbgPz4Bfd9zA4q45w4ixEjIsOVzooVMbSmEpReMwHSt0A_V_CQZJ4lQKzeeHQ2UEQMxXCp4eKMsqnM7PyX6pNU2mqUE4yYqDBU7tl1gxGQdY2B1DKKZquDafts6fH7AJJX56STNcrBL4zv-_09vlJIiFN-5UJkAXFvWd3b7g8N2jbz06oytQ4yqc3rRuaOsln9Zg7ZVnVY_RKvbxyDXN3HInZo30ajOig-yqriORjqqAXlWHbL5V_uLuP6T7Khmru3Kiu7BWEfHQN2gzk_Vqaw4_yvU0W6kjQ3R-oVnTL38740vxDqgqw==)
+
+**Figura 1** — Pinagem do 74HC74 (vista superior). Barra sobre o nome indica sinal ativo em nível baixo; nas tabelas, a barra é escrita como **/** antes do nome.
+
+| Pino  |    Sinal     | Função                          |
+| :---: | :----------: | :------------------------------ |
+| 2, 12 |    1D, 2D    | entrada de dado                 |
+| 3, 11 |  1CLK, 2CLK  | clock, ativo na borda de subida |
+| 4, 10 | /1PRE, /2PRE | preset assíncrono, ativo em 0   |
+| 1, 13 | /1CLR, /2CLR | clear assíncrono, ativo em 0    |
+| 5, 9  |    1Q, 2Q    | saída                           |
+| 6, 8  |   /1Q, /2Q   | saída complementar              |
+|  14   |     VCC      | alimentação positiva            |
+|   7   |     GND      | referência (0 V)                |
+
+## Tabela de funcionamento
+
+X = irrelevante; ↑ = borda de subida; ↓ = borda de descida.
+
+| /PRE | /CLR |  CLK   |  D  |   Q    |   /Q   |    Função    |
+| :--: | :--: | :----: | :-: | :----: | :----: | :----------: |
+|  0   |  1   |   X    |  X  |   1    |   0    |    preset    |
+|  1   |  0   |   X    |  X  |   0    |   1    |    clear     |
+|  0   |  0   |   X    |  X  |   1    |   1    | não utilizar |
+|  1   |  1   |   ↑    |  1  |   1    |   0    |  armazena 1  |
+|  1   |  1   |   ↑    |  0  |   0    |   1    |  armazena 0  |
+|  1   |  1   | 0 ou 1 |  X  | mantém | mantém |   memória    |
+
+![Exemplo de funcionamento do 74HC74](https://kroki.io/wavedrom/svg/eNqrVirOTM9LzFGyUoiuVspLzE0FspScfbyVdBSUyhPLwNwCPSAACRSkFmXmpwCFjGp1FBDKXZAVGxgCFRvoGeoZKKEoCkRRpAdTpVQbCxTPSE0EGVutVJJaUQJS4JaTWaCblpNfoOCiUJyaV3x4bVlqjsLhBQpJ-UUpiQopqQrFpUmZKYlKtbUALLs4AQ==)
+
+**Figura 2** — Exemplo de funcionamento do 74HC74
+
+## Características elétricas (resumo)
+
+| Parâmetro                      |      Valor      | Condição                                     |
+| :----------------------------- | :-------------: | :------------------------------------------- |
+| Tensão de alimentação $V_{CC}$ |    2 V a 6 V    | 5 V nos roteiros                             |
+| $V_{IH}$ mínima                |     3,15 V      | $V_{CC}$ = 4,5 V (cerca de 70 % de $V_{CC}$) |
+| $V_{IL}$ máxima                |     1,35 V      | $V_{CC}$ = 4,5 V (cerca de 30 % de $V_{CC}$) |
+| $V_{OH}$ mínima                |      4,4 V      | $V_{CC}$ = 4,5 V, saída fornecendo 20 µA     |
+| $V_{OL}$ máxima                |      0,1 V      | $V_{CC}$ = 4,5 V, saída drenando 20 µA       |
+| Corrente de saída recomendada  |    até 4 mA     | $V_{CC}$ = 4,5 V, saídas padrão              |
+| Corrente de entrada            | no máximo ±1 µA | entrada em $V_{CC}$ ou GND                   |
+| Temperatura de operação        | −40 °C a +85 °C | versões comerciais                           |
+
+:::note
+
+Valores de referência da família 74HC, comuns aos principais fabricantes. Atrasos de propagação, frequência máxima de clock e limites absolutos variam conforme o fabricante e devem ser consultados na folha de dados original.
+
+:::
+
+## Notas de uso
+
+- Mantenha /PRE e /CLR em +5 V durante a operação normal.
+- Ligando /Q à entrada D, o flip-flop divide a frequência do clock por 2.
+- Ligue sempre VCC e GND e não deixe entradas abertas.
+
+## Onde é usado
+
+[Lab 09](../lab09.mdx), [Lab 10](../lab10.mdx).
+
+## Folha de dados do fabricante
+
+- [SN74HC74 — Texas Instruments](https://www.ti.com/product/SN74HC74)
+- No Tinkercad, localize o componente digitando `74HC74` na busca da lista de componentes.

@@ -1,0 +1,82 @@
+---
+title: 74HC02 — 4 portas NOR de 2 entradas
+sidebar_label: 74HC02
+description: Ficha técnica resumida do 74HC02 (4 portas NOR de 2 entradas) para as atividades de laboratório de Eletrônica Digital.
+slug: /datasheets/74HC02
+---
+
+# 74HC02 — 4 portas NOR de 2 entradas
+
+## Descrição
+
+Contém quatro portas NOR independentes de 2 entradas. A saída vai a nível 1 somente quando as duas entradas estão em nível 0. Também é uma porta universal.
+
+**Função**: $Y = \overline{A + B}$
+
+![Símbolo lógico](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVopU0lGIVqqrAVJKjiDCSSk2NrYWAMrpCg4=)
+
+**Figura 1** — Símbolo lógico de uma das portas
+
+## Pinagem
+
+![Pinagem do 74HC02](https://kroki.io/graphviz/svg/eNqdlNtOg0AQhu99isl6bTja2pTdhJOUhECDRKONF9uytSQIDWBNND6HD-SLuT0EWyNBuNnsLPPPfv8M2Th5Kuh6BQ68nwHMnxZ5mhcYva6SiqExZHnMYFau6JrhdUqTDJZ5VmX0mWE0YemGVcmCot1hmbwxLEmPY15nkcAspXOWYk2LdMOzwQhCyw4xEhGYtuf9Cm-muun6DkbyPp7qlrWLFUR4OS0KiRZZRBO2y8nmOvAjmAauH13cuA82RiNENklZUShf1qxI8kITtjl_aYX9Eh5dAbrnOj5GoetMIkSke_7lkF9bkBAYjhl4Ad-fx4s4ZvzkzrWiCedXuahWhMEdd8bLDY8l8lIZqGItkSQRHXwcMvbNJ5pBhurEFGVNMHgQCn-7VeHrE_wgBBlYVhU0pmVt-cT5_w2oteTQDs--5t0AuDXNn641tEzv0TK5O6PSxKjetyIaPRCV7ohyI6LRhij3-fHU7ohSI6Leithn0JfdEcUmRKV10HKfQQ86K0aNhK1zdnyrB-Kws-KqEVE_fQaF3XNNCH_GP86-AbDVk1A=)
+
+**Figura 2** — Pinagem do 74HC02 (vista superior). Barra sobre o nome indica sinal ativo em nível baixo; nas tabelas, a barra é escrita como **/** antes do nome.
+
+|  Pino  | Sinal  | Função               |
+| :----: | :----: | :------------------- |
+|  2, 3  | 1A, 1B | entradas da porta 1  |
+|   1    |   1Y   | saída da porta 1     |
+|  5, 6  | 2A, 2B | entradas da porta 2  |
+|   4    |   2Y   | saída da porta 2     |
+|  8, 9  | 3A, 3B | entradas da porta 3  |
+|   10   |   3Y   | saída da porta 3     |
+| 11, 12 | 4A, 4B | entradas da porta 4  |
+|   13   |   4Y   | saída da porta 4     |
+|   14   |  VCC   | alimentação positiva |
+|   7    |  GND   | referência (0 V)     |
+
+## Tabela de funcionamento
+
+X = irrelevante; ↑ = borda de subida; ↓ = borda de descida.
+
+|  A  |  B  |  Y  |
+| :-: | :-: | :-: |
+|  0  |  0  |  1  |
+|  0  |  1  |  0  |
+|  1  |  0  |  0  |
+|  1  |  1  |  0  |
+
+## Características elétricas (resumo)
+
+| Parâmetro                      |      Valor      | Condição                                     |
+| :----------------------------- | :-------------: | :------------------------------------------- |
+| Tensão de alimentação $V_{CC}$ |    2 V a 6 V    | 5 V nos roteiros                             |
+| $V_{IH}$ mínima                |     3,15 V      | $V_{CC}$ = 4,5 V (cerca de 70 % de $V_{CC}$) |
+| $V_{IL}$ máxima                |     1,35 V      | $V_{CC}$ = 4,5 V (cerca de 30 % de $V_{CC}$) |
+| $V_{OH}$ mínima                |      4,4 V      | $V_{CC}$ = 4,5 V, saída fornecendo 20 µA     |
+| $V_{OL}$ máxima                |      0,1 V      | $V_{CC}$ = 4,5 V, saída drenando 20 µA       |
+| Corrente de saída recomendada  |    até 4 mA     | $V_{CC}$ = 4,5 V, saídas padrão              |
+| Corrente de entrada            | no máximo ±1 µA | entrada em $V_{CC}$ ou GND                   |
+| Temperatura de operação        | −40 °C a +85 °C | versões comerciais                           |
+
+:::note
+
+Valores de referência da família 74HC, comuns aos principais fabricantes. Atrasos de propagação, frequência máxima de clock e limites absolutos variam conforme o fabricante e devem ser consultados na folha de dados original.
+
+:::
+
+## Notas de uso
+
+- **A disposição dos pinos difere da do 74HC00**: em cada porta, a saída ocupa o primeiro pino do grupo (pinos 1, 4, 10 e 13).
+- Dois níveis de portas NOR implementam diretamente um produto de somas.
+- Ligue sempre VCC e GND e não deixe entradas abertas.
+
+## Onde é usado
+
+[Lab 02](../lab02.mdx), [Lab 03](../lab03.mdx).
+
+## Folha de dados do fabricante
+
+- [SN74HC02 — Texas Instruments](https://www.ti.com/product/SN74HC02)
+- No Tinkercad, localize o componente digitando `74HC02` na busca da lista de componentes.

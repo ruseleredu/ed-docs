@@ -1,0 +1,82 @@
+---
+title: 74HC08 — 4 portas AND de 2 entradas
+sidebar_label: 74HC08
+description: Ficha técnica resumida do 74HC08 (4 portas AND de 2 entradas) para as atividades de laboratório de Eletrônica Digital.
+slug: /datasheets/74HC08
+---
+
+# 74HC08 — 4 portas AND de 2 entradas
+
+## Descrição
+
+Contém quatro portas AND independentes de 2 entradas. A saída vai a nível 1 somente quando as duas entradas estão em nível 1.
+
+**Função**: $Y = A \cdot B$
+
+![Símbolo lógico](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVopU0lGIVlIDkkqOIMJJKTY2thYAt3AJOg==)
+
+**Figura 1** — Símbolo lógico de uma das portas
+
+## Pinagem
+
+![Pinagem do 74HC08](https://kroki.io/graphviz/svg/eNqdlNtOg0AQhu_7FJP12nDU1shuwklKQqChxKY2XqxltSQIDaAmGp_DB_LF3B6CrSlBuNnsLPMP3z8DGydPBV2vwIGPAcDD0zJP8wKjt1VSMXQNWR4zWJQrumZ4ndIkg8c8qzL6zDAas_SVVcmSou1hmbwzLEn317zOMoFFSh9YijUt0g3PBiMILTvESERg2p73J5xOdNP1HYzkXTzRLWsbK4jwcloUEi2yiCZslqPNTeBHMAlcPzqfunc2RleIvCZlRaF8WbMiyQtN2OSc0gq7JTx4Beie6_gYha4zjhCRdP5kn19bkBAYjhl4Ad-fxcs4Zvxk5lrRmPOrXFQrwmDGnfFyw0OJ_KhcqmItkSQR7X3sM3bNJ5pBhurYFEeaYPAgFE67VeH7C3TfAhlYVhU0pmVt-cj5_w2otWTfDs--4d0AuDXN3641tMzo0TK5O6PSxKgarYjzHohKd0S5EVFvQ5T7fHhqd0SpEXHeithn0BfdEcUmRKV10HKfQV92Vlw1ErbO2eH_bXfEYWfFqBFxfnwNCtvrmhB-jX8OfgDNOpM6)
+
+**Figura 2** — Pinagem do 74HC08 (vista superior). Barra sobre o nome indica sinal ativo em nível baixo; nas tabelas, a barra é escrita como **/** antes do nome.
+
+|  Pino  | Sinal  | Função               |
+| :----: | :----: | :------------------- |
+|  1, 2  | 1A, 1B | entradas da porta 1  |
+|   3    |   1Y   | saída da porta 1     |
+|  4, 5  | 2A, 2B | entradas da porta 2  |
+|   6    |   2Y   | saída da porta 2     |
+| 9, 10  | 3A, 3B | entradas da porta 3  |
+|   8    |   3Y   | saída da porta 3     |
+| 12, 13 | 4A, 4B | entradas da porta 4  |
+|   11   |   4Y   | saída da porta 4     |
+|   14   |  VCC   | alimentação positiva |
+|   7    |  GND   | referência (0 V)     |
+
+## Tabela de funcionamento
+
+X = irrelevante; ↑ = borda de subida; ↓ = borda de descida.
+
+|  A  |  B  |  Y  |
+| :-: | :-: | :-: |
+|  0  |  0  |  0  |
+|  0  |  1  |  0  |
+|  1  |  0  |  0  |
+|  1  |  1  |  1  |
+
+## Características elétricas (resumo)
+
+| Parâmetro                      |      Valor      | Condição                                     |
+| :----------------------------- | :-------------: | :------------------------------------------- |
+| Tensão de alimentação $V_{CC}$ |    2 V a 6 V    | 5 V nos roteiros                             |
+| $V_{IH}$ mínima                |     3,15 V      | $V_{CC}$ = 4,5 V (cerca de 70 % de $V_{CC}$) |
+| $V_{IL}$ máxima                |     1,35 V      | $V_{CC}$ = 4,5 V (cerca de 30 % de $V_{CC}$) |
+| $V_{OH}$ mínima                |      4,4 V      | $V_{CC}$ = 4,5 V, saída fornecendo 20 µA     |
+| $V_{OL}$ máxima                |      0,1 V      | $V_{CC}$ = 4,5 V, saída drenando 20 µA       |
+| Corrente de saída recomendada  |    até 4 mA     | $V_{CC}$ = 4,5 V, saídas padrão              |
+| Corrente de entrada            | no máximo ±1 µA | entrada em $V_{CC}$ ou GND                   |
+| Temperatura de operação        | −40 °C a +85 °C | versões comerciais                           |
+
+:::note
+
+Valores de referência da família 74HC, comuns aos principais fabricantes. Atrasos de propagação, frequência máxima de clock e limites absolutos variam conforme o fabricante e devem ser consultados na folha de dados original.
+
+:::
+
+## Notas de uso
+
+- Duas portas em cascata formam uma AND de 3 entradas.
+- Com uma entrada usada como controle, a porta deixa passar ou bloqueia o sinal da outra entrada.
+- Ligue sempre VCC e GND e não deixe entradas abertas.
+
+## Onde é usado
+
+[Lab 01](../lab01.mdx), [Lab 03](../lab03.mdx), [Lab 04](../lab04.mdx), [Lab 05](../lab05.mdx), [Lab 06](../lab06.mdx), [Lab 07](../lab07.mdx), [Lab 08](../lab08.mdx), [Lab 12](../lab12.mdx).
+
+## Folha de dados do fabricante
+
+- [SN74HC08 — Texas Instruments](https://www.ti.com/product/SN74HC08)
+- No Tinkercad, localize o componente digitando `74HC08` na busca da lista de componentes.
