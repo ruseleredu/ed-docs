@@ -72,28 +72,8 @@ const navbarItems: NavbarItem[] = [
         position: "left",
         items: [
             {
-                to: "/pjts/2026.2", // Link to a page in your PJTS docs
-                label: "Semestre 2026.2",
-            },
-            {
-                to: "/pjts/2026.1", // Link to a page in your PJTS docs
-                label: "Semestre 2026.1",
-            },
-            {
-                to: "/pjts/2025.2", // Link to a page in your PJTS docs
-                label: "Semestre 2025.2",
-            },
-            {
-                to: "/pjts/2025.1", // Link to a page in your PJTS docs
-                label: "Semestre 2025.1",
-            },
-            {
-                to: "/pjts/2024.2", // Link to a page in your PJTS docs
-                label: "Semestre 2024.2",
-            },
-            {
-                to: "/pjts/2024.1", // Link to a page in your PJTS docs
-                label: "Semestre 2024.1",
+                to: "/pjts/2027.1", // Link to a page in your PJTS docs
+                label: "Semestre 2027.1",
             },
         ],
     },
