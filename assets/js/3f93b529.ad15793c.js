@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunksd_docs=self.webpackChunksd_docs||[]).push([["9981"],{17970(e){e.exports=JSON.parse('{"metadata":{"permalink":"/ed-docs/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
