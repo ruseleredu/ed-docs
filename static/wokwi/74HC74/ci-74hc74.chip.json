@@ -1,0 +1,20 @@
+{
+  "name": "74HC74",
+  "author": "ELT82F - UTFPR",
+  "pins": [
+    "1CLR_N",
+    "1D",
+    "1CLK",
+    "1PRE_N",
+    "1Q",
+    "1Q_N",
+    "GND",
+    "2Q_N",
+    "2Q",
+    "2PRE_N",
+    "2CLK",
+    "2D",
+    "2CLR_N",
+    "VCC"
+  ]
+}

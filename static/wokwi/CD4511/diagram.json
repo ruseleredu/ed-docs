@@ -1,0 +1,297 @@
+{
+  "version": 1,
+  "author": "ELT82F - UTFPR",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "chip-ci-cd4511",
+      "id": "u1",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-vcc",
+      "id": "vcc1",
+      "top": -110,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd1",
+      "top": 440,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd2",
+      "top": 250,
+      "left": 330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw1",
+      "top": -60,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw2",
+      "top": 0,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw3",
+      "top": 60,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw4",
+      "top": 120,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw5",
+      "top": 180,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw6",
+      "top": 240,
+      "left": -250,
+      "attrs": {
+        "bounce": "0",
+        "value": "1"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw7",
+      "top": 300,
+      "left": -250,
+      "attrs": {
+        "bounce": "0",
+        "value": "1"
+      }
+    },
+    {
+      "type": "wokwi-7segment",
+      "id": "disp1",
+      "top": -40,
+      "left": 260,
+      "attrs": {
+        "common": "cathode"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "u1:VDD",
+      "vcc1:VCC",
+      "red",
+      []
+    ],
+    [
+      "u1:VSS",
+      "gnd1:GND",
+      "black",
+      []
+    ],
+    [
+      "sw1:1",
+      "gnd1:GND",
+      "black",
+      []
+    ],
+    [
+      "sw1:3",
+      "vcc1:VCC",
+      "red",
+      []
+    ],
+    [
+      "sw1:2",
+      "u1:D",
+      "green",
+      []
+    ],
+    [
+      "sw2:1",
+      "gnd1:GND",
+      "black",
+      []
+    ],
+    [
+      "sw2:3",
+      "vcc1:VCC",
+      "red",
+      []
+    ],
+    [
+      "sw2:2",
+      "u1:C",
+      "green",
+      []
+    ],
+    [
+      "sw3:1",
+      "gnd1:GND",
+      "black",
+      []
+    ],
+    [
+      "sw3:3",
+      "vcc1:VCC",
+      "red",
+      []
+    ],
+    [
+      "sw3:2",
+      "u1:B",
+      "green",
+      []
+    ],
+    [
+      "sw4:1",
+      "gnd1:GND",
+      "black",
+      []
+    ],
+    [
+      "sw4:3",
+      "vcc1:VCC",
+      "red",
+      []
+    ],
+    [
+      "sw4:2",
+      "u1:A",
+      "green",
+      []
+    ],
+    [
+      "sw5:1",
+      "gnd1:GND",
+      "black",
+      []
+    ],
+    [
+      "sw5:3",
+      "vcc1:VCC",
+      "red",
+      []
+    ],
+    [
+      "sw5:2",
+      "u1:LE",
+      "green",
+      []
+    ],
+    [
+      "sw6:1",
+      "gnd1:GND",
+      "black",
+      []
+    ],
+    [
+      "sw6:3",
+      "vcc1:VCC",
+      "red",
+      []
+    ],
+    [
+      "sw6:2",
+      "u1:BL_N",
+      "green",
+      []
+    ],
+    [
+      "sw7:1",
+      "gnd1:GND",
+      "black",
+      []
+    ],
+    [
+      "sw7:3",
+      "vcc1:VCC",
+      "red",
+      []
+    ],
+    [
+      "sw7:2",
+      "u1:LT_N",
+      "green",
+      []
+    ],
+    [
+      "u1:SEG_A",
+      "disp1:A",
+      "orange",
+      []
+    ],
+    [
+      "u1:SEG_B",
+      "disp1:B",
+      "orange",
+      []
+    ],
+    [
+      "u1:SEG_C",
+      "disp1:C",
+      "orange",
+      []
+    ],
+    [
+      "u1:SEG_D",
+      "disp1:D",
+      "orange",
+      []
+    ],
+    [
+      "u1:SEG_E",
+      "disp1:E",
+      "orange",
+      []
+    ],
+    [
+      "u1:SEG_F",
+      "disp1:F",
+      "orange",
+      []
+    ],
+    [
+      "u1:SEG_G",
+      "disp1:G",
+      "orange",
+      []
+    ],
+    [
+      "disp1:COM.1",
+      "gnd2:GND",
+      "black",
+      []
+    ]
+  ]
+}
