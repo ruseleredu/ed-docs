@@ -10,9 +10,9 @@ import footer from "./footer";
 import navbarItems from "./navbar";
 
 const config: Config = {
-  title: "ELT72B - Sistemas Digitais",
+  title: "ELT82F - Eletrônica Digital",
   tagline:
-    "Possibilitar ao aluno analisar, sintetizar e desenvolver circuitos digitais combinacionais e sequenciais.",
+    "Aplicar princípios da álgebra de Boole. Implementar circuitos lógicos combinacionais. Aplicar circuitos integrados. Implementar circuitos sequenciais.",
   favicon: "img/favicon.ico",
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -25,13 +25,13 @@ const config: Config = {
   url: "https://ruseleredu.github.io",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: "/sd-docs/",
+  baseUrl: "/ed-docs/",
   trailingSlash: false,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "ruseleredu", // Usually your GitHub org/user name.
-  projectName: "sd-docs", // Usually your repo name.
+  projectName: "ed-docs", // Usually your repo name.
   deploymentBranch: "gh-pages",
 
   onBrokenLinks: "throw",
@@ -79,7 +79,7 @@ const config: Config = {
           sidebarPath: "./sidebars.ts",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/ruseleredu/sd-docs/edit/main/",
+          editUrl: "https://github.com/ruseleredu/ed-docs/edit/main/",
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
 
@@ -94,7 +94,7 @@ const config: Config = {
           },
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/ruseleredu/sd-docs/edit/main/",
+          editUrl: "https://github.com/ruseleredu/ed-docs/edit/main/",
           // Useful options to enforce blogging best practices
           onInlineTags: "warn",
           onInlineAuthors: "warn",
@@ -177,9 +177,9 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: "ELT72B",
+      title: "ELT82F",
       logo: {
-        alt: "ELT72B Logo",
+        alt: "ELT82F Logo",
         src: "img/logo.svg",
       },
       items: navbarItems,

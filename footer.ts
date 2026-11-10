@@ -19,7 +19,7 @@ const utc3Time = formatter.format(new Date());
 // Using consistent styling for links
 const linkStyle =
     'style="color: #ffffff; font-weight: bold;" target="_blank" rel="noopener noreferrer"';
-const gitlink = `<a href="https://github.com/ruseleredu/sd-docs" ${linkStyle}>ELT72B</a>`;
+const gitlink = `<a href="https://github.com/ruseleredu/ed-docs" ${linkStyle}>ELT82F</a>`;
 const docusaurusVersion = require("@docusaurus/core/package.json").version;
 const doclink = `<a href="https://docusaurus.io/" ${linkStyle}>Docusaurus</a>  v${docusaurusVersion}`;
 
@@ -169,7 +169,7 @@ const footer: ThemeConfig["footer"] = {
                 },
                 {
                     label: "Sistemas Digitais",
-                    href: "https://ruseleredu.github.io/sd-docs/",
+                    href: "https://ruseleredu.github.io/ed-docs/",
                 },
                 {
                     label: "Analógica",

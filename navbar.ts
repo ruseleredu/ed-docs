@@ -40,6 +40,10 @@ const navbarItems: NavbarItem[] = [
         position: "left",
         items: [
             {
+                to: "/utfpr/ELT82F/folder", // Link to a page in your UTFPR docs
+                label: "ELT82F - Eletrônica Digital",
+            },
+            {
                 to: "/utfpr/ELT72B/folder", // Link to a page in your UTFPR docs
                 label: "ELT72B - Sistemas Digitais",
             },

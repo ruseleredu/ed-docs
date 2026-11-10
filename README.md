@@ -6,7 +6,7 @@ This website is built using [Docusaurus](https://docusaurus.io/), a modern stati
 - https://www.youtube.com/watch?v=ALDuHAi4F4A
   
 ```bash
-npx create-docusaurus@latest sd-docs classic --typescript
+npx create-docusaurus@latest ed-docs classic --typescript
 ```
 
 ```bash
@@ -14,7 +14,7 @@ git init
 git add .
 git commit -m "first commit"
 git branch -M main
-git remote add origin https://github.com/ruseleredu/sd-docs.git
+git remote add origin https://github.com/ruseleredu/ed-docs.git
 git push -u origin main
 ```
 
@@ -35,8 +35,8 @@ npm install --save remark-math@6 rehype-katex@7
 ## Clone repo
 
 ```bash
-git clone https://github.com/ruseleredu/sd-docs.git
-cd sd-docs
+git clone https://github.com/ruseleredu/ed-docs.git
+cd ed-docs
 npm i
 ```
 
