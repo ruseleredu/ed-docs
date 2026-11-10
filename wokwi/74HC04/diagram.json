@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "author": "ELT82F - UTFPR",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "chip-ci-74hc04",
+      "id": "u1",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-vcc",
+      "id": "vcc1",
+      "top": -110,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd1",
+      "top": 80,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd2",
+      "top": 250,
+      "left": 330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw1",
+      "top": -60,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -80,
+      "left": 220,
+      "attrs": {
+        "color": "red",
+        "label": "Y"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "u1:VCC",
+      "vcc1:VCC",
+      "red",
+      []
+    ],
+    [
+      "u1:GND",
+      "gnd1:GND",
+      "black",
+      []
+    ],
+    [
+      "sw1:1",
+      "gnd1:GND",
+      "black",
+      []
+    ],
+    [
+      "sw1:3",
+      "vcc1:VCC",
+      "red",
+      []
+    ],
+    [
+      "sw1:2",
+      "u1:1A",
+      "green",
+      []
+    ],
+    [
+      "u1:1Y",
+      "led1:A",
+      "orange",
+      []
+    ],
+    [
+      "led1:C",
+      "gnd2:GND",
+      "black",
+      []
+    ]
+  ]
+}

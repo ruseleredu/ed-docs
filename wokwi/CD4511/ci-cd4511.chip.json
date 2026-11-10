@@ -1,0 +1,22 @@
+{
+  "name": "CD4511",
+  "author": "ELT82F - UTFPR",
+  "pins": [
+    "B",
+    "C",
+    "LT_N",
+    "BL_N",
+    "LE",
+    "D",
+    "A",
+    "VSS",
+    "SEG_E",
+    "SEG_D",
+    "SEG_C",
+    "SEG_B",
+    "SEG_A",
+    "SEG_G",
+    "SEG_F",
+    "VDD"
+  ]
+}
