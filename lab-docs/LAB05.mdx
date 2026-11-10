@@ -1,10 +1,106 @@
-import LabTable from '@site/src/components/LabTable';
-
-# Laboratório 05
-
-{/* Tabela com link para atividade, inicio, fim e descrição do LAB! */}
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <LabTable index={5} internal={false} />
-</div>
-
 ---
+title: Lab 05 — Mapa de Veitch-Karnaugh e condição irrelevante
+sidebar_position: 6
+sidebar_label: 05 — Mapa de Karnaugh
+description: Simplificação de funções de 4 variáveis por mapa de Veitch-Karnaugh, com uso da condição irrelevante em entradas BCD.
+---
+
+# Lab 05 — Mapa de Veitch-Karnaugh e condição irrelevante
+
+## Objetivos
+
+- Simplificar funções de até 4 variáveis pelo mapa de Veitch-Karnaugh.
+- Aproveitar condições irrelevantes (_don't care_) para reduzir o circuito.
+- Projetar, montar e testar circuitos cuja entrada é um dígito em código BCD 8421.
+
+## Material
+
+| Qtd. | Item                                                                           |
+| :--: | :----------------------------------------------------------------------------- |
+|  1   | 74HC04, 74HC08 e 74HC32 (um de cada)                                           |
+|  1   | Display de 7 segmentos configurado como **catodo comum** e resistores de 330 Ω |
+|  1   | Placa de ensaio e fonte de 5 V do Tinkercad, 4 chaves e 2 LEDs                 |
+
+## Fundamentação
+
+No código BCD 8421 um dígito decimal (0 a 9) é representado por 4 bits, **D C B A**, em que D é o bit mais significativo. As combinações 1010 a 1111 nunca ocorrem; por isso a saída nessas linhas é **irrelevante** (X) e pode ser tratada como 0 ou como 1, o que for mais conveniente para formar agrupamentos maiores.
+
+### Exemplo resolvido — detector de dígito maior ou igual a 5
+
+$Y = \sum m(5, 6, 7, 8, 9) + d(10, 11, 12, 13, 14, 15)$
+
+![Mapa de Karnaugh do detector de dígito BCD maior ou igual a 5](https://kroki.io/graphviz/svg/eNq9lstum0AUhvd5iqPxJpFamcHgSwMjgSE2ErItgtRL2gXGg43KxTUklVr1AfoYXXSRRdfd12_SJ-lA67SuU-yhipEYzTCH8_2cfwaYhfOVt1zAAN6fAEznfhqlKxW9XYQ5ReeQpDMKV9nCW1J1GXlhAkGa5IkXUxUNaXRD89D3UHkxC99RFYuvzlme13AVeVMaqYriarptgj52DNNRkYCgb9r2Zoh_Di8nWt8aDe6mJ5phlGMJEZZNcR2iuMZWknFx00hFMiKKTp6DChjeXHvJLIUUZusv8zBPQe8bsL6F7x8_g6w0daI0XaNonPuzFpmMPrwEXfsdvRMhCFWTuGISV04K2wrvl_cX_KlluENWpjaCoWkNhi7rs-roA1afsbOxkQiK7jSJcjEeuTAZWyP38aX1wlRRtyxkEdiQywORmAGKuAdl4CMwWkdgiFuMCtfwQ7sm8T5toyNNe0GACOagyNwUT-xNA8pH6XBTZJkGvsRHaR_oHebzrhFMfbmFEXnGsx9E7keuhWnV9o8LI9c2kAsjHeqgUM9BntXUrW0gD6V3nGWCj4MRdvzb_62HfcE7mjbiReHu7n-klxBotjVgPdu8cBGJwmThZYAxUMACnHbBX99G15GXnT2BnK7iFIyqtbf7sq2vJZYfQdxhJ24VjbwR0P_2VYPTuMMksqtAY4jCaP0pOztQ2K-N9x_CClHtUlPRSH8I0_cIKwxslr-HhLC_xg8nPwCzqrAZ)
+
+**Figura 1** — Mapa de Karnaugh do detector de dígito BCD maior ou igual a 5
+
+Com os três agrupamentos, $Y = D + C \cdot A + C \cdot B = D + C \cdot (A + B)$.
+
+![Circuito do detector de dígito maior ou igual a 5](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVopU0lGIVqoBkkouYKYaiOmMEHUEEU5KsSBQCwDKfw5p)
+
+**Figura 2** — Circuito do detector de dígito maior ou igual a 5
+
+## Pré-laboratório
+
+1. Simplifique o exemplo resolvido **sem** usar as condições irrelevantes (considere X = 0) e conte as portas necessárias.
+2. **Projeto**: o segmento **e** de um display de 7 segmentos deve acender para os dígitos 0, 2, 6 e 8.
+   1. Monte a tabela da verdade com entradas D C B A e saída _e_ (1 = segmento aceso), marcando X nas linhas 10 a 15.
+   2. Simplifique pelo mapa de Karnaugh usando as condições irrelevantes.
+   3. Desenhe o circuito com as portas disponíveis e anote os pinos.
+
+![Identificação dos segmentos do display](https://kroki.io/graphviz/svg/eNrFk9Fqg0AQRd_zFcP0A4xpSQPZXVDXqiAx2IU-hD6sulHBqiTSQkv_vVstRSyBFtrmce7O3jNzYbIyP8i2AA9eZgBJnjZVc6D4VJSdwjXUTaZgdyxkq2hbybKGfVN3tXxQFH1VPaquTCX24rF8VtRc3K-1Twa7SiaqooQIyw5dsKOYuzHFOYLjhuGkvN1aTrDxKF4O9dbivK8XyLQbETEjgo9MGDEEHzTPicJIixdqdWWaK4S7gAuf4rX29t3A8wVFc6l_3EQbAR_Nw3qM2EwSw9Zu748j0ynI0BOMBzkF1aBP6HJ-Err_FvQXQMkX0HSTP4g0P0ek6r8iTc8RafajSI3-5hjTp_g6ewPSSgDb)
+
+**Figura 3** — Identificação dos segmentos do display
+
+Mapa em branco para o projeto (copie para o relatório):
+
+| DC \ BA | 00  | 01  | 11  | 10  |
+| :-----: | :-: | :-: | :-: | :-: |
+| **00**  |     |     |     |     |
+| **01**  |     |     |     |     |
+| **11**  |     |     |     |     |
+| **10**  |     |     |     |     |
+
+## Procedimento
+
+### Parte A — Detector de dígito maior ou igual a 5
+
+Monte o circuito da Figura 2 e preencha a tabela. Nas linhas 10 a 15, registre o valor que o circuito efetivamente produz.
+
+| Decimal |  D  |  C  |  B  |  A  | Y previsto | Y medido |
+| :-----: | :-: | :-: | :-: | :-: | :--------: | :------: |
+|    0    |  0  |  0  |  0  |  0  |            |          |
+|    1    |  0  |  0  |  0  |  1  |            |          |
+|    2    |  0  |  0  |  1  |  0  |            |          |
+|    3    |  0  |  0  |  1  |  1  |            |          |
+|    4    |  0  |  1  |  0  |  0  |            |          |
+|    5    |  0  |  1  |  0  |  1  |            |          |
+|    6    |  0  |  1  |  1  |  0  |            |          |
+|    7    |  0  |  1  |  1  |  1  |            |          |
+|    8    |  1  |  0  |  0  |  0  |            |          |
+|    9    |  1  |  0  |  0  |  1  |            |          |
+|   10    |  1  |  0  |  1  |  0  |     X      |          |
+|   11    |  1  |  0  |  1  |  1  |     X      |          |
+|   12    |  1  |  1  |  0  |  0  |     X      |          |
+|   13    |  1  |  1  |  0  |  1  |     X      |          |
+|   14    |  1  |  1  |  1  |  0  |     X      |          |
+|   15    |  1  |  1  |  1  |  1  |     X      |          |
+
+### Parte B — Segmento _e_ do display
+
+1. Monte o circuito projetado no pré-laboratório e teste-o primeiro com um LED, para as 16 combinações.
+2. Ligue o catodo comum do display a GND e a saída do circuito ao terminal do segmento _e_ por um resistor de 330 Ω.
+3. Percorra os dígitos de 0 a 9 e confirme que o segmento acende somente em 0, 2, 6 e 8.
+
+| Decimal      |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |
+| :----------- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| _e_ previsto |     |     |     |     |     |     |     |     |     |     |
+| _e_ medido   |     |     |     |     |     |     |     |     |     |     |
+
+## Questões
+
+1. Compare o número de portas do detector com e sem o uso das condições irrelevantes.
+2. Que valores o circuito da Parte A atribuiu às linhas 10 a 15? Relacione cada um com os agrupamentos do mapa.
+3. Apresente tabela, mapa, expressão e circuito do segmento _e_.
+4. Para um display de **anodo comum** o segmento acende com nível 0. Refaça o mapa agrupando os zeros e apresente a expressão da saída ativa em nível baixo.
+5. Por que as linhas e colunas do mapa seguem a ordem 00, 01, 11, 10 e não a ordem binária natural?
+6. Qual é o maior agrupamento possível em um mapa de 4 variáveis e a que expressão ele corresponde?

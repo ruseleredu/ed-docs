@@ -1,0 +1,121 @@
+---
+title: Lab 11 — Contadores assíncronos
+sidebar_position: 12
+sidebar_label: 11 — Contadores assíncronos
+description: Contador de pulsos assíncrono crescente e decrescente, contador de 0 a n, contador de década com o 74HC93 e contador sequencial 74HC4017.
+---
+
+# Lab 11 — Contadores assíncronos
+
+## Objetivos
+
+- Montar um contador de pulsos assíncrono de 4 bits com flip-flops JK.
+- Converter o contador crescente em decrescente.
+- Limitar a contagem a uma sequência de 0 a $n$.
+- Obter um contador de década com um contador integrado e exibir a contagem em display.
+- Utilizar um contador sequencial com saídas decodificadas.
+
+## Material
+
+| Qtd. | Item                                                                                                         |
+| :--: | :----------------------------------------------------------------------------------------------------------- |
+|  2   | 74HC73                                                                                                       |
+|  1   | 74HC00                                                                                                       |
+|  1   | 74HC93 (contador binário de 4 bits)                                                                          |
+|  1   | 74HC4017 (contador Johnson de década com 10 saídas decodificadas)                                            |
+|  1   | CD4511, display catodo comum e 7 resistores de 330 Ω (montagem do [Lab 06](/lab/LAB06))                      |
+|  1   | Placa de ensaio e fonte de 5 V do Tinkercad, LEDs com resistores, botão de clock manual e gerador de funções |
+|  2   | Osciloscópios                                                                                                |
+
+## Pré-laboratório
+
+1. Desenhe as formas de onda de CLK, QA, QB, QC e QD do contador crescente de 4 bits para 16 pulsos.
+2. Para um contador de 0 a 9 construído a partir do contador de 4 bits, que estado deve ser detectado para gerar o reset? Que saídas devem ir à porta NAND?
+3. Repita o item 2 para um contador de 0 a 5.
+
+## Procedimento
+
+### Parte A — Contador crescente de 4 bits
+
+Em todos os flip-flops: J e K em +5 V e as entradas /R ligadas juntas a uma chave. A pinagem do 74HC73 está no [Lab 09](/lab/LAB09).
+
+![Contador assíncrono crescente: a saída Q de cada flip-flop é o clock do seguinte](https://kroki.io/graphviz/svg/eNrVlM9OwkAQxu88xWRMDB4UCgEj7TbpH0BkpVCaeDAcSruFSmmxEEk0Xn0B39AncbsVUKOe7aFpZn7fN7v7HcYPZ6m7mkMXnkoA05mXRElKcDsPNwxlSN144YcpobYMceKzNVuR6lkjB3lxLnNjxuB2PXdXjKwiN4whSOJN7C4ZwUsWPbBN6LkomuvwkRFJmsjA_Bk3_S28mGTjvWgBt5E7ZRFBg_aRm5fr6b41MqF8PdZPUIiD6g4oiqPptA26ZZttm2AVwWhTuiulvBwPNaM36O7xUDNNUTdRVRybfyYMLdsheIeg0V53QJC2Ow6qV0BAUiqOKTS2dcNHcVhH0LuGRS1-xlHQCJoBf9FNz3QuCTaqfKiudjqgKRVd_dGcH3aP6ijHFXGJzxfxvl3keLaRgQcD5WmS-i68vbye_OZdfPP2D48Q4orITFV5xoFUiCT1AiRZK0SSRgGSrBciSfPfJ_mxVk9VvjBbXmsrZ__7FhMdKesc9qsGZZrv1wztRLWvIl3g2h7Xv2JD4PoO8_0tl55L72cvvpo=)
+
+**Figura 1** — Contador assíncrono crescente: a saída Q de cada flip-flop é o clock do seguinte
+
+![Formas de onda ideais dos três primeiros estágios](https://kroki.io/wavedrom/svg/eNpdj80KwjAMgF8l5KQwyub8AcGD7qgXz7JDXMMcbC2sRYWxR_IpfDEXmT9bSr4m4QulDboiN1TiGk4NGqq4qzA57DEAvNH13RrVB7YB_Kzj9l8Ko_6MpN1AUpF650hKhpLqFNVLAzGxxlPO1b---YQMNXmSv2AoXSSYCWLBXLAQLAUrQYhpm3b3hUl3iw16vvvvU9rWQM49HyarrbGQ1ewyNp5BM8RwLryDSaGZygAcV0C-JmfdFNv2BbUrXGM=)
+
+**Figura 2** — Formas de onda ideais dos três primeiros estágios
+
+1. Zere o contador e aplique 16 pulsos com o clock manual, conferindo a contagem nos LEDs (QD é o bit mais significativo).
+2. Aplique uma onda quadrada de 160 Hz e meça, com o osciloscópio, a frequência de CLK e de cada saída.
+
+| Sinal | Frequência medida (Hz) | Razão em relação ao CLK |
+| :---: | :--------------------: | :---------------------: |
+|  CLK  |                        |            1            |
+|  QA   |                        |                         |
+|  QB   |                        |                         |
+|  QC   |                        |                         |
+|  QD   |                        |                         |
+
+### Parte B — Contador decrescente
+
+Altere **apenas** as ligações de clock: o clock de cada flip-flop passa a vir da saída /Q do anterior. Mantenha os LEDs nas saídas Q. Registre a sequência obtida a partir do estado 0000.
+
+| Pulso              |  0  |  1  |  2  |  3  |  4  |  5  |
+| :----------------- | :-: | :-: | :-: | :-: | :-: | :-: |
+| Contagem (decimal) |  0  |     |     |     |     |     |
+
+### Parte C — Contador de 0 a n
+
+1. Refaça as ligações da Parte A (contador crescente).
+2. **Desligue a chave** das entradas /R. Ligue as saídas definidas no pré-laboratório a uma porta NAND e a saída dessa porta às entradas /R de **todos** os flip-flops. Monte o contador de 0 a 9.
+3. Aplique clock de 1 Hz e confira a sequência.
+4. Altere a detecção para obter o contador de 0 a 5.
+
+| Contador | Saídas ligadas à NAND | Sequência observada |
+| :------: | :-------------------: | :------------------ |
+|  0 a 9   |                       |                     |
+|  0 a 5   |                       |                     |
+
+### Parte D — Contador integrado 74HC93
+
+![Pinagem do 74HC93. Atenção: VCC no pino 5 e GND no pino 10](https://kroki.io/graphviz/svg/eNq1lN9umzAUxu_zFEfedQUGmiwKthQMJUgMGEWr1KoXBNzGEoUIWCe16sPsWfZic_6INVNQSqTeWD7G3_Hv-5BOLh7rdL0CF15HAMvHrCqqmqBfK9FyNIOyyjncNat0zcm6SEUJD1XZlukTJ2jBi2feiixF28NGvHCC8f1M9skE3BXpkhfENJO55TtghbHtxASpCJjj-_-V19GceYFLkLaro7ltb2sdUdnOTGJqJjY1lc1ysLkKgwSi0AuSi2vv1iFoiuizaNoUmp9rXouqNpXNnWNaZbfE756Aue-5AUGx5y4SRFmE5ae9oPOAEVguC_1Q7r_kWZ5zeXLj2clCGjAQxZ0iDm-kNdlv8l6iPehjQ-0kGKtob2R_Y5c-NS06MRZsqpuKJYtYOW43k-GneVXDUpR_fkvLIP-ZIau26bwfRPBxI0Yn2efiO1cyFgAWqf_iO57dt_ic7LThkHofZMBOM2pnMOrDGbU-xu8ncwzYGYjGcETci6ifQvzBzmG8HM6o9jG6gf0pOY4HK6a9MeJPIZwMVnztJdQOR6KyHd2UypH-NvoLgWiY8Q==)
+
+**Figura 3** — Pinagem do 74HC93. Atenção: VCC no pino 5 e GND no pino 10
+
+O 74HC93 contém um divisor por 2 (entrada CP0, saída Q0) e um divisor por 8 (entrada CP1, saídas Q1, Q2 e Q3), ambos sensíveis à borda de descida. As entradas MR1 e MR2, **juntas em 1**, zeram o contador.
+
+1. Ligue Q0 a CP1 e MR1 e MR2 a GND. Verifique a contagem de 0 a 15 nos LEDs.
+2. Para o contador de década, ligue MR1 a Q1 e MR2 a Q3 e acrescente o CD4511 e o display.
+
+![Contador de década com exibição em display](https://kroki.io/graphviz/svg/eNp9jzFuwjAYhXdO8eSuVIoJFCHkLkGCoUiEoQvpYGInWDU2SkwLVJV6i96gVQ_QE7D3ED1JnYCAqZOt77e_936h8oKvFhjipQHM89RqWzDyvFBOkj4Kbh6FKtjdtA9jhcSsXPCVZHO7QWaNM3wpGRlJ_SSdSjmpYal2klGK0m21ZJnSWgpUx1F-lXWym4yTh76PlCL31v9dvfpljpnmc6kZGcqCC1vA98nWZv-5_5ZlYihGuyYCcHRwT3AoutJcGSc37qJAvVytTE_KbnsU9cLExAG0yr3da6IJTcx4SsEQ0ybG01Z1Cw-9xelrNGh3KD3Q8kQHqvTZ28Sk3FmvS-1yvSTHRa5vL6KjSeC5B56erXGIuOVzEddTUU3Pdo7ftw_kieli_44wDPDzVclfG3_AKJST)
+
+**Figura 4** — Contador de década com exibição em display
+
+3. Com clock de 100 Hz, meça a frequência em Q3 e a fração do período em que Q3 permanece em 1.
+4. Altere as ligações de MR1 e MR2 para contar de 0 a 5 e verifique.
+
+| Medida em Q3 (0 a 9)         | Valor |
+| :--------------------------- | :---: |
+| Frequência                   |       |
+| Fração do período em nível 1 |       |
+
+### Parte E — Contador sequencial 74HC4017
+
+![Pinagem do 74HC4017](https://kroki.io/graphviz/svg/eNqdld1umzAYhs97FZ-84woM5E-1LYWfEioGhKJVarUDF9wGiUEEaSdt2gXtOnZjc5OINVMphRPLn_le-3lfEM7yx5pvN-DCzzOA-8e0Kqqaou-bfCfQBZRVJuCu2fCtoNuC5yU8VOWu5N8ERStRPItdnnK0X2zyH4Ji_PVC7pPmcFfwe1FQQpKl6TtghrHtxBSpCCzH9_8rr6Ol5QUuRdqhjpa2va91xOR2JIkZSWxGlJfhZHIZBglEoRck59ferUPRArHnvNlxaJ62os6rmigvPW9plcMQvzoClr7nBhTFnrtKEFtP5JNjf2sBIzBdK_RDOf-UpVkm5MqNZycryW8ghltFHN5IZ3K7-WuJ9qBPDbWVYKyio49jxyF8Rkw2M1aWoeIZUUxZxsrbflOZPs-qGq6qTdlUJch3lv35nfKMt-ZPMvi4lWkrOQbjO5cyF4AvlvUvv47w8IjwtOGMky7Gz3EvojoCUR-OaHQhWpHay6iNYDSGM-pdjCRkViQ_6pD1ok5HoE6Go2rvoK4n54sPsc5GsE6Hs-Iu1vWiF1EfgTgbjqh2Ihp9iG5gj2CcD1YsOhHnp79xZX_dMCavoV9nfwGfBsXL)
+
+**Figura 5** — Pinagem do 74HC4017
+
+1. Ligue Q0 a Q9 a dez LEDs com resistores, MR e $\overline{CP1}$ a GND e aplique clock de 2 Hz em CP0.
+2. Descreva a sequência dos LEDs e o comportamento da saída $\overline{Q5\text{-}9}$.
+3. Desligue MR de GND e ligue-o à saída Q4. Descreva a nova sequência.
+
+## Questões
+
+1. Por que este tipo de contador é chamado de assíncrono? Qual a consequência para o tempo que as saídas levam para se estabilizar com 4, 8 e 16 estágios?
+2. Explique por que trocar a origem do clock de Q para /Q inverte o sentido da contagem.
+3. No contador de 0 a 9 da Parte C, o estado 1010 existe por um instante antes do reset. Em um circuito real, quanto tempo ele dura e em que tipo de circuito ligado às saídas esse pulso poderia causar erro? O simulador mostra esse estado?
+4. Se os flip-flops fossem sensíveis à borda de **subida**, que alteração tornaria crescente o contador da Parte A?
+5. Compare o contador binário com decodificador (Parte D) e o contador 74HC4017 (Parte E) para acionar 10 saídas em sequência.
+6. Desenhe o diagrama de blocos de um contador de 00 a 59 usando dois 74HC93, dois CD4511 e dois displays.

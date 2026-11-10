@@ -1,10 +1,126 @@
-import LabTable from '@site/src/components/LabTable';
-
-# Laboratório 07
-
-{/* Tabela com link para atividade, inicio, fim e descrição do LAB! */}
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <LabTable index={7} internal={false} />
-</div>
-
 ---
+title: Lab 07 — Multiplexadores e demultiplexadores
+sidebar_position: 8
+sidebar_label: 07 — Multiplex e demultiplex
+description: Multiplexadores e demultiplexadores construídos com portas lógicas e geração de funções lógicas com multiplexador.
+---
+
+# Lab 07 — Multiplexadores e demultiplexadores
+
+## Objetivos
+
+- Construir multiplexadores de 2 e de 4 entradas com portas lógicas.
+- Construir demultiplexadores de 2 e de 4 saídas.
+- Implementar uma função lógica com multiplexador.
+- Transmitir 4 sinais por um único fio de dados.
+- Projetar a expansão para 8 entradas e 8 saídas.
+
+## Material
+
+| Qtd. | Item                                                                                            |
+| :--: | :---------------------------------------------------------------------------------------------- |
+|  1   | 74HC04 e 74HC08 (um de cada)                                                                    |
+|  3   | 74HC11 (3 portas AND de 3 entradas)                                                             |
+|  1   | 74HC32                                                                                          |
+|  1   | Placa de ensaio e fonte de 5 V do Tinkercad, chaves, 4 LEDs com resistores e gerador de funções |
+
+![Pinagem do 74HC11](https://kroki.io/graphviz/svg/eNqdlN9OgzAUxu99ipN6bVgBN5fRJvyTkRBYkGjm4kUd1ZEgLIAz0fgcPpAvZt0WdGYE4abpKec7_L6P0Dh5LNh6BQ68nQDcPy7zNC8IelklFUcTyPKYw6JcsTUn65QlGTzkWZWxJ07QlKcbXiVLhraHZfLKCcZ3EzFnmcAiZfc8JZoW6YZngxGElh0SNEBg2p73p7ya6abrOwTJu3qmW9a2VhAV47QopFpkUU36Xg42l4EfwSxw_ejsyr21CRojuknKikH5vOZFkhea9N1zTCvtlvDXK0D3XMcnKHSdaYQo1sWTfX9tASMwHDPwArE_jZdxzMXJjWtFU8GvClGtCIMb4UyMG_2WyA_KUB3UEowHaO9j37ELn2oGHalTE4t5hihC6bhbBT4_QPctUIBnVcFiVtaWD5z_34BaS_ZxePalSAPg2jR_UmuIzOgRmdydUWlixK2Icp-vqnRHlBsR562IfVJUuyPiJkSlPUWzB-J5d8RBI6LRijjvgTjsrBg3EupthI74b7sjjjorLhoR54fXoLS9rikV1_j7yRdw4pMb)
+
+**Figura 1** — Pinagem do 74HC11
+
+## Pré-laboratório
+
+1. Escreva a tabela da verdade resumida do multiplexador de 2 entradas (saída em função de S, D0 e D1).
+2. Para a função de votação do [Lab 04](/lab/LAB04), $M = \sum m(3, 5, 6, 7)$, use B e A como seleção de um multiplexador de 4 entradas e determine o que ligar em cada entrada de dados (0, 1, C ou $\overline{C}$).
+3. Desenhe o diagrama de blocos de um multiplexador de 8 entradas formado por dois multiplexadores de 4 entradas e um de 2 entradas.
+
+## Procedimento
+
+### Parte A — Multiplexador de 2 entradas
+
+$Y = \overline{S} \cdot D_0 + S \cdot D_1$
+
+![Multiplexador de 2 entradas](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVopU0lGIVqoBk2pAUsnFAMyuA7GDlWJjERKGMKHY2FoAV3kQXg==)
+
+**Figura 2** — Multiplexador de 2 entradas
+
+|  S  | D1  | D0  |  Y  |
+| :-: | :-: | :-: | :-: |
+|  0  |  0  |  0  |     |
+|  0  |  0  |  1  |     |
+|  0  |  1  |  0  |     |
+|  0  |  1  |  1  |     |
+|  1  |  0  |  0  |     |
+|  1  |  0  |  1  |     |
+|  1  |  1  |  0  |     |
+|  1  |  1  |  1  |     |
+
+### Parte B — Multiplexador de 4 entradas
+
+Use quatro portas AND de 3 entradas (dois 74HC11) e três portas OR de 2 entradas para formar a OR de 4 entradas.
+
+![Multiplexador de 4 entradas. Os inversores de A e de B são únicos](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVopU0lGIVqoBk2pAUsnFAMyuA7GdlGLhbEel2FiEIkM0RSBphKwRRByHXmOYLFg8NrYWAF9PH18=)
+
+**Figura 3** — Multiplexador de 4 entradas. Os inversores de A e de B são únicos
+
+Aplique em D0 uma onda quadrada de 1 Hz, nível 1 em D1, nível 0 em D2 e uma onda quadrada de 5 Hz em D3 (um segundo gerador de funções).
+
+|  B  |  A  | Sinal observado em Y |
+| :-: | :-: | :------------------- |
+|  0  |  0  |                      |
+|  0  |  1  |                      |
+|  1  |  0  |                      |
+|  1  |  1  |                      |
+
+### Parte C — Multiplexador como gerador de funções
+
+Ligue as entradas de dados conforme o item 2 do pré-laboratório e verifique a função de votação.
+
+|  C  |  B  |  A  | Entrada selecionada | Ligada a | M medido |
+| :-: | :-: | :-: | :-----------------: | :------: | :------: |
+|  0  |  0  |  0  |         D0          |          |          |
+|  0  |  0  |  1  |         D1          |          |          |
+|  0  |  1  |  0  |         D2          |          |          |
+|  0  |  1  |  1  |         D3          |          |          |
+|  1  |  0  |  0  |         D0          |          |          |
+|  1  |  0  |  1  |         D1          |          |          |
+|  1  |  1  |  0  |         D2          |          |          |
+|  1  |  1  |  1  |         D3          |          |          |
+
+### Parte D — Demultiplexador de 4 saídas
+
+Mantenha o multiplexador montado. Com o terceiro 74HC11 e uma das portas AND de 3 entradas que restaram, monte o demultiplexador em outra região da placa.
+
+![Demultiplexador de 4 saídas](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVoo0UNJRiFZSA5JKLmBmHYjppBQLZzsqxcaCeZGGuNWCVYEVGaEqAkpjMckYiyKIdC0APekifg==)
+
+**Figura 4** — Demultiplexador de 4 saídas
+
+1. Aplique uma onda quadrada de 1 Hz em D e identifique a saída em que o sinal aparece para cada seleção.
+2. **2 saídas**: fixe B em 0 e use apenas A.
+
+|  B  |  A  | Saída que reproduz o dado | Estado das demais saídas |
+| :-: | :-: | :-----------------------: | :----------------------: |
+|  0  |  0  |                           |                          |
+|  0  |  1  |                           |                          |
+|  1  |  0  |                           |                          |
+|  1  |  1  |                           |                          |
+
+### Parte E — Quatro sinais em um fio
+
+Ligue a saída Y do multiplexador à entrada D do demultiplexador e use as **mesmas** linhas de seleção nos dois circuitos.
+
+![Transmissão de 4 sinais por um único fio de dados](https://kroki.io/graphviz/svg/eNqNkUFKw0AUhvc9xWPc6EIwGgUJIygpuqgbRbC0LiaZl2RwOlOSaa2K4MoDeIWCHqQ36Ul8maQ1K3E1w_zv_d__M1LlpZgWcAmvPYAkT622JWdPhXLIIiiFeZSq5IObCIyVCKOqEFPkiV1AZo0zYoKcXaGeo1OpYP6xUi_IgwAq96yRZ0prlFAfrflOdpydZII9RIREmZPr316nflIZGGmRoOYshLQQc6zGJj6A9fsXxEcMmmRTLZRxuHAdom_jPSazxdbk-u4eQlh_fELQRJGTXzHu13Lg5bCR7cx1Agz6MeGHDX74T3yFemtxixpX36ulhQs4H5vdw7YTcSCl5kLaco9tmu-f1dkjX4Du3agBoSzQ30haqWjDqzREgTfQZn27QsR6rlW6Zo3Se-v9AN43scE=)
+
+**Figura 5** — Transmissão de 4 sinais por um único fio de dados
+
+1. Coloque um padrão qualquer nas quatro chaves e percorra os quatro endereços, conferindo cada saída.
+2. Aplique nas linhas de seleção duas ondas quadradas (A com 20 Hz e B com 10 Hz) e observe os quatro LEDs.
+
+## Questões
+
+1. Quantas entradas de seleção são necessárias para um multiplexador de 32 entradas?
+2. Apresente a solução do item 2 do pré-laboratório, com a tabela usada para definir cada entrada de dados.
+3. Apresente o diagrama do multiplexador de 8 entradas e do demultiplexador de 8 saídas e conte os CIs necessários com portas discretas.
+4. Compare o demultiplexador da Parte D com o decodificador do [Lab 06](/lab/LAB06). Qual a relação entre os dois circuitos?
+5. Na Parte E, as saídas não selecionadas ficam em que nível? Que circuito estudado nos próximos roteiros permitiria "guardar" cada bit recebido?
+6. Pesquise as funções dos CIs comerciais 74HC151, 74HC153 e 74HC138 e relacione-as com os circuitos deste roteiro.

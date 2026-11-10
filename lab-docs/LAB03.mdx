@@ -1,10 +1,106 @@
-import LabTable from '@site/src/components/LabTable';
-
-# Laboratório 03
-
-{/* Tabela com link para atividade, inicio, fim e descrição do LAB! */}
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <LabTable index={3} internal={false} />
-</div>
-
 ---
+title: Lab 03 — Álgebra de Boole e teoremas de De Morgan
+sidebar_position: 4
+sidebar_label: 03 — Álgebra de Boole
+description: Verificação experimental de propriedades e teoremas da álgebra de Boole e simplificação algébrica de um circuito.
+---
+
+# Lab 03 — Álgebra de Boole e teoremas de De Morgan
+
+## Objetivos
+
+- Verificar experimentalmente postulados, propriedades e teoremas da álgebra de Boole.
+- Comprovar os teoremas de De Morgan.
+- Simplificar uma expressão e comparar o circuito original com o simplificado.
+
+## Material
+
+| Qtd. | Item                                                           |
+| :--: | :------------------------------------------------------------- |
+|  1   | 74HC00, 74HC02, 74HC04, 74HC08 e 74HC32 (um de cada)           |
+|  1   | Placa de ensaio e fonte de 5 V do Tinkercad, 3 chaves e 2 LEDs |
+
+As pinagens estão nos roteiros [01](/lab/LAB01) e [02](/lab/LAB02).
+
+## Fundamentação
+
+| Identidade          | Forma com AND                                        | Forma com OR                                         |
+| :------------------ | :--------------------------------------------------- | :--------------------------------------------------- |
+| Elemento neutro     | $A \cdot 1 = A$                                      | $A + 0 = A$                                          |
+| Elemento absorvente | $A \cdot 0 = 0$                                      | $A + 1 = 1$                                          |
+| Idempotência        | $A \cdot A = A$                                      | $A + A = A$                                          |
+| Complemento         | $A \cdot \overline{A} = 0$                           | $A + \overline{A} = 1$                               |
+| Absorção            | $A \cdot (A + B) = A$                                | $A + A \cdot B = A$                                  |
+| De Morgan           | $\overline{A \cdot B} = \overline{A} + \overline{B}$ | $\overline{A + B} = \overline{A} \cdot \overline{B}$ |
+
+## Pré-laboratório
+
+1. Simplifique algebricamente, indicando a identidade usada em cada passo:
+   $Y = A \cdot B + A \cdot (B + C) + B \cdot (B + C)$
+2. Preencha as colunas **previsto** das tabelas das Partes B e C.
+3. Conte quantas portas e quantos CIs são necessários para o circuito original e para o simplificado.
+
+## Procedimento
+
+### Parte A — Identidades básicas
+
+Use uma porta AND (74HC08) e uma porta OR (74HC32). Ligue a entrada A a uma chave e a outra entrada conforme a tabela. Anote a saída para A = 0 e A = 1 e escreva a que ela equivale (0, 1 ou A).
+
+| Montagem                                  | Y com A = 0 | Y com A = 1 | Y equivale a |
+| :---------------------------------------- | :---------: | :---------: | :----------: |
+| AND com a outra entrada em 1              |             |             |              |
+| AND com a outra entrada em 0              |             |             |              |
+| AND com as duas entradas em A             |             |             |              |
+| AND com a outra entrada em $\overline{A}$ |             |             |              |
+| OR com a outra entrada em 0               |             |             |              |
+| OR com a outra entrada em 1               |             |             |              |
+| OR com as duas entradas em A              |             |             |              |
+| OR com a outra entrada em $\overline{A}$  |             |             |              |
+
+### Parte B — Teoremas de De Morgan
+
+Monte os quatro circuitos da figura com as mesmas chaves A e B e observe os pares X1/X2 e Z1/Z2 em dois LEDs, lado a lado.
+
+![Pares de circuitos equivalentes pelos teoremas de De Morgan](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVoowVNJRiFaqUwNSSo4gwkkpNhYkFGEElqmByEOkY-FskCowLwpqQA2GAVEQA9TwGBBbCwBZpiDW)
+
+**Figura 1** — Pares de circuitos equivalentes pelos teoremas de De Morgan
+
+|  A  |  B  | X1  | X2  | Z1  | Z2  |
+| :-: | :-: | :-: | :-: | :-: | :-: |
+|  0  |  0  |     |     |     |     |
+|  0  |  1  |     |     |     |     |
+|  1  |  0  |     |     |     |     |
+|  1  |  1  |     |     |     |     |
+
+### Parte C — Circuito original e circuito simplificado
+
+1. Monte o circuito original. O termo $B + C$ aparece duas vezes no desenho, mas basta **uma** porta OR para gerá-lo.
+
+![Circuito original: Y = A·B + A·(B + C) + B·(B + C)](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVopU0lGIVqpBItWApJIjiHBSikURgKgACgMJZ6XYWISsEzbZ2NhaAEsHGBM=)
+
+**Figura 2** — Circuito original: Y = A·B + A·(B + C) + B·(B + C)
+
+2. Sem desmontar o primeiro, monte o circuito obtido na sua simplificação e ligue-o a um segundo LED. O resultado esperado da simplificação está na figura seguinte; confira com o seu antes de montar.
+
+![Circuito simplificado](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVopU0lGIVqoBkkpOYKYaiOkIIpyVYoGgFgA0DwvR)
+
+**Figura 3** — Circuito simplificado
+
+|  C  |  B  |  A  | Y original | Y simplificado |
+| :-: | :-: | :-: | :--------: | :------------: |
+|  0  |  0  |  0  |            |                |
+|  0  |  0  |  1  |            |                |
+|  0  |  1  |  0  |            |                |
+|  0  |  1  |  1  |            |                |
+|  1  |  0  |  0  |            |                |
+|  1  |  0  |  1  |            |                |
+|  1  |  1  |  0  |            |                |
+|  1  |  1  |  1  |            |                |
+
+## Questões
+
+1. Apresente a simplificação passo a passo, com a identidade usada em cada linha.
+2. Compare os dois circuitos da Parte C quanto ao número de portas, de CIs e de ligações. Que outras vantagens o circuito simplificado traz (consumo, atraso, confiabilidade)?
+3. Use De Morgan para escrever $Y = B + A \cdot C$ usando somente portas NAND e desenhe o circuito.
+4. Aplique De Morgan a $\overline{(A + \overline{B}) \cdot C}$ até que as barras estejam apenas sobre variáveis isoladas.
+5. A igualdade das tabelas da verdade é uma demonstração válida de uma identidade booleana? Justifique.

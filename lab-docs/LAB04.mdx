@@ -1,10 +1,98 @@
-import LabTable from '@site/src/components/LabTable';
-
-# Laboratório 04
-
-{/* Tabela com link para atividade, inicio, fim e descrição do LAB! */}
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <LabTable index={4} internal={false} />
-</div>
-
 ---
+title: Lab 04 — Soma de produtos e produto de somas
+sidebar_position: 5
+sidebar_label: 04 — Mintermos e maxtermos
+description: Projeto de circuitos combinacionais a partir da tabela da verdade usando mintermos e maxtermos.
+---
+
+# Lab 04 — Soma de produtos e produto de somas
+
+## Objetivos
+
+- Obter expressões canônicas em soma de produtos (mintermos) e produto de somas (maxtermos) a partir da tabela da verdade.
+- Implementar a mesma função nas duas formas e comprovar a equivalência.
+- Implementar uma soma de produtos com dois níveis de portas NAND.
+
+## Material
+
+| Qtd. | Item                                                           |
+| :--: | :------------------------------------------------------------- |
+|  1   | 74HC00, 74HC08, 74HC10, 74HC32 e 74HC86 (um de cada)           |
+|  1   | Placa de ensaio e fonte de 5 V do Tinkercad, 3 chaves e 2 LEDs |
+
+![Pinagem do 74HC10 (3 portas NAND de 3 entradas)](https://kroki.io/graphviz/svg/eNqdlN9OgzAUxu99ipN6baCAm0bahH8yEgILI5ppvKijOhKEBXAmGp_DB_LF7P4EnZEg3DQ95XyH3_cRmqSPJVstwYW3I4D7x0WRFSVBL8u05ugC8iLhcFst2YqTVcbSHB6KvM7ZEydowrM1r9MFQ9vDKn3lBOO7CzFnkcJtxu55RnQ9NkzfATOMbCciSEZgOb7_q5xNDcsLXIKUXT01bHtbq4iKcXocUT22qS5tloPNZRjEMA29ID6ZeTcOQeeIrtOqZlA9r3iZFqUubXr-0kq7JfrxCjB8zw0Iijx3EiOKDfFk399YwAhM1wr9UOyPk0WScHFy7dnxRPBrQtQoovBaOBPjxj8lyoM60uRGgrGM9j72HbvwqW7SsTaxsKxLpigi6W-3Knx-QGAENqjA87pkCasazwfW_-9AayT7PHznUsQBcGVZ37G1ZGYOyEzpz6i2MeJORGXIZ1X7IyqtiPNOxCEpav0RcRui2p2iNQDxtD-i3IpodiLOByCOeivOWwmNLkJX_Lf9Ece9FWetiPPDe1Da3teUinv8_egLPGmTaA==)
+
+**Figura 1** — Pinagem do 74HC10 (3 portas NAND de 3 entradas)
+
+## Problema 1 — Circuito de votação
+
+Três jurados (A, B e C) votam por meio de chaves (1 = aprovado). A lâmpada M deve acender quando a **maioria** aprovar.
+
+| Linha |  C  |  B  |  A  | M previsto | M (SOP) | M (POS) |
+| :---: | :-: | :-: | :-: | :--------: | :-----: | :-----: |
+|   0   |  0  |  0  |  0  |            |         |         |
+|   1   |  0  |  0  |  1  |            |         |         |
+|   2   |  0  |  1  |  0  |            |         |         |
+|   3   |  0  |  1  |  1  |            |         |         |
+|   4   |  1  |  0  |  0  |            |         |         |
+|   5   |  1  |  0  |  1  |            |         |         |
+|   6   |  1  |  1  |  0  |            |         |         |
+|   7   |  1  |  1  |  1  |            |         |         |
+
+## Pré-laboratório
+
+1. Preencha a coluna **M previsto**.
+2. Escreva a expressão canônica em soma de produtos, na forma $M = \sum m(\ldots)$, e em produto de somas, na forma $M = \prod M(\ldots)$.
+3. Simplifique algebricamente as duas expressões e mostre que resultam em:
+   - $M = A \cdot B + A \cdot C + B \cdot C$
+   - $M = (A + B) \cdot (A + C) \cdot (B + C)$
+4. Quantas portas seriam necessárias para montar a soma de produtos **canônica**, sem simplificar?
+5. Faça a tabela da verdade do Problema 2.
+
+## Procedimento
+
+### Parte A — Soma de produtos com NAND-NAND
+
+Uma soma de produtos AND-OR equivale a dois níveis de portas NAND. Monte o circuito com um 74HC00 e um 74HC10 e preencha a coluna **M (SOP)**.
+
+![Circuito de votação em soma de produtos com portas NAND](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVvJV0lGIVqpTQ1BKjiDCSSkWTcQZWcQJKgIEtQAi8hK5)
+
+**Figura 2** — Circuito de votação em soma de produtos com portas NAND
+
+### Parte B — Produto de somas
+
+Sem desmontar o anterior, monte a forma em produto de somas com um 74HC32 e um 74HC08 (a AND de 3 entradas é feita com duas AND de 2 entradas). Ligue a saída a um segundo LED e preencha a coluna **M (POS)**.
+
+![Circuito de votação em produto de somas](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVvJV0lGIVlJDImuApJIjiHBSikUVcFaKRYg4wURiY2sBRxMTMQ==)
+
+**Figura 3** — Circuito de votação em produto de somas
+
+### Parte C — Problema 2: gerador de paridade
+
+Um transmissor envia 3 bits de dados (A, B, C) mais um bit P, escolhido de modo que o total de bits em 1 nos quatro fios seja sempre **par**.
+
+1. Com a tabela do pré-laboratório, escreva P em soma de produtos canônica e tente simplificar.
+2. Monte o circuito abaixo e verifique que ele realiza a mesma tabela.
+
+![Gerador de paridade par com portas XOR](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVgpQ0lGIVoqDk0qOIMJJKRZIOivFxsbWAgA1xwvi)
+
+**Figura 4** — Gerador de paridade par com portas XOR
+
+|  C  |  B  |  A  | P previsto | P medido |
+| :-: | :-: | :-: | :--------: | :------: |
+|  0  |  0  |  0  |            |          |
+|  0  |  0  |  1  |            |          |
+|  0  |  1  |  0  |            |          |
+|  0  |  1  |  1  |            |          |
+|  1  |  0  |  0  |            |          |
+|  1  |  0  |  1  |            |          |
+|  1  |  1  |  0  |            |          |
+|  1  |  1  |  1  |            |          |
+
+## Questões
+
+1. Mostre, com De Morgan, que o circuito NAND-NAND da Parte A equivale à forma AND-OR.
+2. Compare as implementações SOP e POS do circuito de votação quanto ao número de portas e de CIs.
+3. Em que tipo de tabela da verdade a forma em produto de somas tende a ser mais econômica que a soma de produtos?
+4. A expressão canônica da paridade pôde ser simplificada algebricamente em termos AND-OR? O que isso indica sobre funções do tipo XOR?
+5. Projete (apenas no papel) o circuito de votação para 4 jurados, em que o empate reprova.

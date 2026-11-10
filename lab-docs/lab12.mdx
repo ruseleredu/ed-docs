@@ -1,0 +1,109 @@
+---
+title: Lab 12 — Contadores síncronos
+sidebar_position: 13
+sidebar_label: 12 — Contadores síncronos
+description: Projeto, montagem e teste de contadores síncronos com flip-flops JK, incluindo contador de 0 a 5 e contador crescente/decrescente.
+---
+
+# Lab 12 — Contadores síncronos
+
+## Objetivos
+
+- Montar um contador síncrono de 3 bits com flip-flops JK.
+- Projetar um contador síncrono de sequência definida a partir da tabela de transição.
+- Montar um contador síncrono crescente/decrescente com entrada de controle.
+- Comparar contadores síncronos e assíncronos.
+
+## Material
+
+| Qtd. | Item                                                                                                                 |
+| :--: | :------------------------------------------------------------------------------------------------------------------- |
+|  2   | 74HC73                                                                                                               |
+|  1   | 74HC04, 74HC08 e 74HC86 (um de cada)                                                                                 |
+|  1   | CD4511, display catodo comum e 7 resistores de 330 Ω                                                                 |
+|  1   | Placa de ensaio e fonte de 5 V do Tinkercad, chaves, LEDs com resistores, botão de clock manual e gerador de funções |
+
+## Fundamentação
+
+No contador síncrono **todos os flip-flops recebem o mesmo clock**; a lógica combinacional ligada a J e K decide quais deles mudam em cada pulso. Para o contador binário de 3 bits (QA é o bit menos significativo):
+
+![Equações de entrada do contador síncrono crescente de 3 bits](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVvJyVLBV8HZU0lFQMlSK1VEAijiBRJxAIoGOUCFnkJCzEoitBpUAkU5KsbGxtQAieBK4)
+
+**Figura 1** — Equações de entrada do contador síncrono crescente de 3 bits
+
+Tabela de excitação do flip-flop JK, usada no projeto:
+
+| Q atual | Q seguinte |  J  |  K  |
+| :-----: | :--------: | :-: | :-: |
+|    0    |     0      |  0  |  X  |
+|    0    |     1      |  1  |  X  |
+|    1    |     0      |  X  |  1  |
+|    1    |     1      |  X  |  0  |
+
+## Pré-laboratório
+
+**Projeto**: contador síncrono de 0 a 5 com três flip-flops JK.
+
+![Diagrama de estados do contador de 0 a 5 (QC QB QA)](https://kroki.io/graphviz/svg/eNpNzU0OgjAQhuE9p5jUtUnLjxtSt3oH4qLAFJqMlNCqQePdhUKQzdvkyaRfbZpB9S1c4BMBlE1lyQ6SvVrjkeVAarQPLyszVDaHztYIhWtVj4EIQdvOd-qOkl2RnuhNpVhAZ94oRQzOj4RSGyKsYX7WhYPO9EkrdsunXcehIFUiScY5nwyc2IkIEv9FLDfJTpabdBOx_pPtRGxrx_O8MDcOTULT0CyU59E3-gFDO1Vc)
+
+**Figura 2** — Diagrama de estados do contador de 0 a 5 (QC QB QA)
+
+1. Monte a tabela de transição (estado atual, estado seguinte e os valores de J e K de cada flip-flop). Trate os estados 6 e 7 como condição irrelevante.
+2. Simplifique JA, KA, JB, KB, JC e KC por mapas de Karnaugh.
+3. Desenhe o circuito e anote os pinos (a pinagem do 74HC73 está no [Lab 09](/lab/LAB09)).
+4. Com as equações obtidas, determine para onde o contador vai se for ligado nos estados 6 ou 7.
+
+## Procedimento
+
+### Parte A — Contador síncrono de 3 bits
+
+1. Monte três flip-flops JK com o **clock comum** e as entradas /R em uma chave. Ligue J e K conforme a Figura 1.
+2. Confira a sequência de 0 a 7 com o clock manual.
+3. Ligue QC QB QA às entradas C B A do CD4511 (entrada D em GND) e acompanhe a contagem no display com clock de 1 Hz.
+
+| Pulso    |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |
+| :------- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| QC QB QA | 000 |     |     |     |     |     |     |     |     |
+
+### Parte B — Contador síncrono de 0 a 5
+
+1. Altere as ligações de J e K conforme o seu projeto.
+2. Confira a sequência com o clock manual e preencha a tabela.
+
+| Pulso    |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |
+| :------- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| QC QB QA | 000 |     |     |     |     |     |     |     |
+
+### Parte C — Dado eletrônico
+
+1. Aplique no clock uma onda quadrada de 50 Hz **através de uma porta AND** cuja segunda entrada vem de um botão (com resistor de 10 kΩ a GND): o contador só avança enquanto o botão está pressionado.
+2. Pressione e solte o botão várias vezes e registre os valores exibidos.
+3. Proponha e teste uma alteração para que o display mostre de 1 a 6 em vez de 0 a 5.
+
+| Lançamento |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  | 10  |
+| :--------- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| Valor      |     |     |     |     |     |     |     |     |     |     |
+
+### Parte D — Contador crescente/decrescente de 2 bits
+
+Com dois flip-flops e uma porta XOR, a entrada M escolhe o sentido da contagem.
+
+![Equações de entrada do contador síncrono crescente/decrescente de 2 bits](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVvJyVLBV8HZU0lFQMlSK1VEAijiBRJyUQOw4kHggWNZXKTY2thYA3dcOqA==)
+
+**Figura 3** — Equações de entrada do contador síncrono crescente/decrescente de 2 bits
+
+|  M  | Sequência observada (QB QA) a partir de 00 |
+| :-: | :----------------------------------------- |
+|  0  |                                            |
+|  1  |                                            |
+
+Mude M durante a contagem e verifique que o contador inverte o sentido a partir do estado em que se encontra.
+
+## Questões
+
+1. Apresente o projeto completo do contador de 0 a 5: tabela de transição, mapas, equações e circuito.
+2. O contador projetado é autocorretivo, isto é, retorna à sequência a partir dos estados 6 e 7? Justifique com as equações.
+3. Compare contadores síncronos e assíncronos quanto a estados transitórios e ao que limita a frequência máxima de clock em cada tipo.
+4. Na Parte C, o resultado é realmente aleatório? Que cuidado deve ser tomado ao interromper o clock com uma porta AND em um circuito real?
+5. Explique o funcionamento da porta XOR no contador da Parte D e estenda as equações para 3 bits.
+6. Pesquise os contadores síncronos comerciais 74HC161 e 74HC193 e descreva as funções das entradas de carga paralela e de habilitação.

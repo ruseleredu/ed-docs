@@ -1,10 +1,131 @@
-import LabTable from '@site/src/components/LabTable';
-
-# Laboratório 10
-
-{/* Tabela com link para atividade, inicio, fim e descrição do LAB! */}
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <LabTable index={10} internal={false} />
-</div>
-
 ---
+title: Lab 10 — Registradores de deslocamento
+sidebar_position: 11
+sidebar_label: 10 — Registradores
+description: Registradores série/série e paralelo/paralelo com flip-flops D, contadores em anel e Johnson e registrador integrado 74HC595.
+---
+
+# Lab 10 — Registradores de deslocamento
+
+## Objetivos
+
+- Montar um registrador de deslocamento série/série de 4 bits com flip-flops D.
+- Armazenar uma palavra em um registrador paralelo/paralelo.
+- Montar contadores em anel e Johnson.
+- Operar um registrador integrado série/paralelo de 8 bits.
+
+## Material
+
+| Qtd. | Item                                                                                            |
+| :--: | :---------------------------------------------------------------------------------------------- |
+|  2   | 74HC74                                                                                          |
+|  1   | 74HC04                                                                                          |
+|  1   | 74HC595 (registrador de deslocamento de 8 bits com registrador de saída)                        |
+|  2   | Botões e resistores de 10 kΩ, para os clocks manuais                                            |
+|  1   | Placa de ensaio e fonte de 5 V do Tinkercad, chaves, 8 LEDs com resistores e gerador de funções |
+
+## Pré-laboratório
+
+1. Preencha a coluna **previsto** da tabela da Parte A.
+2. Quantos pulsos de clock são necessários para que um bit aplicado em SER apareça na saída serial de um registrador de 4 bits? E para carregar uma palavra completa de 4 bits?
+3. Escreva a sequência de estados de um contador em anel de 4 bits que parte de 1000 e de um contador Johnson de 4 bits que parte de 0000.
+
+## Procedimento
+
+### Parte A — Registrador série/série (e série/paralelo)
+
+Monte quatro flip-flops D em cascata. **Todas as entradas CLK são ligadas juntas** ao clock manual; todas as entradas /CLR vão a uma chave e as /PRE a +5 V. A pinagem do 74HC74 está no [Lab 09](/lab/LAB09).
+
+![Registrador de deslocamento de 4 bits com flip-flops D (clock comum não desenhado)](https://kroki.io/graphviz/svg/eNrNlMFOg0AQhu8-xWRMjB60pU01FpYEWFobibSUpIfqYVuWlojQAmqi8ZF8Cl_MZbGkNcZj08OGzHwzP7N_shNEi4ytltCH9yOA2WKexmlG8HUZFRxVyFjyGEQZcTwVkjTgOV-R5kWnAlVwpYrGksE0X7IVJ6uYRQmEaVIk7IkTvOHxCy-iOUOZzKM3ThTlQQUeLETT_4XXD6V8zjOYxmzGY4Jj27tPTudL9sLPUKikz0XNcvb1GbD7RNRHLEbZGzY3WNN8w3RsMF2P2h7BJoJlO84mVKpwPDSswV2_xkODUhlfoq75njgUhq7nEwwQDGfQvyPo2D0fdao1fCq5506EjAAtBLNvuY4r9I_DTngZistNBtS_IdhpCkFT7_XA0Bqm_mdz9aM16qMKN-QA20PMfw1xsihUsJzbrfqGvLauC7NC5eDNMPdnRuvgzbD2Z0b74M2g-zLjZ-Oc62J5dIPuq1p-110uM0qZqTfOyED5rGrc2sWmxK0at3exJXF7g7d32YiW--vj6BsF6YbX)
+
+**Figura 1** — Registrador de deslocamento de 4 bits com flip-flops D (clock comum não desenhado)
+
+![Deslocamento de um bit pelo registrador](https://kroki.io/wavedrom/svg/eNqrVirOTM9LzFGyUoiuVspLzE0FspScfbyVdBSUyhPLwNwCPQhQqtVRQCgKdg1CVmRogKQIRWGgI7I6A6hCVMMCnVDU6EEUoalxRlUDUYSmxgVNDViRUm0sUDQjNTEFKFqtVJJaUQKSdkktzslPBurMK8lXSElVKM1VOLwrLzM5XyEps0TBUKm2FgCbQUyk)
+
+**Figura 2** — Deslocamento de um bit pelo registrador
+
+1. Zere o registrador com /CLR e volte /CLR a 1.
+2. Aplique em SER, um bit por pulso de clock, a sequência 1, 0, 1, 1 e depois mantenha SER em 0.
+
+|     Pulso      | SER | QA QB QC QD previsto | QA QB QC QD medido |
+| :------------: | :-: | :------------------: | :----------------: |
+| 0 (após clear) |  —  |         0000         |                    |
+|       1        |  1  |                      |                    |
+|       2        |  0  |                      |                    |
+|       3        |  1  |                      |                    |
+|       4        |  1  |                      |                    |
+|       5        |  0  |                      |                    |
+|       6        |  0  |                      |                    |
+|       7        |  0  |                      |                    |
+|       8        |  0  |                      |                    |
+
+Observando apenas QD, você tem um registrador **série/série**; observando os quatro LEDs após o 4º pulso, um registrador **série/paralelo**.
+
+### Parte B — Contador em anel e contador Johnson
+
+1. **Anel**: ligue QD à entrada D do primeiro flip-flop (no lugar da chave SER). Desligue a entrada /PRE do flip-flop A de +5 V e ligue-a a uma chave. Zere o registrador, leve /PRE do flip-flop A a 0 por um instante (estado 1000) e aplique clock de 1 Hz.
+2. **Johnson**: ligue a saída complementar /Q do flip-flop D à entrada D do primeiro flip-flop. Zere o registrador e aplique clock de 1 Hz.
+
+| Pulso | Anel: QA QB QC QD | Johnson: QA QB QC QD |
+| :---: | :---------------: | :------------------: |
+|   0   |       1000        |         0000         |
+|   1   |                   |                      |
+|   2   |                   |                      |
+|   3   |                   |                      |
+|   4   |                   |                      |
+|   5   |                   |                      |
+|   6   |                   |                      |
+|   7   |                   |                      |
+|   8   |                   |                      |
+
+### Parte C — Registrador paralelo/paralelo
+
+1. Desfaça a cascata: ligue as entradas D dos quatro flip-flops a quatro chaves, mantendo o clock comum e os LEDs nas saídas.
+2. Coloque 1010 nas chaves. Os LEDs mudaram? Aplique um pulso de clock e observe.
+3. Altere as chaves para 0110 **sem** aplicar clock. Anote o que os LEDs mostram.
+4. Aplique /CLR = 0 por um instante.
+
+| Ação                            | Chaves | Saídas |
+| :------------------------------ | :----: | :----: |
+| 1010 nas chaves, antes do clock |  1010  |        |
+| após 1 pulso de clock           |  1010  |        |
+| chaves alteradas, sem clock     |  0110  |        |
+| após 1 pulso de clock           |  0110  |        |
+| /CLR em 0                       |  0110  |        |
+
+### Parte D — Registrador integrado 74HC595
+
+![Pinagem do 74HC595](https://kroki.io/graphviz/svg/eNqdlU1vozAQhu_9FSPvoacVISFpotqW-AqgRTh10FbaqgcS3MQSGyJgW6nV_vd1PkSbqmwCF8tj_I6fd0bGqVwVyXYNHrxdASxWyzzLC4Je1rIS6BY2eSrgoVwnW0G2WSI38JRvqk3yWxDki-xZVHKZoP1iKV8F0fXHW5VnKeEhSxYiIxjHphW6YDHuuJygHgLbDcNP4Xxm2kHkEdQ_xDPTcfbxAFGVDsec4tihWNsNJ5Mpi2KYsSCKv8-DXy5BE0SfZVklUP7ZikLmBdZ2e77SaoeBfzgCzDDwIoJ44PkxoneW-nLcX1vQEViezUKm5t_SZZoKtXIfOLGv-A1E9VrB2b1yptKNP0r6T4OR0aslut5DRx_HHYfiU2zRG8O3h5Mh1iwVce1ru4VYKcNFkuYFqG6NYSGrsnZ9Yv5yD6NacqxI6E5VQQB-2vZ74RqqZneoWr8947CJ8c48i-h0QBy0RzSaEOcuP8vodmA02jMOmhgxo8zFGqNnSacdSIftSftNpNwOf5yF9DpAjtpD6o0tv4jS70B5056y95-m70D5JX33oi7XaNxaMWm86P716V9c2782lKpX6O_VP8tyxXI=)
+
+**Figura 3** — Pinagem do 74HC595
+
+| Pino               | Função                                                                                 |
+| :----------------- | :------------------------------------------------------------------------------------- |
+| SER                | entrada serial de dados                                                                |
+| SRCLK              | clock de deslocamento (borda de subida)                                                |
+| RCLK               | clock do registrador de saída: copia os 8 bits internos para QA a QH (borda de subida) |
+| $\overline{SRCLR}$ | em 0, zera o registrador de deslocamento                                               |
+| $\overline{OE}$    | em 0, habilita as saídas                                                               |
+| QH'                | saída serial, para ligação em cascata                                                  |
+
+1. Ligue QA a QH a oito LEDs, $\overline{OE}$ a GND, $\overline{SRCLR}$ a +5 V, SER a uma chave e SRCLK e RCLK a dois botões.
+2. Envie, um bit por pulso de SRCLK, a palavra 1011 0010 (o primeiro bit enviado é o da esquerda). Os LEDs mudam durante o envio?
+3. Aplique um pulso em RCLK e anote as saídas.
+4. Leve $\overline{SRCLR}$ a 0 por um instante. Os LEDs mudaram? Aplique um pulso em RCLK e observe.
+
+| Ação                        | QA QB QC QD QE QF QG QH |
+| :-------------------------- | :---------------------: |
+| após 8 pulsos de SRCLK      |                         |
+| após 1 pulso de RCLK        |                         |
+| após $\overline{SRCLR}$ = 0 |                         |
+| após novo pulso de RCLK     |                         |
+
+## Questões
+
+1. Compare os quatro tipos de registrador (série/série, série/paralelo, paralelo/série, paralelo/paralelo) quanto ao número de pulsos de clock e de fios necessários para transferir 8 bits.
+2. Na Parte C, por que as saídas não acompanharam a mudança das chaves?
+3. Deslocar um número binário uma posição no sentido do bit mais significativo equivale a que operação aritmética? E no sentido contrário?
+4. Quantos estados distintos têm o contador em anel e o contador Johnson de 4 bits? Quantos flip-flops cada um exigiria para dividir a frequência por 10?
+5. O que acontece com o contador em anel se, por ruído, o registrador assumir o estado 0000? Proponha uma correção.
+6. Na Parte D, em que saída ficou o primeiro bit enviado? Qual a utilidade do registrador de saída separado (RCLK)?
+7. Pesquise o registrador universal 74HC194 e descreva os seus quatro modos de operação.

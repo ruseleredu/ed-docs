@@ -1,10 +1,115 @@
-import LabTable from '@site/src/components/LabTable';
-
-# Laboratório 06
-
-{/* Tabela com link para atividade, inicio, fim e descrição do LAB! */}
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <LabTable index={6} internal={false} />
-</div>
-
 ---
+title: Lab 06 — Codificadores, decodificadores e display de 7 segmentos
+sidebar_position: 7
+sidebar_label: 06 — Codificadores e decodificadores
+description: Decodificador 2 para 4 e codificador de prioridade com portas lógicas e decodificador BCD para 7 segmentos CD4511.
+---
+
+# Lab 06 — Codificadores, decodificadores e display de 7 segmentos
+
+## Objetivos
+
+- Construir e testar um decodificador 2 para 4 com portas lógicas.
+- Acionar um display de 7 segmentos a partir de um código BCD.
+- Projetar e testar um codificador de prioridade de 4 entradas.
+- Interligar codificador, decodificador e display em um sistema completo.
+
+## Material
+
+| Qtd. | Item                                                                        |
+| :--: | :-------------------------------------------------------------------------- |
+|  1   | 74HC04, 74HC08 e 74HC32 (um de cada)                                        |
+|  1   | CD4511 (decodificador BCD para 7 segmentos)                                 |
+|  1   | Display de 7 segmentos configurado como **catodo comum**                    |
+|  7   | Resistores de 330 Ω para o display                                          |
+|  1   | Placa de ensaio e fonte de 5 V do Tinkercad, chaves e 4 LEDs com resistores |
+
+## Pré-laboratório
+
+1. Escreva a tabela da verdade do decodificador 2 para 4 da Figura 1.
+2. Preencha a tabela da Parte B com os segmentos que devem acender para cada dígito.
+3. Monte a tabela da verdade do codificador de prioridade de 4 entradas (I3 tem a maior prioridade; saídas B A e saída V, que indica "alguma entrada ativa") e confira que as expressões da Figura 4 a satisfazem.
+
+## Procedimento
+
+### Parte A — Decodificador 2 para 4
+
+![Decodificador 2 para 4 com saídas ativas em nível alto](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVoo0UNJRiFZSA5N1QFLJSSkWznZUio0F8yINsSoDKwDLG8HlgTJY9BujykNkagHpkB8u)
+
+**Figura 1** — Decodificador 2 para 4 com saídas ativas em nível alto
+
+|  B  |  A  | Y0  | Y1  | Y2  | Y3  |
+| :-: | :-: | :-: | :-: | :-: | :-: |
+|  0  |  0  |     |     |     |     |
+|  0  |  1  |     |     |     |     |
+|  1  |  0  |     |     |     |     |
+|  1  |  1  |     |     |     |     |
+
+### Parte B — Decodificador BCD para 7 segmentos (CD4511)
+
+![Pinagem do CD4511](https://kroki.io/graphviz/svg/eNqdld9qgzAUxu_3FIfselhb-48lATXWClKLlRVWdmE1bQWnpboONna7B9gj7kmWtcWto-L0JuTE8x1_3weaMFrv_O0GTHi9AliugzROdwQ9b6Kco1tI0pDDItv4W062sR8lsEqTPPEfOUFjHu95HgU-Ohxm0QsnsvxwK-YEESxif8ljgrGnarYBmuMywyWohUA3bPtPOZuqujUxCWof66nK2KHuICrGYc-l2GMUS9_L2WbkTDyYOtbEu5lZ9wZBQ0T3UZb7kD1t-S5Kd1j67rmklY6L--sVoNqWOSHItcyxh6gmHpzaCwcyAs3UHdsR--swCEMuTuYW88YCX0FULhSuMxfGxLTBb0l71ekprUIiyy10snHqOGZPsUZ1pnRlMU8ThStdNqvpDD7fP6APGV8_8iRPs8LxmfH_G-gVklMatjESYQDcMfYT2uXE9AaJtesjdssQV1WA2KG2hyWHNgDt1AdVykDX_wDV7IagSn3QThmoXwUqvu76hN36hO0ywmUVIWsA2KsPKJcBBlWAagPAfn3AVhlgWAV4N5s1QBzUVgzLCPn531o63CqUitvm7eoLheK_MA==)
+
+**Figura 2** — Pinagem do CD4511
+
+![Identificação dos segmentos do display](https://kroki.io/graphviz/svg/eNrFk9Fqg0AQRd_zFcP0A4xpSQPZXVDXqiAx2IU-hD6sulHBqiTSQkv_vVstRSyBFtrmce7O3jNzYbIyP8i2AA9eZgBJnjZVc6D4VJSdwjXUTaZgdyxkq2hbybKGfVN3tXxQFH1VPaquTCX24rF8VtRc3K-1Twa7SiaqooQIyw5dsKOYuzHFOYLjhuGkvN1aTrDxKF4O9dbivK8XyLQbETEjgo9MGDEEHzTPicJIixdqdWWaK4S7gAuf4rX29t3A8wVFc6l_3EQbAR_Nw3qM2EwSw9Zu748j0ynI0BOMBzkF1aBP6HJ-Err_FvQXQMkX0HSTP4g0P0ek6r8iTc8RafajSI3-5hjTp_g6ewPSSgDb)
+
+**Figura 3** — Identificação dos segmentos do display
+
+1. Ligue o catodo comum do display a GND e cada segmento à saída correspondente do CD4511 **por um resistor de 330 Ω**.
+2. Ligue $\overline{LT}$ e $\overline{BL}$ a +5 V, LE a GND e as entradas D, C, B e A a quatro chaves.
+3. Aplique os códigos de 0 a 15 e preencha a tabela.
+4. Leve $\overline{LT}$ a nível 0 e observe. Volte $\overline{LT}$ a 1, leve $\overline{BL}$ a 0 e observe.
+5. Com $\overline{LT}$ e $\overline{BL}$ em 1, coloque 0101 nas chaves, leve LE a 1 e altere as chaves. Anote o que o display mostra.
+
+| Decimal |   D C B A   | Segmentos acesos | Símbolo exibido |
+| :-----: | :---------: | :--------------- | :-------------: |
+|    0    |    0000     |                  |                 |
+|    1    |    0001     |                  |                 |
+|    2    |    0010     |                  |                 |
+|    3    |    0011     |                  |                 |
+|    4    |    0100     |                  |                 |
+|    5    |    0101     |                  |                 |
+|    6    |    0110     |                  |                 |
+|    7    |    0111     |                  |                 |
+|    8    |    1000     |                  |                 |
+|    9    |    1001     |                  |                 |
+| 10 a 15 | 1010 a 1111 |                  |                 |
+
+### Parte C — Codificador de prioridade de 4 entradas
+
+![Codificador de prioridade 4 para 2 com indicação de entrada válida (V)](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVnJS0lGIVqoBkkqexmDSSCk2FiTmiCYTraQGJutgqkCUIVAxWHUYXDWGaQghQzBpANITWwsAYI4eow==)
+
+**Figura 4** — Codificador de prioridade 4 para 2 com indicação de entrada válida (V)
+
+Monte o circuito com as portas disponíveis (a porta OR de I3 e I2 é uma só) e preencha a tabela.
+
+| I3  | I2  | I1  | I0  |  B  |  A  |  V  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+|  0  |  0  |  0  |  0  |     |     |     |
+|  0  |  0  |  0  |  1  |     |     |     |
+|  0  |  0  |  1  |  0  |     |     |     |
+|  0  |  0  |  1  |  1  |     |     |     |
+|  0  |  1  |  0  |  0  |     |     |     |
+|  0  |  1  |  1  |  1  |     |     |     |
+|  1  |  0  |  0  |  0  |     |     |     |
+|  1  |  1  |  1  |  1  |     |     |     |
+
+### Parte D — Sistema completo
+
+Mantenha as montagens das Partes B e C e interligue-as conforme a figura. O número da chave acionada de maior prioridade deve aparecer no display.
+
+![Teclado de 4 chaves com exibição em display de 7 segmentos](https://kroki.io/graphviz/svg/eNp9j01KA0EUhPc5RdFudCFkTKLIMIJmIAbEhduMi5fpNzNNerqH7jEaRXDlAdx4A8FzuPcQOYmdH5KdqwdV9b6ipCodNRVGeOkA0zK32rpEPFaqZRHDkZlJ5ZKbuxjGSsbEV9RwMrVPKKxpDdWciGvWc25VTmItevXMSRTBtwvNSaG0ZonV2cIPikFxWpC4j0MlyzJQ_2edr5MzTDRNWSeij7yiOfvMjLsgjHtb1C4wtFIVgSGtg-TMNE5ZpySFAX0s3z9wkpnDxrqW_NHmV-5_0_4gijIzDLwUXGN0m24ybpc5w88ner0ufr83lt9ZqfKNpkVmcmqttMht_VCL7YDjC3AcuOHuC69wGfwgBHVfQVi-faFcOW7l-Ljz2vkDNQWJhQ==)
+
+**Figura 5** — Teclado de 4 chaves com exibição em display de 7 segmentos
+
+Em seguida, use a saída V para apagar o display quando nenhuma chave estiver acionada (ligue V à entrada $\overline{BL}$).
+
+## Questões
+
+1. Acrescente uma entrada de habilitação ao decodificador da Parte A e desenhe o circuito. Que CI seria necessário?
+2. Mostre como obter um decodificador 3 para 8 a partir de dois decodificadores 2 para 4 com habilitação.
+3. Para que servem as entradas $\overline{LT}$, $\overline{BL}$ e LE do CD4511? O que o CI exibe para os códigos 10 a 15?
+4. Calcule a corrente aproximada em um segmento com resistor de 330 Ω, supondo queda de 2 V no LED.
+5. Que alterações seriam necessárias para usar um display de **anodo comum**?
+6. Explique o que é prioridade em um codificador, usando os resultados da Parte C. Sem a saída V, como distinguir "nenhuma chave" de "chave 0"?
+7. Pesquise as funções dos CIs comerciais 74HC138, 74HC147 e 74HC148 e relacione-as com os circuitos deste roteiro.

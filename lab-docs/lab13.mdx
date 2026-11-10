@@ -1,0 +1,123 @@
+---
+title: Lab 13 — Famílias lógicas TTL e CMOS
+sidebar_position: 14
+sidebar_label: 13 — Famílias TTL e CMOS
+description: Níveis lógicos, curva de transferência, histerese e capacidade de corrente de portas CMOS 74HC e estudo comparativo com a família TTL.
+---
+
+# Lab 13 — Famílias lógicas TTL e CMOS
+
+## Objetivos
+
+- Levantar a curva de transferência de um inversor CMOS e identificar os níveis lógicos.
+- Observar a histerese de uma porta Schmitt trigger e usá-la em um oscilador.
+- Verificar o efeito da carga sobre a tensão de saída.
+- Comparar parâmetros das famílias TTL e CMOS a partir das folhas de dados.
+
+## Material
+
+| Qtd. | Item                                                        |
+| :--: | :---------------------------------------------------------- |
+|  1   | 74HC04                                                      |
+|  1   | 74HC14 (6 inversores Schmitt trigger)                       |
+|  1   | Potenciômetro de 10 kΩ                                      |
+|  1   | Resistores de 330 Ω, 1 kΩ e 10 kΩ; capacitor de 100 nF; LED |
+|  2   | Multímetros                                                 |
+|  1   | Osciloscópio                                                |
+|  1   | Placa de ensaio e fonte de 5 V do Tinkercad                 |
+
+:::info[Limites da simulação]
+
+O Tinkercad oferece apenas CIs CMOS e usa modelos simplificados: atrasos de propagação, consumo e correntes de entrada não são reproduzidos com fidelidade. Por isso as Partes A a C verificam o comportamento da família 74HC no simulador e a Parte D compara as famílias pelas **folhas de dados**. Registre o que o simulador mostrar e discuta as diferenças em relação aos valores dos fabricantes.
+
+:::
+
+## Pré-laboratório
+
+Preencha a tabela com os valores das folhas de dados (alimentação de 5 V), indicando a condição de teste quando houver.
+
+| Parâmetro                      | 74LS04 (TTL) | 74HC04 (CMOS) | CD4069UB (CMOS 4000) |
+| :----------------------------- | :----------: | :-----------: | :------------------: |
+| $V_{IH}$ mínima                |              |               |                      |
+| $V_{IL}$ máxima                |              |               |                      |
+| $V_{OH}$ mínima                |              |               |                      |
+| $V_{OL}$ máxima                |              |               |                      |
+| Corrente de entrada máxima     |              |               |                      |
+| $I_{OL}$ máxima                |              |               |                      |
+| Atraso de propagação típico    |              |               |                      |
+| Faixa de tensão de alimentação |              |               |                      |
+
+Calcule, para cada família, as margens de ruído $NM_H = V_{OH} - V_{IH}$ e $NM_L = V_{IL} - V_{OL}$.
+
+## Procedimento
+
+### Parte A — Curva de transferência
+
+![Montagem para levantamento da curva de transferência](https://kroki.io/graphviz/svg/eNp9kD9OwzAUh_ee4iczIqQGpSAUmQWkFgkQYujSdnDjl8Sqa0eOE_6JlQNwCwY2btCdQ3ASnARVlRBMtt773vd-tlS5E2WBMZ4GwDJPrbaOs7tCeWIJnDArqRy_vE1grCTMqkKUxJf2Hpk13og1cTYh3ZBXqWBdsVKPxKMIlX_QxDOlNUm0x498LxtlR5lgiySsJJkH6_-uk44sMdNiSZqzG-vJpGrzsSbvLKIhVp9vc0PGO8L-CFMQxtfn_YJ8O3ZhGnKVdXNzHE_OhjFsjfYWxT3ZRFv0qtZ-897p52aqGPpnk9aqrGiRoDn8g7W_2C76welOkLRuY-Dr5RXBHWx5299RBkuodlNtqP4jpagKksH3PPgGNwCTtg==)
+
+**Figura 1** — Montagem para levantamento da curva de transferência
+
+1. Ligue os extremos do potenciômetro a +5 V e a GND e o cursor à entrada de um inversor do 74HC04. Ligue a GND as entradas dos inversores não utilizados.
+2. Varie a tensão de entrada de 0 a 5 V e anote a de saída. Faça mais leituras na região em que a saída muda.
+
+| Vi (V)        | 0,0 | 1,0 | 1,5 | 2,0 | 2,3 | 2,5 | 2,7 | 3,0 | 3,5 | 4,0 | 5,0 |
+| :------------ | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| Vo 74HC04 (V) |     |     |     |     |     |     |     |     |     |     |     |
+
+### Parte B — Histerese do Schmitt trigger
+
+![Pinagem do 74HC14](https://kroki.io/graphviz/svg/eNqdlNtqgzAYx-_7FB_Z9bAe1m7MBDzVCqLFyko3duE0awNOi7oONvYce6C92NIDPYyJ05uQL-af_L6fkIQtimi1BBs-egBPizhP8wKjtyWrKLqFLE8oPJTLaEXxKo1YBs95VmXRC8VoTNM1rVgcoe1iyd4pFsXHW35OzOAhjZ5oilU11HTXAt0PTCvAqI_AsFz3VzmdaIbj2RhJu3qimea2lhHhx6lhQNTQJKqwGc4mI98LYeI7Xng5de4tjG4QWbOyiqB8XdGC5YUqbPb8lRV2Q3ByBWiuY3sYBY49DhERNf5lv__QgohAtw3f9fn8IomThPKVmWOGY86v8NAhEfgz3hk_bngakZ7lgdI_RESxj_Z97Hfs5BNVJ0NlbIiKKui8CIS_ux3A9xewbE2LMi9gGi9fWFVBVbDFgh6bP3Pw_1aUQ2QvxrVG3AvAnWEc_dXIm3eQJ7VnlOsYB1oTotTl_8rtEaVaxHkjYheLSntEsQ7xqtGi3MXiVXvEfi1io0W5i8VB68RNHaHSKNH2zA6Iw9aJ61rE-fmDKGwfbkL4g_7Z-wG7G5hi)
+
+**Figura 2** — Pinagem do 74HC14
+
+1. Substitua o 74HC04 pelo 74HC14.
+2. **Subindo** a tensão de entrada lentamente a partir de 0 V, anote o valor de Vi em que a saída muda.
+3. **Descendo** a tensão a partir de 5 V, anote o valor de Vi em que a saída muda.
+
+| Medida                       | Valor (V) |
+| :--------------------------- | :-------: |
+| Limiar na subida, $V_{T+}$   |           |
+| Limiar na descida, $V_{T-}$  |           |
+| Histerese, $V_{T+} - V_{T-}$ |           |
+
+Trace as curvas Vo × Vi do 74HC04 e do 74HC14 (subida e descida) no mesmo gráfico.
+
+### Parte C — Oscilador com Schmitt trigger
+
+![Oscilador de relaxação com um inversor Schmitt trigger](https://kroki.io/graphviz/svg/eNqFkb1OwzAUhfc-xVVY6ABKqkJBkVlA0AExdOhSOtzGN4mF8Y2c2x9APBADE4_QnWfCSUMlhorFlu1zdL57rE3hsSrhDt56AIsiY8teRevSCEUpeHRP2nh1P0nBsaaaKhWfXu4OMMvZicNnUtGY7IrEZBhBc1mbV1JJMk-BdPG_MAb0ntcloVaOHc3TAOMSmNUlVqQqNk5gbbSUIT2-gI3FBVkVTbOolRq3gll3NxqOr5NhBDureIOusATsDTlBMezUYBRDLS-WVG6sJQ3N1k1-lJ_l53mg28UlUJIpSmmmDrIN6ZZY_LKDHByCbJ95KXuwKT-6Y64zY8Oy_aoM938pK4vBTBtpTYXTe9Pdw81h0clVW1InvQYFSRyDu4266RZsdfiCoAnK0FHaFtW4AnXbuKCxijULNL-8YCkb_aDRBPRuwC4mY1eLbxhUjrYm6HInbS48fX_AsUaocfsZtgo9AkLo3KPG_l-k3nvvB7Wl0sk=)
+
+**Figura 3** — Oscilador de relaxação com um inversor Schmitt trigger
+
+O resistor R liga a saída do inversor à sua entrada; o capacitor C liga a entrada a GND.
+
+1. Monte o circuito com R = 10 kΩ e C = 100 nF.
+2. Observe a saída Vo e a tensão no capacitor Vc com o osciloscópio e meça a frequência.
+3. Troque R por 1 kΩ e repita.
+
+|   R   |   C    | Frequência medida | Valores mínimo e máximo de Vc |
+| :---: | :----: | :---------------: | :---------------------------: |
+| 10 kΩ | 100 nF |                   |                               |
+| 1 kΩ  | 100 nF |                   |                               |
+
+### Parte D — Efeito da carga na saída
+
+Com a entrada de um inversor do 74HC04 em GND (saída em nível 1), meça a tensão de saída para cada carga ligada entre a saída e GND.
+
+| Carga                  | $V_{OH}$ medida (V) | Corrente fornecida (mA) |
+| :--------------------- | :-----------------: | :---------------------: |
+| sem carga              |                     |                         |
+| 10 kΩ                  |                     |                         |
+| 1 kΩ                   |                     |                         |
+| LED em série com 330 Ω |                     |                         |
+
+## Questões
+
+1. Qual a tensão de limiar do 74HC04 obtida no simulador? Compare com os valores de $V_{IH}$ e $V_{IL}$ da folha de dados.
+2. Com os valores do pré-laboratório, compare as margens de ruído das três famílias.
+3. Explique o que é histerese e cite duas aplicações de portas Schmitt trigger em circuitos digitais.
+4. Relacione os valores mínimo e máximo de Vc na Parte C com os limiares medidos na Parte B. Como a frequência depende de R e de C?
+5. A tensão $V_{OH}$ variou com a carga no simulador? O que a folha de dados prevê para uma corrente de saída de 4 mA?
+6. O que é _fan-out_? Por que ele é limitado pela corrente de entrada na família TTL e pela capacitância de entrada na família CMOS?
+7. Como variam o consumo e o atraso de uma porta CMOS com a tensão de alimentação e com a frequência de operação?
+8. Uma saída 74LS pode acionar diretamente uma entrada 74HC alimentada em 5 V? Justifique com os níveis de tensão e indique duas soluções (resistor de _pull-up_ e família 74HCT).
+9. Monte um quadro comparativo TTL (74LS) × CMOS (4000B e 74HC) com: alimentação, consumo, velocidade, margem de ruído, _fan-out_ e cuidados de manuseio.

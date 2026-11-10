@@ -1,10 +1,124 @@
-import LabTable from '@site/src/components/LabTable';
-
-# Laboratório 01
-
-{/* Tabela com link para atividade, inicio, fim e descrição do LAB! */}
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <LabTable index={1} internal={false} />
-</div>
-
 ---
+title: Lab 01 — Bancada digital e portas AND, OR e NOT
+sidebar_position: 2
+sidebar_label: 01 — Portas AND, OR e NOT
+description: Familiarização com a bancada virtual, níveis lógicos e levantamento da tabela da verdade das portas básicas.
+---
+
+# Lab 01 — Bancada digital e portas AND, OR e NOT
+
+## Objetivos
+
+- Identificar pinagem e alimentação de circuitos integrados da série 74HC.
+- Medir as tensões que representam os níveis lógicos 0 e 1.
+- Levantar experimentalmente a tabela da verdade das portas AND, OR e NOT.
+- Implementar um circuito lógico a partir de uma função lógica.
+
+## Material
+
+| Qtd. | Item                                                           |
+| :--: | :------------------------------------------------------------- |
+|  1   | 74HC08 (4 portas AND de 2 entradas)                            |
+|  1   | 74HC32 (4 portas OR de 2 entradas)                             |
+|  1   | 74HC04 (6 inversores)                                          |
+|  1   | Placa de ensaio e fonte de 5 V do Tinkercad, 3 chaves e 2 LEDs |
+|  2   | Resistores de 330 Ω                                            |
+|  1   | Multímetro                                                     |
+
+## Fundamentação
+
+![Símbolos das portas AND (Y1), OR (Y2) e NOT (Y3)](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVoo0VNJRiFZSA5JKjiDCSSk2FiQSaQSWqMGUMAZL1EEkYmNjawEtMRMQ)
+
+**Figura 1** — Símbolos das portas AND (Y1), OR (Y2) e NOT (Y3)
+
+| Porta | Função             | A saída vale 1 quando…        |
+| :---- | :----------------- | :---------------------------- |
+| AND   | $Y = A \cdot B$    | todas as entradas valem 1     |
+| OR    | $Y = A + B$        | pelo menos uma entrada vale 1 |
+| NOT   | $Y = \overline{A}$ | a entrada vale 0              |
+
+![Pinagem do 74HC08. O 74HC32 tem a mesma disposição de pinos](https://kroki.io/graphviz/svg/eNqdlNtOg0AQhu_7FJP12nDU1shuwklKQqChxKY2XqxltSQIDaAmGp_DB_LF3B6CrSlBuNnsLPMP3z8DGydPBV2vwIGPAcDD0zJP8wKjt1VSMXQNWR4zWJQrumZ4ndIkg8c8qzL6zDAas_SVVcmSou1hmbwzLEn317zOMoFFSh9YijUt0g3PBiMILTvESERg2p73J5xOdNP1HYzkXTzRLWsbK4jwcloUEi2yiCZslqPNTeBHMAlcPzqfunc2RleIvCZlRaF8WbMiyQtN2OSc0gq7JTx4Beie6_gYha4zjhCRdP5kn19bkBAYjhl4Ad-fxcs4Zvxk5lrRmPOrXFQrwmDGnfFyw0OJ_KhcqmItkSQR7X3sM3bNJ5pBhurYFEeaYPAgFE67VeH7C3TfAhlYVhU0pmVt-cj5_w2otWTfDs--4d0AuDXN3641tMzo0TK5O6PSxKgarYjzHohKd0S5EVFvQ5T7fHhqd0SpEXHeithn0BfdEcUmRKV10HKfQV92Vlw1ErbO2eH_bXfEYWfFqBFxfnwNCtvrmhB-jX8OfgDNOpM6)
+
+**Figura 2** — Pinagem do 74HC08. O 74HC32 tem a mesma disposição de pinos
+
+![Pinagem do 74HC04](https://kroki.io/graphviz/svg/eNqdlNtqg0AURd_zFYfpc_GapCHOgLcYQTRYaUlDH2ycJgNWg6YptPQ7-kH9sU4upEmJWH0Z5oxnn1l7C5OwRRGvluDARwfgaTHP07zA6G3J1hQNIcsTCrNyGa8oXqUxy-A5z9ZZ_EIxGtN0Q9dsHqPdYcneKZakxyGfM2cwS-MnmmJNi3TDs8EIQssOMRIRmLbn_SlvJ7rp-g5G8r6e6Ja1qxVE-DgtCokWWUQTtsvZZhT4EUwC14-ub90HG6MBIhtWrmMoX1e0YHmhCdueS1phv4QnV4DuuY6PUeg64wgRSedfDv1HCxICwzEDL-D7q2SeJJSf3LtWNOb8KhcdFWFwz53xcf1Tifys9FTxKJEkER18HDr24RPNIH11bIqqJhi8CIXLbnvw_QUs29CiPDF75vn_6OpRcgjCs0c8B4A70_zNqyKsaYuw5OaMShVjT69DlNv8T6U5olyJOK1FbJOi2hxRqkLs1qaotEmx2xxRrESsTVFpk2KvsWJQRajWhuj4VgvEfmPFTSXi9PwBFHYPNSH8Af_s_ACBbJJR)
+
+**Figura 3** — Pinagem do 74HC04
+
+## Pré-laboratório
+
+1. Converta para binário os números decimais de 0 a 7 e escreva-os em ordem; essa é a sequência de entradas de uma tabela da verdade de 3 variáveis.
+2. Preencha a coluna **previsto** da tabela da Parte C.
+3. Complete o diagrama de tempo abaixo.
+
+![Diagrama de tempo a completar no pré-laboratório](https://kroki.io/wavedrom/svg/eNqrVirOTM9LzFGyUoiuVspLzE0FspQclXQUlMoTy8AcAz1DPRBWqtVRQChxQlWiB1SgB1GCoszx0HYUlRV6EIBqmKM2EYr8_EMUHLEriwWKZqQmpgBFq5VKUitKQNLO-bkFOaklqQqJxQolRYdXFSsUJx5em5JYrFRbCwB5bURz)
+
+**Figura 4** — Diagrama de tempo a completar no pré-laboratório
+
+## Procedimento
+
+### Parte A — Níveis lógicos
+
+1. Com a fonte desligada, insira o 74HC08 na matriz de contatos. Ligue o pino 14 a +5 V e o pino 7 a GND.
+2. Ligue a fonte e meça a tensão de alimentação entre os pinos 14 e 7.
+3. Meça a tensão de uma chave lógica nas posições 0 e 1.
+
+| Grandeza                  | Valor medido (V) |
+| :------------------------ | :--------------: |
+| Tensão de alimentação VCC |                  |
+| Chave em nível 0          |                  |
+| Chave em nível 1          |                  |
+
+### Parte B — Tabelas da verdade
+
+Ligue as chaves A e B às entradas de uma porta (pinos 1 e 2) e a saída (pino 3) a um LED. Para cada combinação, anote o estado do LED e a tensão de saída. Repita para o 74HC32 e, com uma única chave, para o 74HC04 (entrada no pino 1, saída no pino 2).
+
+|  A  |  B  | AND: Y | AND: Vo (V) | OR: Y | OR: Vo (V) |
+| :-: | :-: | :----: | :---------: | :---: | :--------: |
+|  0  |  0  |        |             |       |            |
+|  0  |  1  |        |             |       |            |
+|  1  |  0  |        |             |       |            |
+|  1  |  1  |        |             |       |            |
+
+|  A  | NOT: Y | NOT: Vo (V) |
+| :-: | :----: | :---------: |
+|  0  |        |             |
+|  1  |        |             |
+
+### Parte C — Circuito a partir de uma função lógica
+
+Monte o circuito da função $Y = A \cdot B + \overline{C}$. Antes de montar, anote no diagrama o CI e o número do pino de cada ligação.
+
+![Circuito da função Y = A·B + NOT C](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVopU0lGIVqoBk2pAUskRRDgpxYIE6kBsZ6VYIKgFAIytDZc=)
+
+**Figura 5** — Circuito da função Y = A·B + NOT C
+
+|  C  |  B  |  A  | Y previsto | Y medido |
+| :-: | :-: | :-: | :--------: | :------: |
+|  0  |  0  |  0  |            |          |
+|  0  |  0  |  1  |            |          |
+|  0  |  1  |  0  |            |          |
+|  0  |  1  |  1  |            |          |
+|  1  |  0  |  0  |            |          |
+|  1  |  0  |  1  |            |          |
+|  1  |  1  |  0  |            |          |
+|  1  |  1  |  1  |            |          |
+
+### Parte D — Entrada aberta
+
+1. No 74HC08, mantenha a entrada A em nível 1 e **desconecte** o fio da entrada B. Observe a saída e meça a tensão no pino desconectado.
+2. Ligue a entrada B a GND por um resistor de 10 kΩ (_pull-down_) e a +5 V por uma chave. Verifique que a entrada passa a ter nível definido nas duas posições da chave.
+
+:::warning
+
+Em CIs CMOS (série 74HC) uma entrada aberta **não tem nível definido**: o simulador mostra um valor qualquer e, no circuito real, a saída oscila com ruído e o consumo aumenta. Nenhuma entrada pode ficar aberta, nem as das portas não utilizadas.
+
+:::
+
+## Questões
+
+1. As tensões medidas para os níveis 0 e 1 estão dentro das faixas válidas da família 74HC alimentada em 5 V? Compare com a folha de dados.
+2. Como obter uma porta AND de 3 entradas usando apenas portas AND de 2 entradas? Desenhe o circuito.
+3. Na Parte D, que valor lógico a porta "enxergou" na entrada aberta? Explique a função do resistor de _pull-down_ e por que ele não impede a chave de impor o nível 1.
+4. Quantas linhas tem a tabela da verdade de um circuito com 5 entradas? Generalize para $n$ entradas.
+5. Cite uma aplicação cotidiana que possa ser descrita pela função da Parte C.

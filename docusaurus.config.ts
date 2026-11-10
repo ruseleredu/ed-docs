@@ -116,6 +116,10 @@ const config: Config = {
         path: "lab-docs", // Path to your LAB docs folder
         routeBasePath: "lab", // Base URL for these docs (e.g., yoursite.com/lab/...)
         sidebarPath: require.resolve("./labsidebars.ts"), // Separate sidebar for LAB docs
+
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
+
         // ... other options specific to your LAB docs
         showLastUpdateAuthor: true,
         showLastUpdateTime: true,
@@ -129,6 +133,8 @@ const config: Config = {
         path: "ead-docs", // Path to your EaD docs folder
         routeBasePath: "ead", // Base URL for these docs (e.g., yoursite.com/ead/...)
         sidebarPath: require.resolve("./eadsidebars.ts"), // Separate sidebar for EaD docs
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
         // ... other options specific to your EaD docs
         showLastUpdateAuthor: true,
         showLastUpdateTime: true,
@@ -143,6 +149,8 @@ const config: Config = {
         routeBasePath: "utfpr", // Base URL for these docs (e.g., yoursite.com/api/...)
         sidebarPath: require.resolve("./sidebarsutfpr.ts"), // Separate sidebar for API docs
         // 👇 Add this line for the last update time
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
         showLastUpdateAuthor: true,
         showLastUpdateTime: true,
         // ... other options specific to your API docs
@@ -157,6 +165,8 @@ const config: Config = {
         routeBasePath: "pjts", // Base URL for these docs (e.g., yoursite.com/api/...)
         sidebarPath: require.resolve("./sidebarspjts.ts"), // Separate sidebar for API docs
         // 👇 Add this line for the last update time
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
         showLastUpdateAuthor: true,
         showLastUpdateTime: true,
         // ... other options specific to your API docs

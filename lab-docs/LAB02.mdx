@@ -1,10 +1,119 @@
-import LabTable from '@site/src/components/LabTable';
-
-# Laboratório 02
-
-{/* Tabela com link para atividade, inicio, fim e descrição do LAB! */}
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <LabTable index={2} internal={false} />
-</div>
-
 ---
+title: Lab 02 — Portas NAND, NOR, XOR e XNOR
+sidebar_position: 3
+sidebar_label: 02 — NAND, NOR, XOR e XNOR
+description: Tabelas da verdade das portas NAND, NOR, XOR e XNOR e universalidade da porta NAND.
+---
+
+# Lab 02 — Portas NAND, NOR, XOR e XNOR
+
+## Objetivos
+
+- Levantar a tabela da verdade das portas NAND, NOR, XOR e XNOR.
+- Verificar que qualquer função lógica pode ser construída apenas com portas NAND.
+- Usar a porta XOR como inversor controlado e como comparador de 1 bit.
+
+## Material
+
+| Qtd. | Item                                                       |
+| :--: | :--------------------------------------------------------- |
+|  2   | 74HC00 (4 portas NAND de 2 entradas)                       |
+|  1   | 74HC02 (4 portas NOR de 2 entradas)                        |
+|  1   | 74HC86 (4 portas XOR de 2 entradas)                        |
+|  1   | Placa de ensaio e fonte de 5 V do Tinkercad, chaves e LEDs |
+
+## Fundamentação
+
+![Símbolos das portas NAND (Y1), NOR (Y2), XOR (Y3) e XNOR (Y4)](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVoo0VNJRiFaqUwNSSo4gwkkpNhYkFGkEkanBlDEGy8RhSphAtKDKxNYCACqpGlo=)
+
+**Figura 1** — Símbolos das portas NAND (Y1), NOR (Y2), XOR (Y3) e XNOR (Y4)
+
+| Porta | Função                                                                    |
+| :---- | :------------------------------------------------------------------------ |
+| NAND  | $Y = \overline{A \cdot B}$                                                |
+| NOR   | $Y = \overline{A + B}$                                                    |
+| XOR   | $Y = A \oplus B = \overline{A} \cdot B + A \cdot \overline{B}$            |
+| XNOR  | $Y = \overline{A \oplus B} = \overline{A} \cdot \overline{B} + A \cdot B$ |
+
+![Pinagem do 74HC00. O 74HC86 tem a mesma disposição de pinos](https://kroki.io/graphviz/svg/eNqdlNtOg0AQhu99isl6bTjaamQ34SQlIdBQoqmNF9uytSQIDWBNND6HD-SLuT0ErSlBuNnsLPMP3z8DGydPBV2vwIH3M4D50yJP8wKj11VSMXQDWR4zmJUrumZ4ndIkg2WeVRl9ZhiNWLphVbKgaHdYJm8MS9LjDa-zSGCW0jlLsaZFuuHZYAShZYcYiQhM2_P-hJOxbrq-g5G8j8e6Ze1iBRFeTotCokUW0YTtcrS5DfwIxoHrRxcT98HG6BqRTVJWFMqXNSuSvNCEbc4prbBfwl-vAN1zHR-j0HVGESKSzp8c8msLEgLDMQMv4PvzeBHHjJ_cu1Y04vwqF9WKMLjnzni54W-JvFQGqlhLJElEBx-HjH3ziWaQoToyRVETDB6Ewmm3Knx9gq_7FsjAsqqgMS1rz0fW_-9ArSWHfnj2LW8HwJ1p_rStoWdGj57J3RmVJkbVaEWc9kBUuiPKjYh6G6Lc58tTuyNKjYjTVsQ-g77sjig2ISqtg5b7DHrQWXHdSNg6Z4f_t90Rh50VV42I0-N7UNjd14Twe_zj7Bt5a5OA)
+
+**Figura 2** — Pinagem do 74HC00. O 74HC86 tem a mesma disposição de pinos
+
+![Pinagem do 74HC02. Atenção: a saída de cada porta está no primeiro pino do grupo](https://kroki.io/graphviz/svg/eNqdlNtOg0AQhu99isl6bTja2pTdhJOUhECDRKONF9uytSQIDWBNND6HD-SLuT0EWyNBuNnsLPPPfv8M2Th5Kuh6BQ68nwHMnxZ5mhcYva6SiqExZHnMYFau6JrhdUqTDJZ5VmX0mWE0YemGVcmCot1hmbwxLEmPY15nkcAspXOWYk2LdMOzwQhCyw4xEhGYtuf9Cm-muun6DkbyPp7qlrWLFUR4OS0KiRZZRBO2y8nmOvAjmAauH13cuA82RiNENklZUShf1qxI8kITtjl_aYX9Eh5dAbrnOj5GoetMIkSke_7lkF9bkBAYjhl4Ad-fx4s4ZvzkzrWiCedXuahWhMEdd8bLDY8l8lIZqGItkSQRHXwcMvbNJ5pBhurEFGVNMHgQCn-7VeHrE_wgBBlYVhU0pmVt-cT5_w2oteTQDs--5t0AuDXNn641tEzv0TK5O6PSxKjetyIaPRCV7ohyI6LRhij3-fHU7ohSI6Leithn0JfdEcUmRKV10HKfQQ86K0aNhK1zdnyrB-Kws-KqEVE_fQaF3XNNCH_GP86-AbDVk1A=)
+
+**Figura 3** — Pinagem do 74HC02. Atenção: a saída de cada porta está no primeiro pino do grupo
+
+## Pré-laboratório
+
+1. Preencha as colunas **previsto** das tabelas das Partes A e B.
+2. Prove algebricamente que o circuito da Figura 5 realiza a função XOR.
+3. Desenhe uma porta NOR de 2 entradas usando apenas portas NAND.
+
+## Procedimento
+
+### Parte A — Tabelas da verdade
+
+Não existe XNOR nos CIs deste roteiro: obtenha-a ligando a saída de uma XOR a uma NAND com as duas entradas unidas (inversor).
+
+|  A  |  B  | NAND | NOR | XOR | XNOR |
+| :-: | :-: | :--: | :-: | :-: | :--: |
+|  0  |  0  |      |     |     |      |
+|  0  |  1  |      |     |     |      |
+|  1  |  0  |      |     |     |      |
+|  1  |  1  |      |     |     |      |
+
+### Parte B — Universalidade da NAND
+
+Monte, um por vez, os três circuitos da figura usando um único 74HC00 e identifique a função que cada um realiza.
+
+![Três circuitos construídos somente com portas NAND](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVnIzVNJRiFaqUwNSSo4QIjYWJORmhJBBUeCkFIspAtVjjEOPI7IeJ7ie2FoAAiEfag==)
+
+**Figura 4** — Três circuitos construídos somente com portas NAND
+
+|  A  |  B  | F1  | F2  | F3  |
+| :-: | :-: | :-: | :-: | :-: |
+|  0  |  0  |     |     |     |
+|  0  |  1  |     |     |     |
+|  1  |  0  |     |     |     |
+|  1  |  1  |     |     |     |
+
+| Circuito | Função identificada |
+| :------: | :------------------ |
+|    F1    |                     |
+|    F2    |                     |
+|    F3    |                     |
+
+### Parte C — XOR com quatro portas NAND
+
+Monte o circuito abaixo. A porta NAND de entrada (A, B) aparece duas vezes no desenho, mas é **uma única porta** cuja saída alimenta as duas portas seguintes. Compare o resultado com o 74HC86.
+
+![Função XOR com portas NAND. As duas portas com entradas A e B são a mesma porta física](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVopU0lGIVqpTQ1BKjmhsJSel2FiEkBM2aSCoBQDFXhSu)
+
+**Figura 5** — Função XOR com portas NAND. As duas portas com entradas A e B são a mesma porta física
+
+|  A  |  B  | Y (4 × NAND) | Y (74HC86) |
+| :-: | :-: | :----------: | :--------: |
+|  0  |  0  |              |            |
+|  0  |  1  |              |            |
+|  1  |  0  |              |            |
+|  1  |  1  |              |            |
+
+### Parte D — Aplicações da XOR
+
+1. **Inversor controlado**: em uma porta do 74HC86, chame uma entrada de dado (D) e a outra de controle (M). Registre a saída para M = 0 e M = 1.
+2. **Comparador de 2 bits**: usando duas XOR e as portas que julgar necessárias, monte um circuito cuja saída vale 1 somente quando o número $A_1A_0$ é igual ao número $B_1B_0$. Mostre o funcionamento ao professor.
+
+|  M  |  D  |  Y  |
+| :-: | :-: | :-: |
+|  0  |  0  |     |
+|  0  |  1  |     |
+|  1  |  0  |     |
+|  1  |  1  |     |
+
+## Questões
+
+1. Por que as portas NAND e NOR são chamadas de portas universais? Qual a vantagem prática de projetar com um único tipo de porta?
+2. Quantas portas NAND de 2 entradas são necessárias para obter uma NOR de 2 entradas? Apresente o circuito do pré-laboratório.
+3. Descreva em uma frase o comportamento da XOR como inversor controlado. Onde esse recurso será útil em circuitos aritméticos?
+4. Apresente a expressão lógica e o diagrama do comparador de 2 bits da Parte D.
+5. A saída de uma XOR de três entradas em cascata indica que propriedade do conjunto de bits de entrada?

@@ -1,10 +1,130 @@
-import LabTable from '@site/src/components/LabTable';
-
-# Laboratório 09
-
-{/* Tabela com link para atividade, inicio, fim e descrição do LAB! */}
-<div style={{ display: "flex", justifyContent: "center" }}>
-  <LabTable index={9} internal={false} />
-</div>
-
 ---
+title: Lab 09 — Latches e flip-flops
+sidebar_position: 10
+sidebar_label: 09 — Flip-flops
+description: Latch RS com portas NAND e flip-flops D, JK e T integrados.
+---
+
+# Lab 09 — Latches e flip-flops
+
+## Objetivos
+
+- Montar um latch RS com portas NAND e identificar os estados de memória e proibido.
+- Levantar as tabelas de funcionamento dos flip-flops D e JK, incluindo as entradas assíncronas.
+- Distinguir disparo por nível, por borda e mestre-escravo.
+- Obter um flip-flop T e usá-lo como divisor de frequência.
+
+## Material
+
+| Qtd. | Item                                                                      |
+| :--: | :------------------------------------------------------------------------ |
+|  1   | 74HC00                                                                    |
+|  1   | 74HC74 (2 flip-flops D, borda de subida)                                  |
+|  1   | 74HC73 (2 flip-flops JK, borda de descida)                                |
+|  1   | Botão (_pushbutton_) e resistor de 10 kΩ, para o clock manual             |
+|  1   | Placa de ensaio e fonte de 5 V do Tinkercad, chaves e LEDs com resistores |
+|  1   | Gerador de funções e 2 osciloscópios                                      |
+
+## Pré-laboratório
+
+1. Preencha a coluna **previsto** da tabela da Parte A.
+2. Complete a forma de onda de Q do flip-flop JK (considere Q = 0 no início).
+
+![Diagrama de tempo a completar no pré-laboratório](https://kroki.io/wavedrom/svg/eNqrVirOTM9LzFGyUoiuVspLzE0FspScfbyVdBSUyhPLwNw8PRAAiRSkFmXmpwDFjGp1FBDqvZBVGxgCFRsAMZBWQlGGYqgBWAFQIUwZitJAVKUVejCgVBsLlMlITQS5olqpJLWiBKTELSezQDctJ79AwctboTg1r_jw2rLUHIXDCxSS8otSEhVSUoGoODkTyHzUMEUhOT-3ICe1JFUhUKm2FgAqA0o6)
+
+**Figura 1** — Diagrama de tempo a completar no pré-laboratório
+
+3. Pesquise: o que é um flip-flop JK mestre-escravo e em que ele difere de um flip-flop disparado por borda?
+
+## Procedimento
+
+### Parte A — Latch RS com portas NAND
+
+Nos desenhos, a barra inclinada antes do nome indica sinal ativo em nível baixo ou saída complementar. Fios com o mesmo nome estão interligados: a saída Q realimenta a porta inferior e a saída /Q realimenta a porta superior.
+
+![Latch RS com portas NAND e entradas ativas em nível baixo](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVgpU0lGIVqpTA1JK-sFgMlApNhYkqI8iFwQiQVKxtQAsZg_V)
+
+**Figura 2** — Latch RS com portas NAND e entradas ativas em nível baixo
+
+Aplique as combinações **na ordem da tabela**.
+
+| Passo | /S  | /R  | Q previsto |  Q  | /Q  | Estado                       |
+| :---: | :-: | :-: | :--------: | :-: | :-: | :--------------------------- |
+|   1   |  0  |  1  |            |     |     |                              |
+|   2   |  1  |  1  |            |     |     |                              |
+|   3   |  1  |  0  |            |     |     |                              |
+|   4   |  1  |  1  |            |     |     |                              |
+|   5   |  0  |  0  |            |     |     |                              |
+|   6   |  1  |  1  |            |     |     | (repita 5 e 6 algumas vezes) |
+
+### Parte B — Latch RS com habilitação
+
+Acrescente as duas portas NAND restantes do CI à entrada do latch.
+
+![Latch RS com entrada de habilitação EN](https://kroki.io/wavedrom/svg/eNqrVkosLs5Mz1OyUoiOVgpU0lGIVqpTQ1BKwSDC1U8pFkjpByrFxoKk9LEoDEJSCFIXWwsAEPEVlQ==)
+
+**Figura 3** — Latch RS com entrada de habilitação EN
+
+Verifique e registre: com EN = 0 as entradas S e R têm efeito? Com EN = 1, o que ocorre com Q se S ou R mudarem **enquanto** EN permanece em 1?
+
+### Parte C — Flip-flop D (74HC74)
+
+![Pinagem do 74HC74](https://kroki.io/graphviz/svg/eNqdlN9OwjAUxu95ipN6bUbHBAltE_bHsbhsUBdNNF5MVqTJZAsgJhqfwwfyxSywTDEgbjdNT9Ov-33f6ZrIx3mcT8GFtwbAw-M4S7M5RS9TuRSoB7MsEXC3mMa5oHkayxlMstlyFj8JigYiXYmlHMdos7iQr4JifN9T54wl3KXxg0gpIVHf9B0wQ247nKImAsvx_V_l1bBveYFLkb6th33b3tQtxNRxJOKMRDYj2nrYmVyEQQTD0Aui0yvv1qGoi9hKLpYxLJ5zMZfZnGjrPfu02nbgPz4Bfd9zA4q45w4ixEjIsOVzooVMbSmEpReMwHSt0A_V_CQZJ4lQKzeeHQ2UEQMxXCp4eKMsqnM7PyX6pNU2mqUE4yYqDBU7tl1gxGQdY2B1DKKZquDafts6fH7AJJX56STNcrBL4zv-_09vlJIiFN-5UJkAXFvWd3b7g8N2jbz06oytQ4yqc3rRuaOsln9Zg7ZVnVY_RKvbxyDXN3HInZo30ajOig-yqriORjqqAXlWHbL5V_uLuP6T7Khmru3Kiu7BWEfHQN2gzk_Vqaw4_yvU0W6kjQ3R-oVnTL38740vxDqgqw==)
+
+**Figura 4** — Pinagem do 74HC74
+
+![Exemplo de funcionamento do flip-flop D](https://kroki.io/wavedrom/svg/eNqrVirOTM9LzFGyUoiuVspLzE0FspScfbyVdBSUyhPLwNwCPSAACRSkFmXmpwCFjGp1FBDKXZAVGxgCFRvoGeoZKKEoCkRRpAdTpVQbCxTPSE0EGVutVJJaUQJS4JaTWaCblpNfoOCiUJyaV3x4bVlqjsLhBQpJ-UUpiQopqQrFpUmZKYlKtbUALLs4AQ==)
+
+**Figura 5** — Exemplo de funcionamento do flip-flop D
+
+Monte o clock manual: botão entre +5 V e a entrada CLK, com resistor de 10 kΩ de CLK a GND. A seta ↑ indica um toque no botão; X indica que a entrada não importa.
+
+| /PRE | /CLR |  D   |            CLK            |  Q  | /Q  | Função |
+| :--: | :--: | :--: | :-----------------------: | :-: | :-: | :----- |
+|  0   |  1   |  X   |             X             |     |     |        |
+|  1   |  0   |  X   |             X             |     |     |        |
+|  1   |  1   |  1   |             ↑             |     |     |        |
+|  1   |  1   |  0   |             ↑             |     |     |        |
+|  1   |  1   | muda |        botão solto        |     |     |        |
+|  1   |  1   | muda | botão mantido pressionado |     |     |        |
+
+### Parte D — Flip-flop JK (74HC73)
+
+![Pinagem do 74HC73. Atenção: VCC no pino 4 e GND no pino 11](https://kroki.io/graphviz/svg/eNqdlM1u4jAUhfc8xZVnXQU7mVJU2xL5aQhECQ3RVGrVRUpMsZQhEdBWajXPMQ_UF6sDKEMrMjTZWL6Oj_2dE9upfFwlxQJceOsAPDzO8ixfMfSykBuBLmGZpwLu1oukEKzIErmEeb7cLJPfgqGhyJ7FRs4StB1cy1fBML6_VOvMJNxlyYPIGKXxwPQdMMPIdiKGuggsx_e_lNPJwPIClyGyqycD297WOuJqORpHnMY2p1rZfOpchUEMk9AL4rOpd-sw1Ef8Wa43CayfCrGS-Ypq5ZxjWm3XRAdbwMD33IChyHOHMeLYmqhPe0HlASMwXSv0Q9X_kc7SVKiRG8-Oh8qAoVSVIgpvlDW1Xu9QQub6udGtJBh30d7IfsYufU5N3jOGVk-nmqmKSDtul8D7X5hnsjibZ3kBo3Hl-JPx7-MblWSfhu9cqTAA8OhfZscDoyHHEdVC3iI20pxUryMtOa5LjlPAeNyCVG9OSmozvT6F-MuyWjAazRlxHaMb2KcgSaub8rM5ZLcOkoy_cThJ28N53ljRrwU9-cfJqAVhr7Hi4j-3h3y5PZ0tUfmUc66e-D-dD-_bmqE=)
+
+**Figura 6** — Pinagem do 74HC73. Atenção: VCC no pino 4 e GND no pino 11
+
+O 74HC73 tem apenas a entrada assíncrona de reset (/R), que deve ficar em 1 durante os ensaios. Para obter o estado inicial Q = 0 use /R; para Q = 1, aplique J = 1, K = 0 e um pulso de clock.
+
+|  J  |  K  | Q antes | Q depois | Função |
+| :-: | :-: | :-----: | :------: | :----- |
+|  0  |  0  |    0    |          |        |
+|  0  |  0  |    1    |          |        |
+|  0  |  1  |    1    |          |        |
+|  1  |  0  |    0    |          |        |
+|  1  |  1  |    0    |          |        |
+|  1  |  1  |    1    |          |        |
+
+Determine em qual ação sobre o botão (pressionar ou soltar) a saída muda e relacione com a borda do clock.
+
+### Parte E — Flip-flop T e divisor de frequência
+
+1. Ligue J e K a +5 V (modo T permanente). Substitua o botão pelo gerador de funções: onda quadrada de 100 Hz, amplitude 5 V e deslocamento de 2,5 V.
+2. Observe CLK em um osciloscópio e Q em outro, com a mesma base de tempo, e meça a frequência de Q.
+3. Ligue a saída Q do primeiro flip-flop ao clock do segundo (também com J = K = 1) e repita a medição na saída do segundo.
+
+| Sinal             | Período (ms) | Frequência (Hz) |
+| :---------------- | :----------: | :-------------: |
+| CLK               |              |                 |
+| Q do 1º flip-flop |              |                 |
+| Q do 2º flip-flop |              |                 |
+
+## Questões
+
+1. Por que a combinação /S = /R = 0 é chamada de proibida? O estado obtido no passo 6 da Parte A foi sempre o mesmo? E em um circuito real?
+2. Chaves mecânicas reais produzem trepidação (_bounce_) ao serem acionadas; as do simulador são ideais. Mostre como o latch da Parte A, ligado a uma chave de duas posições, gera um pulso único de clock.
+3. Qual a diferença entre o latch com habilitação (Parte B) e o flip-flop D disparado por borda (Parte C)? Em que situação essa diferença causa problemas?
+4. As entradas /PRE, /CLR e /R dependem do clock? Como são chamadas por isso?
+5. Apresente o diagrama de tempo do pré-laboratório completo e a resposta sobre o flip-flop mestre-escravo.
+6. Mostre como obter um flip-flop D e um flip-flop T a partir de um JK.
+7. Qual a relação entre a frequência de saída e a de entrada com $n$ flip-flops T em cascata?

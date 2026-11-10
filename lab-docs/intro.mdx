@@ -1,48 +1,128 @@
 ---
-title: Introdução
-description: Introdução as atividades de laboratório.
+title: Laboratório — orientações gerais
 sidebar_position: 1
+sidebar_label: Orientações gerais
+description: Organização, bancada virtual no Tinkercad, normas e avaliação das atividades práticas de Eletrônica Digital (ELT82F) - UTFPR.
 ---
 
-import LabTable from '@site/src/components/LabTable';
+# Laboratório de Eletrônica Digital
 
-## LAB intro {/* #lab-intro */}
+As atividades práticas (**AP**, 3 aulas semanais) acompanham o conteúdo programático da disciplina. Cada roteiro foi dimensionado para **um encontro de 3 aulas**, em equipes de 2 ou 3 estudantes, e usa somente componentes disponíveis no simulador **Tinkercad Circuits** ([tinkercad.com](https://www.tinkercad.com)). Os mesmos circuitos podem ser montados em bancada com CIs reais da série 74HC.
 
-| groups     | sessiondate | from  | to    | description                                                                                    |
-| ---------- | ----------- | ----- | ----- | ---------------------------------------------------------------------------------------------- |
-| ELT72B-S21 | 11-03-2026  | 20:20 | 23:00 | Apresentação da disciplina; Formação dos grupos;                                               |
-| ELT72B-S21 | 18-03-2026  | 20:20 | 23:00 | Utilização da matriz de contatos; Utilização de equipamentos; Regras do Laboratório;           |
-| ELT72B-S21 | 25-03-2026  | 20:20 | 23:00 | Portas Lógicas; Tensões de Entrada e Saída - Famílias Lógicas;                                 |
-| ELT72B-S21 | 01-04-2026  | 20:20 | 23:00 | Portas inversoras, E, OU, NE e NOU (Roteiro 3.2);                                              |
-| ELT72B-S21 | 08-04-2026  | 20:20 | 23:00 | Equivalência entre funções lógicas (Roteiro 4.1);                                              |
-| ELT72B-S21 | 15-04-2026  | 20:20 | 23:00 | Avaliação de uma tabela verdade - I (Roteiro 4.2) e Equações Lógicas descritas em Linguagem C; |
-| ELT72B-S21 | 22-04-2026  | 20:20 | 23:00 | Multiplexador (Roteiro 5.3);                                                                   |
-| ELT72B-S21 | 29-04-2026  | 20:20 | 23:00 | Demultiplexador (Roteiro 5.4);                                                                 |
-| ELT72B-S21 | 06-05-2026  | 20:20 | 23:00 | Flip-Flop RS (Roteiro 7.1);                                                                    |
-| ELT72B-S21 | 13-05-2026  | 20:20 | 23:00 | Contadores Assíncronos (Roteiro 9.1)                                                           |
-| ELT72B-S21 | 20-05-2026  | 20:20 | 23:00 | Validação do LAB 05 com o Arduino Uno R3;                                                      |
-| ELT72B-S21 | 27-05-2026  | 20:20 | 23:00 | Finalização dos roteiros pendentes;                                                            |
-| ELT72B-S21 | 03-06-2026  | 20:20 | 23:00 | Desenvolvimento do projeto final;                                                              |
-| ELT72B-S21 | 10-06-2026  | 20:20 | 23:00 | Desenvolvimento do projeto final;                                                              |
-| ELT72B-S21 | 17-06-2026  | 20:20 | 23:00 | Desenvolvimento do projeto final;                                                              |
-| ELT72B-S21 | 24-06-2026  | 20:20 | 23:00 | Desenvolvimento do projeto final;                                                              |
-| ELT72B-S21 | 01-07-2026  | 20:20 | 23:00 | Desenvolvimento do projeto final;                                                              |
-| ELT72B-S21 | 08-07-2026  | 20:20 | 23:00 | Fechamento da disciplina;                                                                      |
+## Roteiros
 
+|       Lab        | Tema                                                    | Item do conteúdo programático                              |
+| :--------------: | :------------------------------------------------------ | :--------------------------------------------------------- |
+| [01](/lab/LAB01) | Bancada digital e portas AND, OR e NOT                  | 3 — Funções e Portas Lógicas                               |
+| [02](/lab/LAB02) | Portas NAND, NOR, XOR e XNOR; universalidade da NAND    | 3 — Funções e Portas Lógicas                               |
+| [03](/lab/LAB03) | Álgebra de Boole e teoremas de De Morgan                | 2 — Álgebra de Boole                                       |
+| [04](/lab/LAB04) | Soma de produtos e produto de somas                     | 4 — Técnicas de Simplificação                              |
+| [05](/lab/LAB05) | Mapa de Veitch-Karnaugh e condição irrelevante          | 1 e 4 — Códigos; Técnicas de Simplificação                 |
+| [06](/lab/LAB06) | Codificadores, decodificadores e display de 7 segmentos | 1 — Tipos de códigos; ementa (Codificador e Decodificador) |
+| [07](/lab/LAB07) | Multiplexadores e demultiplexadores                     | 5 — Multiplex e Demultiplex                                |
+| [08](/lab/LAB08) | Circuitos aritméticos                                   | 6 — Circuitos Aritméticos                                  |
+| [09](/lab/LAB09) | Latches e flip-flops                                    | 7 — Flip-Flops                                             |
+| [10](/lab/LAB10) | Registradores de deslocamento                           | 8 — Registradores de Deslocamento                          |
+| [11](/lab/lab11) | Contadores assíncronos                                  | 9 — Contadores Digitais                                    |
+| [12](/lab/lab12) | Contadores síncronos                                    | 9 — Contadores Digitais                                    |
+| [13](/lab/lab13) | Famílias lógicas TTL e CMOS                             | 10 — Famílias de Circuitos Lógicos                         |
 
-## Tabela dos LABs com links internos {/* #tabela-dos-labs-com-links-internos */}
-<div style={{ display: "flex", justifyContent: "center" }}>
-<LabTable internal={true} />
-</div>
+## Estrutura de cada roteiro
 
-## Tabela dos LABs com links externos {/* #tabela-dos-labs-com-links-externos */}
-<div style={{ display: "flex", justifyContent: "center" }}>
-<LabTable internal={false} />
-</div>
+1. **Objetivos** — o que a equipe deve ser capaz de fazer ao final.
+2. **Material** — componentes do Tinkercad.
+3. **Pré-laboratório** — tarefas individuais feitas **antes** da aula (tabelas previstas, projetos, diagramas de ligação).
+4. **Procedimento** — montagens e medições, com tabelas a preencher.
+5. **Questões** — discussão que compõe o relatório.
 
+## Bancada virtual no Tinkercad
 
-## Calendário Acadêmico de 2026 {/* #calendário-acadêmico-de-2026 */}
+Crie um projeto em **Circuitos** e arraste os componentes da lista lateral (a busca aceita o código do CI, por exemplo `74HC08`).
 
-[Calendário Acadêmico de 2026](/pdf/CT2026.pdf)
+| Função                  | Componente do Tinkercad                   | Como usar                                                                       |
+| :---------------------- | :---------------------------------------- | :------------------------------------------------------------------------------ |
+| Alimentação             | Fonte de energia (_Power Supply_)         | ajuste para 5 V e ligue às trilhas + e − da placa de ensaio                     |
+| Montagem                | Placa de ensaio (_Breadboard_)            | o CI fica sobre o canal central                                                 |
+| Entrada lógica          | Interruptor deslizante (_Slideswitch_)    | terminal central na entrada do CI; extremos em +5 V e em GND                    |
+| Entrada lógica (várias) | Interruptor DIP (_DIP Switch_)            | um lado em +5 V; o outro na entrada do CI **e** em GND por um resistor de 10 kΩ |
+| Pulso manual            | Botão (_Pushbutton_)                      | entre +5 V e a entrada, com resistor de 10 kΩ da entrada a GND                  |
+| Saída lógica            | LED com resistor de 330 Ω                 | da saída do CI para GND; aceso = nível 1                                        |
+| Display                 | Display de 7 segmentos                    | configure como **catodo comum**; um resistor de 330 Ω por segmento              |
+| Clock                   | Gerador de funções (_Function Generator_) | onda quadrada, amplitude 5 V e deslocamento CC de 2,5 V (sinal de 0 a 5 V)      |
+| Medições                | Multímetro e Osciloscópio                 | o osciloscópio tem um canal; use dois instrumentos para comparar sinais         |
 
-![Calendário Acadêmico de 2026](/img/CT2026.png)
+:::tip
+
+Monte uma vez a bancada básica (fonte, placa de ensaio, chaves com seus resistores e LEDs com seus resistores) e **duplique o projeto** no início de cada roteiro.
+
+:::
+
+### Circuitos integrados usados
+
+Todos pertencem à lista de componentes do Tinkercad Circuits.
+
+| CI       | Função                                | Labs                           |
+| :------- | :------------------------------------ | :----------------------------- |
+| 74HC00   | 4 portas NAND de 2 entradas           | 02, 03, 04, 09, 11             |
+| 74HC02   | 4 portas NOR de 2 entradas            | 02, 03                         |
+| 74HC04   | 6 inversores                          | 01, 03, 05, 06, 07, 08, 10, 13 |
+| 74HC08   | 4 portas AND de 2 entradas            | 01, 03, 04, 05, 06, 07, 08, 12 |
+| 74HC10   | 3 portas NAND de 3 entradas           | 04                             |
+| 74HC11   | 3 portas AND de 3 entradas            | 07                             |
+| 74HC14   | 6 inversores Schmitt trigger          | 13                             |
+| 74HC32   | 4 portas OR de 2 entradas             | 01, 03, 04, 05, 06, 07, 08     |
+| 74HC86   | 4 portas XOR de 2 entradas            | 02, 04, 08, 12                 |
+| 74HC73   | 2 flip-flops JK                       | 09, 11, 12                     |
+| 74HC74   | 2 flip-flops D                        | 09, 10                         |
+| 74HC93   | Contador binário de 4 bits            | 11                             |
+| 74HC283  | Somador de 4 bits                     | 08                             |
+| 74HC595  | Registrador de deslocamento de 8 bits | 10                             |
+| 74HC4017 | Contador Johnson de década            | 11                             |
+| CD4511   | Decodificador BCD para 7 segmentos    | 06, 11, 12                     |
+
+### Numeração dos pinos
+
+Nas figuras de pinagem o CI está desenhado visto por cima, com o chanfro para cima: os primeiros pinos descem pela esquerda e os demais sobem pela direita. No Tinkercad, passe o cursor sobre o pino para ver o seu nome; os nomes exibidos pelo simulador podem diferir ligeiramente dos usados nas folhas de dados e nestes roteiros — **vale o número do pino**.
+
+![Exemplo de figura de pinagem (74HC00). Sinais com barra superior são ativos em nível baixo](https://kroki.io/graphviz/svg/eNqdlNtOg0AQhu99isl6bTjaamQ34SQlIdBQoqmNF9uytSQIDWBNND6HD-SLuT0ErSlBuNnsLPMP3z8DGydPBV2vwIH3M4D50yJP8wKj11VSMXQDWR4zmJUrumZ4ndIkg2WeVRl9ZhiNWLphVbKgaHdYJm8MS9LjDa-zSGCW0jlLsaZFuuHZYAShZYcYiQhM2_P-hJOxbrq-g5G8j8e6Ze1iBRFeTotCokUW0YTtcrS5DfwIxoHrRxcT98HG6BqRTVJWFMqXNSuSvNCEbc4prbBfwl-vAN1zHR-j0HVGESKSzp8c8msLEgLDMQMv4PvzeBHHjJ_cu1Y04vwqF9WKMLjnzni54W-JvFQGqlhLJElEBx-HjH3ziWaQoToyRVETDB6Ewmm3Knx9gq_7FsjAsqqgMS1rz0fW_-9ArSWHfnj2LW8HwJ1p_rStoWdGj57J3RmVJkbVaEWc9kBUuiPKjYh6G6Lc58tTuyNKjYjTVsQ-g77sjig2ISqtg5b7DHrQWXHdSNg6Z4f_t90Rh50VV42I0-N7UNjd14Twe_zj7Bt5a5OA)
+
+**Figura 1** — Exemplo de figura de pinagem (74HC00). Sinais com barra superior são ativos em nível baixo
+
+## Normas de montagem
+
+:::warning[Antes de iniciar a simulação]
+
+1. Confira a alimentação de **todos** os CIs: VCC em +5 V e GND em 0 V. Nos CIs de 14 pinos costumam ser os pinos 14 e 7; nos de 16 pinos, 16 e 8. **Há exceções** (74HC73 e 74HC93): consulte sempre a pinagem.
+2. Nunca ligue duas saídas entre si.
+3. Em CIs CMOS **nenhuma entrada pode ficar aberta**: ligue a +5 V ou a GND as entradas não utilizadas.
+4. Todo LED precisa do seu resistor em série.
+
+:::
+
+Recomendações: fios curtos, cores padronizadas (vermelho para +5 V, preto para GND, uma cor por sinal), um CI por vez, e teste de cada bloco antes de interligar o seguinte.
+
+## Depuração
+
+Quando o circuito não funcionar, siga esta ordem: (1) meça a alimentação nos pinos do CI; (2) meça o nível lógico em cada entrada; (3) percorra o sinal da entrada para a saída, comparando cada ponto com o valor previsto no pré-laboratório.
+
+| Tensão medida (74HC, VCC = 5 V) | Interpretação                                       |
+| :------------------------------ | :-------------------------------------------------- |
+| 0 V a 1,5 V                     | nível 0 válido                                      |
+| 3,5 V a 5 V                     | nível 1 válido                                      |
+| 1,5 V a 3,5 V                   | nível indefinido: entrada aberta ou saídas em curto |
+
+## Relatório
+
+Entrega por equipe, até o início da aula prática seguinte, contendo: identificação; objetivos; diagramas lógicos (com número dos pinos); **link compartilhado do projeto no Tinkercad** e captura de tela de cada montagem; tabelas preenchidas com valores **previstos e medidos**; respostas às questões; conclusão. Formas de onda devem vir com escalas de tempo e de tensão.
+
+| Critério                                          | Peso |
+| :------------------------------------------------ | :--: |
+| Pré-laboratório individual                        | 20 % |
+| Montagem, funcionamento e organização do circuito | 40 % |
+| Relatório (resultados, questões e conclusão)      | 40 % |
+
+:::note
+
+Os pesos acima são uma sugestão; valem os critérios divulgados pelo professor no início do semestre.
+
+:::
