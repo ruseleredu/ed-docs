@@ -1,0 +1,54 @@
+---
+title: Simulações no Wokwi
+sidebar_label: Visão geral
+sidebar_position: 0
+description: Chips personalizados e simulações no Wokwi para os circuitos integrados do laboratório de Eletrônica Digital.
+slug: /wokwi
+---
+
+# Simulações no Wokwi
+
+O [Wokwi](https://wokwi.com) é um simulador online voltado a microcontroladores, mas aceita **chips personalizados**: um arquivo JSON descreve os pinos e um arquivo em C descreve o comportamento. Esta pasta traz um chip personalizado para cada CI dos roteiros e um circuito de demonstração com chaves e LEDs. Os roteiros continuam escritos para o Tinkercad; o Wokwi é uma alternativa para testar cada CI isoladamente e para montar os circuitos em nível lógico.
+
+| CI                         | Função                                | Chip            | Simulação  |
+| :------------------------- | :------------------------------------ | :-------------- | :--------- |
+| [74HC00](./74HC00.mdx)     | 4 portas NAND de 2 entradas           | `ci-74hc00`     | a publicar |
+| [74HC02](./74HC02.mdx)     | 4 portas NOR de 2 entradas            | `ci-74hc02`     | a publicar |
+| [74HC04](./74HC04.mdx)     | 6 inversores                          | `ci-74hc04`     | a publicar |
+| [74HC08](./74HC08.mdx)     | 4 portas AND de 2 entradas            | `ci-74hc08`     | a publicar |
+| [74HC10](./74HC10.mdx)     | 3 portas NAND de 3 entradas           | `ci-74hc10`     | a publicar |
+| [74HC11](./74HC11.mdx)     | 3 portas AND de 3 entradas            | `ci-74hc11`     | a publicar |
+| [74HC14](./74HC14.mdx)     | 6 inversores Schmitt trigger          | `ci-74hc14`     | a publicar |
+| [74HC32](./74HC32.mdx)     | 4 portas OR de 2 entradas             | `ci-74hc32`     | a publicar |
+| [74HC86](./74HC86.mdx)     | 4 portas XOR de 2 entradas            | `ci-74hc86`     | a publicar |
+| [74HC73](./74HC73.mdx)     | 2 flip-flops JK com reset             | `ci-74hc73`     | a publicar |
+| [74HC74](./74HC74.mdx)     | 2 flip-flops D com preset e clear     | `ci-74hc74`     | a publicar |
+| [74HC93](./74HC93.mdx)     | Contador binário assíncrono de 4 bits | `ci-74hc93`     | a publicar |
+| [74HC283](./74HC283.mdx)   | Somador completo de 4 bits            | `ci-74hc283`    | a publicar |
+| [74HC4017](./74HC4017.mdx) | Contador Johnson de década            | `ci-74hc4017`   | a publicar |
+| [CD4511](./CD4511.mdx)     | Decodificador BCD para 7 segmentos    | `ci-cd4511`     | a publicar |
+| [74HC595](./74HC595.mdx)   | Registrador de deslocamento de 8 bits | nativo do Wokwi | a publicar |
+
+## Como criar a simulação de um CI
+
+1. Entre em [wokwi.com](https://wokwi.com) com a sua conta.
+2. Abra um projeto de lógica sem microcontrolador, como o [Wokwi Logic Gates Showcase](https://wokwi.com/projects/337840407809360468), e use **Save a copy** para criar a sua cópia.
+3. Na aba `diagram.json`, substitua todo o conteúdo pelo `diagram.json` da página do CI.
+4. No editor de diagrama, clique em **+** e escolha **Custom Chip**. Dê ao chip exatamente o nome indicado na página (por exemplo `ci-74hc00`) e escolha a linguagem C. O Wokwi cria os arquivos `ci-74hc00.chip.json` e `ci-74hc00.chip.c`.
+5. Substitua o conteúdo desses dois arquivos pelo da página do CI. Se o passo 4 tiver acrescentado uma segunda peça ao diagrama, apague-a.
+6. Inicie a simulação, confira o item **O que testar** e salve o projeto.
+7. Copie o endereço do projeto para `LINKS` em `tools/wokwi.py` e execute `python3 tools/wokwi.py` para que o link apareça na página do CI e na tabela acima.
+
+Os mesmos arquivos estão no pacote do curso, em `static/wokwi/<CI>/`.
+
+## Convenções dos chips
+
+- A ordem dos pinos no arquivo `.chip.json` é a do encapsulamento, de modo que a peça desenhada pelo Wokwi tem a mesma pinagem do CI real.
+- Sinais ativos em nível baixo têm o sufixo `_N` (por exemplo `1CLR_N`).
+- Entradas assíncronas ativas em 0 têm _pull-up_ interno e as ativas em 1 têm _pull-down_, para que fiquem inativas se não forem ligadas. As demais entradas devem ser sempre ligadas.
+- Os modelos são **digitais e ideais**: não há atraso de propagação, consumo, níveis de tensão intermediários nem verificação da alimentação. O Lab 13 não pode ser feito no Wokwi.
+
+## Limitações conhecidas
+
+- Os chips foram verificados fora do Wokwi, com um programa de teste que imita a API de chips; **o funcionamento dentro do simulador ainda precisa ser confirmado** na criação de cada projeto.
+- Os diagramas de demonstração foram escritos à mão: as posições das peças e o traçado dos fios podem precisar de ajuste no editor.

@@ -1,0 +1,329 @@
+---
+title: 74HC283 no Wokwi
+sidebar_label: 74HC283
+sidebar_position: 13
+description: Simulação do 74HC283 (Somador completo de 4 bits) no Wokwi com chip personalizado.
+slug: /wokwi/74HC283
+---
+
+# 74HC283 no Wokwi
+
+Somador completo de 4 bits. Ficha técnica: [74HC283](../datasheets/74HC283.mdx).
+
+## Simulação
+
+:::note[Simulação ainda não publicada]
+
+O projeto precisa ser criado e salvo em uma conta do Wokwi (veja [como criar](./index.mdx)). Depois, informe o endereço em `LINKS` no arquivo `tools/wokwi.py` e gere as páginas novamente para que o link apareça aqui.
+
+:::
+
+### Circuito de demonstração
+
+- Chaves deslizantes, de cima para baixo: **A4**, **A3**, **A2**, **A1**, **B4**, **B3**, **B2**, **B1**, **C0**. Posição da esquerda = 0; da direita = 1.
+- LEDs, da esquerda para a direita: **C4**, **S4**, **S3**, **S2**, **S1**.
+
+### O que testar
+
+1. Faça 3 + 2, 9 + 6, 15 + 1 e 8 + 8 e confira os LEDs (C4 é o vai-um).
+2. Repita uma soma com C0 = 1.
+
+### Observações
+
+- Os pinos de soma chamam-se S1 a S4 (Σ1 a Σ4 na folha de dados).
+
+## Arquivos do projeto
+
+### `diagram.json`
+
+```json title="diagram.json"
+{
+  "version": 1,
+  "author": "ELT82F - UTFPR",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "chip-ci-74hc283",
+      "id": "u1",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-vcc",
+      "id": "vcc1",
+      "top": -110,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd1",
+      "top": 560,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd2",
+      "top": 250,
+      "left": 330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw1",
+      "top": -60,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw2",
+      "top": 0,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw3",
+      "top": 60,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw4",
+      "top": 120,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw5",
+      "top": 180,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw6",
+      "top": 240,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw7",
+      "top": 300,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw8",
+      "top": 360,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw9",
+      "top": 420,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -80,
+      "left": 220,
+      "attrs": {
+        "color": "red",
+        "label": "C4"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": -80,
+      "left": 265,
+      "attrs": {
+        "color": "red",
+        "label": "S4"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led3",
+      "top": -80,
+      "left": 310,
+      "attrs": {
+        "color": "red",
+        "label": "S3"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led4",
+      "top": -80,
+      "left": 355,
+      "attrs": {
+        "color": "red",
+        "label": "S2"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led5",
+      "top": -80,
+      "left": 400,
+      "attrs": {
+        "color": "red",
+        "label": "S1"
+      }
+    }
+  ],
+  "connections": [
+    ["u1:VCC", "vcc1:VCC", "red", []],
+    ["u1:GND", "gnd1:GND", "black", []],
+    ["sw1:1", "gnd1:GND", "black", []],
+    ["sw1:3", "vcc1:VCC", "red", []],
+    ["sw1:2", "u1:A4", "green", []],
+    ["sw2:1", "gnd1:GND", "black", []],
+    ["sw2:3", "vcc1:VCC", "red", []],
+    ["sw2:2", "u1:A3", "green", []],
+    ["sw3:1", "gnd1:GND", "black", []],
+    ["sw3:3", "vcc1:VCC", "red", []],
+    ["sw3:2", "u1:A2", "green", []],
+    ["sw4:1", "gnd1:GND", "black", []],
+    ["sw4:3", "vcc1:VCC", "red", []],
+    ["sw4:2", "u1:A1", "green", []],
+    ["sw5:1", "gnd1:GND", "black", []],
+    ["sw5:3", "vcc1:VCC", "red", []],
+    ["sw5:2", "u1:B4", "green", []],
+    ["sw6:1", "gnd1:GND", "black", []],
+    ["sw6:3", "vcc1:VCC", "red", []],
+    ["sw6:2", "u1:B3", "green", []],
+    ["sw7:1", "gnd1:GND", "black", []],
+    ["sw7:3", "vcc1:VCC", "red", []],
+    ["sw7:2", "u1:B2", "green", []],
+    ["sw8:1", "gnd1:GND", "black", []],
+    ["sw8:3", "vcc1:VCC", "red", []],
+    ["sw8:2", "u1:B1", "green", []],
+    ["sw9:1", "gnd1:GND", "black", []],
+    ["sw9:3", "vcc1:VCC", "red", []],
+    ["sw9:2", "u1:C0", "green", []],
+    ["u1:C4", "led1:A", "orange", []],
+    ["led1:C", "gnd2:GND", "black", []],
+    ["u1:S4", "led2:A", "orange", []],
+    ["led2:C", "gnd2:GND", "black", []],
+    ["u1:S3", "led3:A", "orange", []],
+    ["led3:C", "gnd2:GND", "black", []],
+    ["u1:S2", "led4:A", "orange", []],
+    ["led4:C", "gnd2:GND", "black", []],
+    ["u1:S1", "led5:A", "orange", []],
+    ["led5:C", "gnd2:GND", "black", []]
+  ]
+}
+```
+
+### `ci-74hc283.chip.json`
+
+Os pinos estão na ordem do encapsulamento (pino 1 em diante); posições vazias correspondem a pinos sem ligação.
+
+```json title="ci-74hc283.chip.json"
+{
+  "name": "74HC283",
+  "author": "ELT82F - UTFPR",
+  "pins": [
+    "S2",
+    "B2",
+    "A2",
+    "S1",
+    "A1",
+    "B1",
+    "C0",
+    "GND",
+    "C4",
+    "S4",
+    "B4",
+    "A4",
+    "S3",
+    "A3",
+    "B3",
+    "VCC"
+  ]
+}
+```
+
+### `ci-74hc283.chip.c`
+
+```c title="ci-74hc283.chip.c"
+// 74HC283 - somador completo de 4 bits
+// Chip personalizado para o Wokwi (ELT82F - UTFPR)
+#include "wokwi-api.h"
+#include <stdlib.h>
+
+typedef struct {
+  pin_t a[4], b[4], c0, s[4], c4;
+} chip_state_t;
+
+static void update(chip_state_t *chip) {
+  uint32_t a = 0, b = 0;
+  for (int i = 0; i < 4; i++) {
+    a |= (pin_read(chip->a[i]) ? 1u : 0u) << i;
+    b |= (pin_read(chip->b[i]) ? 1u : 0u) << i;
+  }
+  uint32_t sum = a + b + (pin_read(chip->c0) ? 1u : 0u);
+  for (int i = 0; i < 4; i++) {
+    pin_write(chip->s[i], (sum >> i) & 1);
+  }
+  pin_write(chip->c4, (sum >> 4) & 1);
+}
+
+static void on_change(void *user_data, pin_t pin, uint32_t value) {
+  update((chip_state_t *)user_data);
+}
+
+void chip_init() {
+  static const char *A[4] = {"A1", "A2", "A3", "A4"};
+  static const char *B[4] = {"B1", "B2", "B3", "B4"};
+  static const char *S[4] = {"S1", "S2", "S3", "S4"};
+  chip_state_t *chip = malloc(sizeof(chip_state_t));
+  const pin_watch_config_t watch = {
+    .edge = BOTH, .pin_change = on_change, .user_data = chip,
+  };
+  for (int i = 0; i < 4; i++) {
+    chip->a[i] = pin_init(A[i], INPUT);
+    chip->b[i] = pin_init(B[i], INPUT);
+    chip->s[i] = pin_init(S[i], OUTPUT_LOW);
+    pin_watch(chip->a[i], &watch);
+    pin_watch(chip->b[i], &watch);
+  }
+  chip->c0 = pin_init("C0", INPUT);
+  chip->c4 = pin_init("C4", OUTPUT_LOW);
+  pin_watch(chip->c0, &watch);
+  update(chip);
+}
+```
+
+Para usar o chip em outro projeto, copie os dois arquivos `ci-74hc283.chip.*` e acrescente em `diagram.json` uma peça do tipo `chip-ci-74hc283`.

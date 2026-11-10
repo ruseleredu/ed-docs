@@ -1,0 +1,338 @@
+---
+title: 74HC4017 no Wokwi
+sidebar_label: 74HC4017
+sidebar_position: 14
+description: Simulação do 74HC4017 (Contador Johnson de década) no Wokwi com chip personalizado.
+slug: /wokwi/74HC4017
+---
+
+# 74HC4017 no Wokwi
+
+Contador Johnson de década. Ficha técnica: [74HC4017](../datasheets/74HC4017.mdx).
+
+## Simulação
+
+:::note[Simulação ainda não publicada]
+
+O projeto precisa ser criado e salvo em uma conta do Wokwi (veja [como criar](./index.mdx)). Depois, informe o endereço em `LINKS` no arquivo `tools/wokwi.py` e gere as páginas novamente para que o link apareça aqui.
+
+:::
+
+### Circuito de demonstração
+
+- Chaves deslizantes, de cima para baixo: **CP0**, **MR**. Posição da esquerda = 0; da direita = 1.
+- LEDs, da esquerda para a direita: **Q0**, **Q1**, **Q2**, **Q3**, **Q4**, **Q5**, **Q6**, **Q7**, **Q8**, **Q9**, **/Q5-9**.
+- CP1_N ligado a GND.
+
+### O que testar
+
+1. Com MR em 0, cada subida de CP0 (chave de 0 para 1) acende o LED seguinte.
+2. Observe /Q5-9: aceso de 0 a 4 e apagado de 5 a 9.
+3. Leve MR a 1: apenas Q0 fica aceso.
+
+### Observações
+
+- O pino 12 chama-se CO_N (/Q5-9 na folha de dados) e o pino 13, CP1_N.
+
+## Arquivos do projeto
+
+### `diagram.json`
+
+```json title="diagram.json"
+{
+  "version": 1,
+  "author": "ELT82F - UTFPR",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "chip-ci-74hc4017",
+      "id": "u1",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-vcc",
+      "id": "vcc1",
+      "top": -110,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd1",
+      "top": 140,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd2",
+      "top": 250,
+      "left": 330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw1",
+      "top": -60,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw2",
+      "top": 0,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -80,
+      "left": 220,
+      "attrs": {
+        "color": "red",
+        "label": "Q0"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": -80,
+      "left": 265,
+      "attrs": {
+        "color": "red",
+        "label": "Q1"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led3",
+      "top": -80,
+      "left": 310,
+      "attrs": {
+        "color": "red",
+        "label": "Q2"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led4",
+      "top": -80,
+      "left": 355,
+      "attrs": {
+        "color": "red",
+        "label": "Q3"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led5",
+      "top": -80,
+      "left": 400,
+      "attrs": {
+        "color": "red",
+        "label": "Q4"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led6",
+      "top": -80,
+      "left": 445,
+      "attrs": {
+        "color": "red",
+        "label": "Q5"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led7",
+      "top": -80,
+      "left": 490,
+      "attrs": {
+        "color": "red",
+        "label": "Q6"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led8",
+      "top": -80,
+      "left": 535,
+      "attrs": {
+        "color": "red",
+        "label": "Q7"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led9",
+      "top": -80,
+      "left": 580,
+      "attrs": {
+        "color": "red",
+        "label": "Q8"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led10",
+      "top": -80,
+      "left": 625,
+      "attrs": {
+        "color": "red",
+        "label": "Q9"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led11",
+      "top": -80,
+      "left": 670,
+      "attrs": {
+        "color": "red",
+        "label": "/Q5-9"
+      }
+    }
+  ],
+  "connections": [
+    ["u1:VCC", "vcc1:VCC", "red", []],
+    ["u1:GND", "gnd1:GND", "black", []],
+    ["sw1:1", "gnd1:GND", "black", []],
+    ["sw1:3", "vcc1:VCC", "red", []],
+    ["sw1:2", "u1:CP0", "green", []],
+    ["sw2:1", "gnd1:GND", "black", []],
+    ["sw2:3", "vcc1:VCC", "red", []],
+    ["sw2:2", "u1:MR", "green", []],
+    ["u1:Q0", "led1:A", "orange", []],
+    ["led1:C", "gnd2:GND", "black", []],
+    ["u1:Q1", "led2:A", "orange", []],
+    ["led2:C", "gnd2:GND", "black", []],
+    ["u1:Q2", "led3:A", "orange", []],
+    ["led3:C", "gnd2:GND", "black", []],
+    ["u1:Q3", "led4:A", "orange", []],
+    ["led4:C", "gnd2:GND", "black", []],
+    ["u1:Q4", "led5:A", "orange", []],
+    ["led5:C", "gnd2:GND", "black", []],
+    ["u1:Q5", "led6:A", "orange", []],
+    ["led6:C", "gnd2:GND", "black", []],
+    ["u1:Q6", "led7:A", "orange", []],
+    ["led7:C", "gnd2:GND", "black", []],
+    ["u1:Q7", "led8:A", "orange", []],
+    ["led8:C", "gnd2:GND", "black", []],
+    ["u1:Q8", "led9:A", "orange", []],
+    ["led9:C", "gnd2:GND", "black", []],
+    ["u1:Q9", "led10:A", "orange", []],
+    ["led10:C", "gnd2:GND", "black", []],
+    ["u1:CO_N", "led11:A", "orange", []],
+    ["led11:C", "gnd2:GND", "black", []],
+    ["u1:CP1_N", "gnd1:GND", "blue", []]
+  ]
+}
+```
+
+### `ci-74hc4017.chip.json`
+
+Os pinos estão na ordem do encapsulamento (pino 1 em diante); posições vazias correspondem a pinos sem ligação.
+
+```json title="ci-74hc4017.chip.json"
+{
+  "name": "74HC4017",
+  "author": "ELT82F - UTFPR",
+  "pins": [
+    "Q5",
+    "Q1",
+    "Q0",
+    "Q2",
+    "Q6",
+    "Q7",
+    "Q3",
+    "GND",
+    "Q8",
+    "Q4",
+    "Q9",
+    "CO_N",
+    "CP1_N",
+    "CP0",
+    "MR",
+    "VCC"
+  ]
+}
+```
+
+### `ci-74hc4017.chip.c`
+
+```c title="ci-74hc4017.chip.c"
+// 74HC4017 - contador Johnson de decada com 10 saidas decodificadas
+// Avanca na subida de CP0 (com CP1_N em 0) ou na descida de CP1_N (com CP0 em 1).
+// MR em 1 leva a contagem a zero. CO_N fica em 1 de 0 a 4 e em 0 de 5 a 9.
+// Chip personalizado para o Wokwi (ELT82F - UTFPR)
+#include "wokwi-api.h"
+#include <stdlib.h>
+
+typedef struct {
+  pin_t cp0, cp1_n, mr, q[10], co_n;
+  uint32_t count;
+} chip_state_t;
+
+static void update(chip_state_t *chip) {
+  if (pin_read(chip->mr)) chip->count = 0;
+  for (uint32_t i = 0; i < 10; i++) {
+    if (i != chip->count) pin_write(chip->q[i], LOW);
+  }
+  pin_write(chip->q[chip->count], HIGH);
+  pin_write(chip->co_n, chip->count < 5 ? HIGH : LOW);
+}
+
+static void advance(chip_state_t *chip) {
+  if (!pin_read(chip->mr)) chip->count = (chip->count + 1) % 10;
+  update(chip);
+}
+
+static void on_cp0(void *user_data, pin_t pin, uint32_t value) {
+  chip_state_t *chip = (chip_state_t *)user_data;
+  if (pin_read(chip->cp1_n) == LOW) advance(chip);
+}
+
+static void on_cp1(void *user_data, pin_t pin, uint32_t value) {
+  chip_state_t *chip = (chip_state_t *)user_data;
+  if (pin_read(chip->cp0) == HIGH) advance(chip);
+}
+
+static void on_reset(void *user_data, pin_t pin, uint32_t value) {
+  update((chip_state_t *)user_data);
+}
+
+void chip_init() {
+  static const char *Q[10] = {"Q0", "Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9"};
+  chip_state_t *chip = malloc(sizeof(chip_state_t));
+  chip->cp0 = pin_init("CP0", INPUT);
+  chip->cp1_n = pin_init("CP1_N", INPUT_PULLDOWN);
+  chip->mr = pin_init("MR", INPUT_PULLDOWN);
+  chip->q[0] = pin_init(Q[0], OUTPUT_HIGH);
+  for (int i = 1; i < 10; i++) chip->q[i] = pin_init(Q[i], OUTPUT_LOW);
+  chip->co_n = pin_init("CO_N", OUTPUT_HIGH);
+  chip->count = 0;
+
+  const pin_watch_config_t cp0_watch = {
+    .edge = RISING, .pin_change = on_cp0, .user_data = chip,
+  };
+  pin_watch(chip->cp0, &cp0_watch);
+  const pin_watch_config_t cp1_watch = {
+    .edge = FALLING, .pin_change = on_cp1, .user_data = chip,
+  };
+  pin_watch(chip->cp1_n, &cp1_watch);
+  const pin_watch_config_t reset_watch = {
+    .edge = BOTH, .pin_change = on_reset, .user_data = chip,
+  };
+  pin_watch(chip->mr, &reset_watch);
+}
+```
+
+Para usar o chip em outro projeto, copie os dois arquivos `ci-74hc4017.chip.*` e acrescente em `diagram.json` uma peça do tipo `chip-ci-74hc4017`.

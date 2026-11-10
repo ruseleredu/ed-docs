@@ -1,0 +1,190 @@
+---
+title: 74HC14 no Wokwi
+sidebar_label: 74HC14
+sidebar_position: 7
+description: Simulação do 74HC14 (6 inversores Schmitt trigger) no Wokwi com chip personalizado.
+slug: /wokwi/74HC14
+---
+
+# 74HC14 no Wokwi
+
+6 inversores Schmitt trigger. Ficha técnica: [74HC14](../datasheets/74HC14.mdx).
+
+## Simulação
+
+:::note[Simulação ainda não publicada]
+
+O projeto precisa ser criado e salvo em uma conta do Wokwi (veja [como criar](./index.mdx)). Depois, informe o endereço em `LINKS` no arquivo `tools/wokwi.py` e gere as páginas novamente para que o link apareça aqui.
+
+:::
+
+### Circuito de demonstração
+
+- Chaves deslizantes, de cima para baixo: **A** (pino 1A). Posição da esquerda = 0; da direita = 1.
+- LEDs, da esquerda para a direita: **Y**.
+
+### O que testar
+
+1. O LED acende com a chave em 0 e apaga com a chave em 1.
+
+### Observações
+
+- O modelo é **apenas digital**: não reproduz a histerese nem permite montar o oscilador RC do Lab 13. Para essas partes use o Tinkercad ou o Falstad.
+
+## Arquivos do projeto
+
+### `diagram.json`
+
+```json title="diagram.json"
+{
+  "version": 1,
+  "author": "ELT82F - UTFPR",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "chip-ci-74hc14",
+      "id": "u1",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-vcc",
+      "id": "vcc1",
+      "top": -110,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd1",
+      "top": 80,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd2",
+      "top": 250,
+      "left": 330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw1",
+      "top": -60,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -80,
+      "left": 220,
+      "attrs": {
+        "color": "red",
+        "label": "Y"
+      }
+    }
+  ],
+  "connections": [
+    ["u1:VCC", "vcc1:VCC", "red", []],
+    ["u1:GND", "gnd1:GND", "black", []],
+    ["sw1:1", "gnd1:GND", "black", []],
+    ["sw1:3", "vcc1:VCC", "red", []],
+    ["sw1:2", "u1:1A", "green", []],
+    ["u1:1Y", "led1:A", "orange", []],
+    ["led1:C", "gnd2:GND", "black", []]
+  ]
+}
+```
+
+### `ci-74hc14.chip.json`
+
+Os pinos estão na ordem do encapsulamento (pino 1 em diante); posições vazias correspondem a pinos sem ligação.
+
+```json title="ci-74hc14.chip.json"
+{
+  "name": "74HC14",
+  "author": "ELT82F - UTFPR",
+  "pins": [
+    "1A",
+    "1Y",
+    "2A",
+    "2Y",
+    "3A",
+    "3Y",
+    "GND",
+    "4Y",
+    "4A",
+    "5Y",
+    "5A",
+    "6Y",
+    "6A",
+    "VCC"
+  ]
+}
+```
+
+### `ci-74hc14.chip.c`
+
+```c title="ci-74hc14.chip.c"
+// 74HC14 - seis inversores Schmitt trigger (modelo digital, sem histerese)
+// Chip personalizado para o Wokwi (ELT82F - UTFPR)
+#include "wokwi-api.h"
+#include <stdlib.h>
+
+#define GATES 6
+#define INPUTS 1
+
+static const char *IN_NAMES[GATES][INPUTS] = {
+  {"1A"},
+  {"2A"},
+  {"3A"},
+  {"4A"},
+  {"5A"},
+  {"6A"}
+};
+static const char *OUT_NAMES[GATES] = {"1Y", "2Y", "3Y", "4Y", "5Y", "6Y"};
+
+typedef struct {
+  pin_t in[GATES][INPUTS];
+  pin_t out[GATES];
+} chip_state_t;
+
+// Funcao logica de uma porta: in[] contem os niveis das entradas (0 ou 1)
+static uint32_t gate(const uint32_t *in) {
+  return !in[0];
+}
+
+static void update(chip_state_t *chip) {
+  for (int g = 0; g < GATES; g++) {
+    uint32_t in[INPUTS];
+    for (int i = 0; i < INPUTS; i++) in[i] = pin_read(chip->in[g][i]) ? 1 : 0;
+    pin_write(chip->out[g], gate(in) ? HIGH : LOW);
+  }
+}
+
+static void on_change(void *user_data, pin_t pin, uint32_t value) {
+  update((chip_state_t *)user_data);
+}
+
+void chip_init() {
+  chip_state_t *chip = malloc(sizeof(chip_state_t));
+  const pin_watch_config_t watch = {
+    .edge = BOTH, .pin_change = on_change, .user_data = chip,
+  };
+  for (int g = 0; g < GATES; g++) {
+    chip->out[g] = pin_init(OUT_NAMES[g], OUTPUT);
+    for (int i = 0; i < INPUTS; i++) {
+      chip->in[g][i] = pin_init(IN_NAMES[g][i], INPUT);
+      pin_watch(chip->in[g][i], &watch);
+    }
+  }
+  update(chip);
+}
+```
+
+Para usar o chip em outro projeto, copie os dois arquivos `ci-74hc14.chip.*` e acrescente em `diagram.json` uma peça do tipo `chip-ci-74hc14`.

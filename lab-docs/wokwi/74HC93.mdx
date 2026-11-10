@@ -1,0 +1,257 @@
+---
+title: 74HC93 no Wokwi
+sidebar_label: 74HC93
+sidebar_position: 12
+description: Simulação do 74HC93 (Contador binário assíncrono de 4 bits) no Wokwi com chip personalizado.
+slug: /wokwi/74HC93
+---
+
+# 74HC93 no Wokwi
+
+Contador binário assíncrono de 4 bits. Ficha técnica: [74HC93](../datasheets/74HC93.mdx).
+
+## Simulação
+
+:::note[Simulação ainda não publicada]
+
+O projeto precisa ser criado e salvo em uma conta do Wokwi (veja [como criar](./index.mdx)). Depois, informe o endereço em `LINKS` no arquivo `tools/wokwi.py` e gere as páginas novamente para que o link apareça aqui.
+
+:::
+
+### Circuito de demonstração
+
+- Chaves deslizantes, de cima para baixo: **CP0**, **MR** (pino MR1). Posição da esquerda = 0; da direita = 1.
+- LEDs, da esquerda para a direita: **Q3**, **Q2**, **Q1**, **Q0**.
+- CP1 ligado a Q0.
+- MR2 ligado a MR1.
+
+### O que testar
+
+1. Com MR em 0, cada descida de CP0 (chave de 1 para 0) soma 1 à contagem de 0 a 15.
+2. Leve MR a 1: as saídas vão a 0.
+3. Para o contador de década, desligue MR1 e MR2 da chave e ligue MR1 a Q1 e MR2 a Q3.
+
+## Arquivos do projeto
+
+### `diagram.json`
+
+```json title="diagram.json"
+{
+  "version": 1,
+  "author": "ELT82F - UTFPR",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "chip-ci-74hc93",
+      "id": "u1",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-vcc",
+      "id": "vcc1",
+      "top": -110,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd1",
+      "top": 140,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd2",
+      "top": 250,
+      "left": 330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw1",
+      "top": -60,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw2",
+      "top": 0,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -80,
+      "left": 220,
+      "attrs": {
+        "color": "red",
+        "label": "Q3"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": -80,
+      "left": 265,
+      "attrs": {
+        "color": "red",
+        "label": "Q2"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led3",
+      "top": -80,
+      "left": 310,
+      "attrs": {
+        "color": "red",
+        "label": "Q1"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led4",
+      "top": -80,
+      "left": 355,
+      "attrs": {
+        "color": "red",
+        "label": "Q0"
+      }
+    }
+  ],
+  "connections": [
+    ["u1:VCC", "vcc1:VCC", "red", []],
+    ["u1:GND", "gnd1:GND", "black", []],
+    ["sw1:1", "gnd1:GND", "black", []],
+    ["sw1:3", "vcc1:VCC", "red", []],
+    ["sw1:2", "u1:CP0", "green", []],
+    ["sw2:1", "gnd1:GND", "black", []],
+    ["sw2:3", "vcc1:VCC", "red", []],
+    ["sw2:2", "u1:MR1", "green", []],
+    ["u1:Q3", "led1:A", "orange", []],
+    ["led1:C", "gnd2:GND", "black", []],
+    ["u1:Q2", "led2:A", "orange", []],
+    ["led2:C", "gnd2:GND", "black", []],
+    ["u1:Q1", "led3:A", "orange", []],
+    ["led3:C", "gnd2:GND", "black", []],
+    ["u1:Q0", "led4:A", "orange", []],
+    ["led4:C", "gnd2:GND", "black", []],
+    ["u1:CP1", "u1:Q0", "blue", []],
+    ["u1:MR2", "u1:MR1", "blue", []]
+  ]
+}
+```
+
+### `ci-74hc93.chip.json`
+
+Os pinos estão na ordem do encapsulamento (pino 1 em diante); posições vazias correspondem a pinos sem ligação.
+
+```json title="ci-74hc93.chip.json"
+{
+  "name": "74HC93",
+  "author": "ELT82F - UTFPR",
+  "pins": [
+    "CP1",
+    "MR1",
+    "MR2",
+    "",
+    "VCC",
+    "",
+    "",
+    "Q2",
+    "Q1",
+    "GND",
+    "Q3",
+    "Q0",
+    "",
+    "CP0"
+  ]
+}
+```
+
+### `ci-74hc93.chip.c`
+
+```c title="ci-74hc93.chip.c"
+// 74HC93 - contador binario assincrono de 4 bits (divisor por 2 + divisor por 8)
+// Borda de descida; MR1 e MR2 juntas em 1 zeram as saidas.
+// Chip personalizado para o Wokwi (ELT82F - UTFPR)
+#include "wokwi-api.h"
+#include <stdlib.h>
+
+typedef struct {
+  pin_t cp0, cp1, mr1, mr2, q[4];
+  uint32_t div2;   // Q0
+  uint32_t div8;   // Q3 Q2 Q1
+} chip_state_t;
+
+static uint32_t in_reset(chip_state_t *chip) {
+  return pin_read(chip->mr1) && pin_read(chip->mr2);
+}
+
+static void update(chip_state_t *chip) {
+  if (in_reset(chip)) {
+    chip->div2 = 0;
+    chip->div8 = 0;
+  }
+  // Q3..Q1 antes de Q0: Q0 costuma estar ligada a CP1
+  for (int i = 0; i < 3; i++) {
+    pin_write(chip->q[i + 1], (chip->div8 >> i) & 1);
+  }
+  pin_write(chip->q[0], chip->div2);
+}
+
+static void on_cp0(void *user_data, pin_t pin, uint32_t value) {
+  chip_state_t *chip = (chip_state_t *)user_data;
+  if (!in_reset(chip)) chip->div2 ^= 1;
+  update(chip);
+}
+
+static void on_cp1(void *user_data, pin_t pin, uint32_t value) {
+  chip_state_t *chip = (chip_state_t *)user_data;
+  if (!in_reset(chip)) chip->div8 = (chip->div8 + 1) & 7;
+  update(chip);
+}
+
+static void on_reset(void *user_data, pin_t pin, uint32_t value) {
+  update((chip_state_t *)user_data);
+}
+
+void chip_init() {
+  chip_state_t *chip = malloc(sizeof(chip_state_t));
+  chip->cp0 = pin_init("CP0", INPUT);
+  chip->cp1 = pin_init("CP1", INPUT);
+  chip->mr1 = pin_init("MR1", INPUT_PULLDOWN);
+  chip->mr2 = pin_init("MR2", INPUT_PULLDOWN);
+  chip->q[0] = pin_init("Q0", OUTPUT_LOW);
+  chip->q[1] = pin_init("Q1", OUTPUT_LOW);
+  chip->q[2] = pin_init("Q2", OUTPUT_LOW);
+  chip->q[3] = pin_init("Q3", OUTPUT_LOW);
+  chip->div2 = 0;
+  chip->div8 = 0;
+
+  const pin_watch_config_t cp0_watch = {
+    .edge = FALLING, .pin_change = on_cp0, .user_data = chip,
+  };
+  pin_watch(chip->cp0, &cp0_watch);
+  const pin_watch_config_t cp1_watch = {
+    .edge = FALLING, .pin_change = on_cp1, .user_data = chip,
+  };
+  pin_watch(chip->cp1, &cp1_watch);
+  const pin_watch_config_t reset_watch = {
+    .edge = BOTH, .pin_change = on_reset, .user_data = chip,
+  };
+  pin_watch(chip->mr1, &reset_watch);
+  pin_watch(chip->mr2, &reset_watch);
+}
+```
+
+Para usar o chip em outro projeto, copie os dois arquivos `ci-74hc93.chip.*` e acrescente em `diagram.json` uma peça do tipo `chip-ci-74hc93`.

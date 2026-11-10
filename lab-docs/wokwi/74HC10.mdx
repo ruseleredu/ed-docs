@@ -1,0 +1,207 @@
+---
+title: 74HC10 no Wokwi
+sidebar_label: 74HC10
+sidebar_position: 5
+description: Simulação do 74HC10 (3 portas NAND de 3 entradas) no Wokwi com chip personalizado.
+slug: /wokwi/74HC10
+---
+
+# 74HC10 no Wokwi
+
+3 portas NAND de 3 entradas. Ficha técnica: [74HC10](../datasheets/74HC10.mdx).
+
+## Simulação
+
+:::note[Simulação ainda não publicada]
+
+O projeto precisa ser criado e salvo em uma conta do Wokwi (veja [como criar](./index.mdx)). Depois, informe o endereço em `LINKS` no arquivo `tools/wokwi.py` e gere as páginas novamente para que o link apareça aqui.
+
+:::
+
+### Circuito de demonstração
+
+- Chaves deslizantes, de cima para baixo: **A** (pino 1A), **B** (pino 1B), **C** (pino 1C). Posição da esquerda = 0; da direita = 1.
+- LEDs, da esquerda para a direita: **Y**.
+
+### O que testar
+
+1. Percorra as oito combinações: o LED só apaga com A = B = C = 1.
+
+## Arquivos do projeto
+
+### `diagram.json`
+
+```json title="diagram.json"
+{
+  "version": 1,
+  "author": "ELT82F - UTFPR",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "chip-ci-74hc10",
+      "id": "u1",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-vcc",
+      "id": "vcc1",
+      "top": -110,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd1",
+      "top": 200,
+      "left": -330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd2",
+      "top": 250,
+      "left": 330,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw1",
+      "top": -60,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw2",
+      "top": 0,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw3",
+      "top": 60,
+      "left": -250,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -80,
+      "left": 220,
+      "attrs": {
+        "color": "red",
+        "label": "Y"
+      }
+    }
+  ],
+  "connections": [
+    ["u1:VCC", "vcc1:VCC", "red", []],
+    ["u1:GND", "gnd1:GND", "black", []],
+    ["sw1:1", "gnd1:GND", "black", []],
+    ["sw1:3", "vcc1:VCC", "red", []],
+    ["sw1:2", "u1:1A", "green", []],
+    ["sw2:1", "gnd1:GND", "black", []],
+    ["sw2:3", "vcc1:VCC", "red", []],
+    ["sw2:2", "u1:1B", "green", []],
+    ["sw3:1", "gnd1:GND", "black", []],
+    ["sw3:3", "vcc1:VCC", "red", []],
+    ["sw3:2", "u1:1C", "green", []],
+    ["u1:1Y", "led1:A", "orange", []],
+    ["led1:C", "gnd2:GND", "black", []]
+  ]
+}
+```
+
+### `ci-74hc10.chip.json`
+
+Os pinos estão na ordem do encapsulamento (pino 1 em diante); posições vazias correspondem a pinos sem ligação.
+
+```json title="ci-74hc10.chip.json"
+{
+  "name": "74HC10",
+  "author": "ELT82F - UTFPR",
+  "pins": [
+    "1A",
+    "1B",
+    "2A",
+    "2B",
+    "2C",
+    "2Y",
+    "GND",
+    "3Y",
+    "3A",
+    "3B",
+    "3C",
+    "1Y",
+    "1C",
+    "VCC"
+  ]
+}
+```
+
+### `ci-74hc10.chip.c`
+
+```c title="ci-74hc10.chip.c"
+// 74HC10 - tres portas NAND de 3 entradas
+// Chip personalizado para o Wokwi (ELT82F - UTFPR)
+#include "wokwi-api.h"
+#include <stdlib.h>
+
+#define GATES 3
+#define INPUTS 3
+
+static const char *IN_NAMES[GATES][INPUTS] = {
+  {"1A", "1B", "1C"},
+  {"2A", "2B", "2C"},
+  {"3A", "3B", "3C"}
+};
+static const char *OUT_NAMES[GATES] = {"1Y", "2Y", "3Y"};
+
+typedef struct {
+  pin_t in[GATES][INPUTS];
+  pin_t out[GATES];
+} chip_state_t;
+
+// Funcao logica de uma porta: in[] contem os niveis das entradas (0 ou 1)
+static uint32_t gate(const uint32_t *in) {
+  return !(in[0] && in[1] && in[2]);
+}
+
+static void update(chip_state_t *chip) {
+  for (int g = 0; g < GATES; g++) {
+    uint32_t in[INPUTS];
+    for (int i = 0; i < INPUTS; i++) in[i] = pin_read(chip->in[g][i]) ? 1 : 0;
+    pin_write(chip->out[g], gate(in) ? HIGH : LOW);
+  }
+}
+
+static void on_change(void *user_data, pin_t pin, uint32_t value) {
+  update((chip_state_t *)user_data);
+}
+
+void chip_init() {
+  chip_state_t *chip = malloc(sizeof(chip_state_t));
+  const pin_watch_config_t watch = {
+    .edge = BOTH, .pin_change = on_change, .user_data = chip,
+  };
+  for (int g = 0; g < GATES; g++) {
+    chip->out[g] = pin_init(OUT_NAMES[g], OUTPUT);
+    for (int i = 0; i < INPUTS; i++) {
+      chip->in[g][i] = pin_init(IN_NAMES[g][i], INPUT);
+      pin_watch(chip->in[g][i], &watch);
+    }
+  }
+  update(chip);
+}
+```
+
+Para usar o chip em outro projeto, copie os dois arquivos `ci-74hc10.chip.*` e acrescente em `diagram.json` uma peça do tipo `chip-ci-74hc10`.
