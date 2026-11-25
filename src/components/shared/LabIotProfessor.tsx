@@ -1,0 +1,313 @@
+import React from "react";
+import ThemeCodeBlock from "@theme/CodeBlock";
+import Admonition from "@theme/Admonition";
+
+import { GROUPS, ORG, PRESETS_SCADA, ScadaOpcoes } from "../constants"; // updated import
+
+/* ------------------------------------------------------------------ */
+/* Opções do gen_iot_scada_portal.py (servidor do laboratório)          */
+/* ------------------------------------------------------------------ */
+
+const PUBLICO_URL_PADRAO = "https://iot.adrianoruseler.com";
+const SCRIPT = "gen_iot_scada_portal.py";
+
+function montarFlags(o: ScadaOpcoes): string[] {
+    const f: string[] = [];
+    if (o.semTunel) {
+        f.push("--sem-tunel");
+    } else {
+        if (o.publicoUrl && o.publicoUrl !== PUBLICO_URL_PADRAO) f.push(`--publico-url ${o.publicoUrl}`);
+        if (o.vpsHost) f.push(`--vps-host ${o.vpsHost}`);
+    }
+    if (o.semGitea) {
+        f.push("--sem-gitea");
+    } else {
+        if (o.giteaDb === "sqlite") f.push("--gitea-db sqlite");
+        if (o.giteaRepo !== undefined && o.giteaRepo !== "nodered") f.push(`--gitea-repo "${o.giteaRepo}"`);
+        if (o.semRunner) f.push("--sem-runner");
+        else {
+            if (o.runnerCapacidade && o.runnerCapacidade !== 2) f.push(`--runner-capacidade ${o.runnerCapacidade}`);
+            if (o.runnerDns) f.push(`--runner-dns ${o.runnerDns}`);
+        }
+    }
+    if (o.semMicrobin) f.push("--sem-microbin");
+    if (o.semFuxa) f.push("--sem-fuxa");
+    if (o.semNtfy) f.push("--sem-ntfy");
+    if (o.protegerHttp) f.push("--proteger-http");
+    if (o.mqttSemAnonimo) f.push("--mqtt-sem-anonimo");
+    if (o.mqttExplorerAuth) f.push("--mqtt-explorer-auth");
+    if (o.extras) f.push(...o.extras);
+    return f;
+}
+
+/**
+ * Letras dos grupos de alunos: GROUPS sem 'P' (professor) e 'N' (notas).
+ * Se forem as primeiras da sequência do gerador (a, b, c... pulando p e n), basta
+ * --grupos N; senão (ex.: a..m, x), o gerador recebe a lista exata com --letras.
+ */
+const LETRAS_ALUNOS = GROUPS.map((g) => g.trim().toLowerCase()).filter((c) => c !== "p" && c !== "n");
+const SEQUENCIA_GERADOR = "abcdefghijklmoqrstuvwxyz";
+
+/* ------------------------------------------------------------------ */
+/* Componente                                                           */
+/* ------------------------------------------------------------------ */
+
+type LabIotProfessorProps = {
+    /** Nome do laboratório, ex: "lab05", "lab07" */
+    labName?: string;
+    /** IP do servidor na rede do laboratório (se omitido, o professor edita o atalho IOT_IP) */
+    ip?: string;
+    /** Sobrescreve/complementa o preset do laboratório */
+    opcoes?: ScadaOpcoes;
+};
+
+function Cmd({ children }: { children: string }) {
+    return <ThemeCodeBlock className="language-bash">{children}</ThemeCodeBlock>;
+}
+
+export default function LabIotProfessor({
+    labName = "lab05",
+    ip,
+    opcoes,
+}: LabIotProfessorProps) {
+    const githubOrg = ORG;
+    const letras = LETRAS_ALUNOS;
+    const grupos = letras.length; // GROUPS menos P e N
+    const lab = labName.toLowerCase();
+    const o: ScadaOpcoes = { ...(PRESETS_SCADA[lab] ?? {}), ...(opcoes ?? {}) };
+    const flags = montarFlags(o);
+    const labValido = /^[a-z][a-z0-9]{1,20}$/.test(lab);
+    const nValido = grupos >= 1 && grupos <= 24;
+    // cada grupo: uma letra a-z, sem repetir (p e n já foram retiradas)
+    const letrasRuins = letras.filter((c, i) => !/^[a-z]$/.test(c) || letras.indexOf(c) !== i);
+    const letrasValidas = letrasRuins.length === 0;
+    // a, b, c... na ordem do gerador: --grupos N; qualquer outra escolha: --letras a,b,...,x
+    const sequencial = letras.join("") === SEQUENCIA_GERADOR.slice(0, grupos);
+    const argGrupos = sequencial ? `--grupos ${grupos}` : `--letras ${letras.join(",")}`;
+
+    const tunel = !o.semTunel;
+    const gitea = !o.semGitea;
+    const runner = gitea && !o.semRunner;
+    const publico = (o.publicoUrl ?? PUBLICO_URL_PADRAO).replace(/\/$/, "");
+    const vpsHost = o.vpsHost ?? new URL(publico).hostname;
+    const vpsAdmin = `${o.vpsAdmin ?? "ubuntu"}@${vpsHost}`;
+    const ipLocal = ip ?? "<IP-do-servidor>";
+    const prof = `${lab}-p`;
+    const notas = `${lab}-n`;
+
+    // atalhos do cmd: o prompt já está na pasta do gerador (%CD%)
+    // (cada "set" em linha própria: o cmd expande %VAR% ao ler a linha inteira)
+    const atalhos = [
+        `set "IOT_GEN=%CD%\\${SCRIPT}"`,
+        `set "IOT_DIR=%CD%\\${lab}"`,
+        `set "IOT_IP=${ipLocal}"`,
+    ].join("\n");
+    const entrar = `cd /d "%IOT_DIR%"`;
+    const gerarArgs = [`--lab ${lab}`, argGrupos, `--ip %IOT_IP%`, `--github-org ${githubOrg}`, ...flags];
+    // --saida: gera sempre na mesma pasta, de qualquer diretório
+    const gerar = [`py "%IOT_GEN%"`, ...gerarArgs, `--saida "%IOT_DIR%"`].join(" ");
+    const gitBash = `"%ProgramFiles%\\Git\\bin\\bash.exe"`;
+    // Node-RED (settings.js) e mosquitto (passwd/acl) leem login e senhas só ao iniciar:
+    // depois de gerar de novo, "up -d" não os recria, então é preciso reiniciá-los
+    const reiniciarLogin = `docker compose restart ${letras.map((l) => `${lab}-${l}-nodered`).join(" ")} ${prof}-nodered ${notas}-nodered mosquitto`;
+
+    // rede do laboratório: endereço público (o mesmo dentro e fora do laboratório)
+    const baseLocal = PUBLICO_URL_PADRAO;
+    const linhaGrupo = (conta: string, papel: string) => (
+        <tr key={conta}>
+            <td><code>{conta}</code></td>
+            <td>{papel}</td>
+            <td><code>{`/${conta}/`}</code></td>
+            <td>{o.semFuxa || conta === notas ? "—" : <code>{`/fuxa/${conta}/`}</code>}</td>
+            <td>{gitea && papel === "grupo" ? <code>{`${lab}-grupo-${conta.slice(-1)}`}</code> : "—"}</td>
+        </tr>
+    );
+
+    return (
+        <>
+            <Admonition type="info" title="Servidor do laboratório (uso do professor)">
+                <p>
+                    Um único ambiente para a turma: {grupos} grupos (
+                    {sequencial ? (
+                        <>
+                            <code>{`${lab}-${letras[0]}`}</code> a <code>{`${lab}-${letras[letras.length - 1]}`}</code>
+                        </>
+                    ) : (
+                        <code>{letras.join(", ")}</code>
+                    )}
+                    ), professor (<code>{prof}</code>) e
+                    painel de notas (<code>{notas}</code>). Comandos para o <b>Prompt de Comando</b> (cmd),
+                    aberto na pasta onde está o <code>{SCRIPT}</code>.
+                </p>
+                <p>
+                    Configuração do <code>{lab}</code>:{" "}
+                    {flags.length
+                        ? flags.map((f) => <code key={f} style={{ marginRight: 4 }}>{f}</code>)
+                        : "LAB IoT completo, com túnel para o VPS"}
+                </p>
+            </Admonition>
+
+            {!labValido && (
+                <Admonition type="danger" title="Nome de laboratório inválido">
+                    <code>{labName}</code>: o <code>--lab</code> deve começar com letra e ter só letras/dígitos (ex.: lab05).
+                </Admonition>
+            )}
+            {!nValido && (
+                <Admonition type="danger" title="Quantidade de grupos inválida">
+                    {grupos} grupos: GROUPS precisa ter de 1 a 24 grupos de alunos, além de P e N.
+                </Admonition>
+            )}
+            {!letrasValidas && (
+                <Admonition type="danger" title="Letras inválidas em GROUPS">
+                    Cada grupo deve ser uma letra de A a Z, sem repetir (P e N são do professor e das notas).
+                    Problema em: <code>{[...new Set(letrasRuins)].join(", ")}</code>. Ajuste GROUPS em{" "}
+                    <code>constants</code>.
+                </Admonition>
+            )}
+
+            <p><b>0.</b> Crie os atalhos (valem só nesta janela do cmd; abriu outra, volte à pasta do gerador e rode de novo):</p>
+            <Cmd>{atalhos}</Cmd>
+            {!ip && (
+                <Admonition type="warning" title="IP do servidor">
+                    Troque <code>&lt;IP-do-servidor&gt;</code> pelo IPv4 da placa de rede do laboratório
+                    (veja com <code>ipconfig</code>). Com <code>127.x</code>, os alunos não alcançam o servidor.
+                </Admonition>
+            )}
+
+            <p><b>1.</b> Instale a dependência do gerador (uma vez):</p>
+            <Cmd>{`py -m pip install bcrypt`}</Cmd>
+
+            <p><b>2.</b> Gere o LAB IoT da turma (pasta <code>{lab}</code>, ao lado do gerador):</p>
+            <Cmd>{gerar}</Cmd>
+
+            {tunel && (
+                <>
+                    <p>
+                        <b>3.</b> Túnel para o VPS (<b>uma vez</b>): gere a chave, envie os arquivos e configure o Apache
+                        de <code>{vpsHost}</code>:
+                    </p>
+                    <Cmd>{[
+                        `${entrar} && docker compose run --rm --no-deps --build tunel chave`,
+                        `ssh ${vpsAdmin} mkdir -p iot-lab`,
+                        `scp -r vps tunel/chave/id_ed25519.pub ${vpsAdmin}:iot-lab/`,
+                        `ssh -t ${vpsAdmin} sudo bash iot-lab/vps/setup-vps.sh iot-lab/id_ed25519.pub`,
+                    ].join("\n")}</Cmd>
+                </>
+            )}
+
+            <p><b>{tunel ? 4 : 3}.</b> Suba os containers (a primeira vez demora):</p>
+            <Cmd>{`${entrar} && docker compose up -d --build`}</Cmd>
+
+            <p><b>{tunel ? 5 : 4}.</b> Confira e veja as senhas de todos:</p>
+            <Cmd>{`${entrar} && docker compose ps && type credenciais.txt`}</Cmd>
+
+            <p><b>{tunel ? 6 : 5}.</b> Abra o portal:</p>
+            <Cmd>{`start ${baseLocal}/`}</Cmd>
+
+            <p>
+                <b>{tunel ? 7 : 6}.</b> Publique os acessos nos repositórios dos grupos (
+                <code>{`${githubOrg}/${lab}-grupo-<letra>`}</code>, arquivo{" "}
+                <code>{`ACESSO-${lab.toUpperCase()}.md`}</code>). Precisa do Git for Windows e do{" "}
+                <code>gh</code> autenticado (<code>gh auth login</code>). Primeiro confira, depois publique:
+            </p>
+            <Cmd>{[
+                `${entrar} && ${gitBash} publicar-acessos-github.sh --arquivo --dry-run`,
+                `${gitBash} publicar-acessos-github.sh --arquivo`,
+            ].join("\n")}</Cmd>
+
+            <details>
+                <summary><b>Endereços e contas</b></summary>
+                <ul>
+                    <li><b>Rede do laboratório:</b> <a href={`${baseLocal}/`} target="_blank" rel="noopener noreferrer">{`${baseLocal}/`}</a></li>
+                    {gitea && <li><b>Gitea:</b> <code>{"<base>/git/"}</code>{runner ? " (Actions: runner do laboratório)" : ""}</li>}
+                    {!o.semNtfy && <li><b>Avisos (ntfy):</b> <code>{"<base>/avisos/"}</code> · tópico da turma <code>{`${lab}-avisos`}</code></li>}
+                    {!o.semMicrobin && <li><b>MicroBin:</b> <code>{"<base>/bin/"}</code></li>}
+                    <li><b>MQTT Explorer:</b> <code>{`http://${ipLocal}:3001/`}</code> (só na rede do laboratório)</li>
+                    <li><b>MQTT:</b> <code>{`${ipLocal}:1883`}</code> (só na rede do laboratório)</li>
+                </ul>
+                <table>
+                    <thead>
+                        <tr><th>Conta</th><th>Papel</th><th>Node-RED</th><th>FUXA</th><th>Organização Gitea</th></tr>
+                    </thead>
+                    <tbody>
+                        {letras.map((l) => linhaGrupo(`${lab}-${l}`, "grupo"))}
+                        {linhaGrupo(prof, "professor")}
+                        {linhaGrupo(notas, "notas")}
+                    </tbody>
+                </table>
+            </details>
+
+            <details>
+                <summary><b>Operações com Docker</b></summary>
+
+                <p>Subir de novo (depois de reiniciar o servidor ou de um <code>down</code>):</p>
+                <Cmd>{`${entrar} && docker compose up -d`}</Cmd>
+
+                <p>Parar (os dados ficam):</p>
+                <Cmd>{`${entrar} && docker compose down`}</Cmd>
+
+                <p>Reiniciar o Node-RED de um grupo (ex.: <code>{`${lab}-${letras[0]}`}</code>):</p>
+                <Cmd>{`${entrar} && docker compose restart ${lab}-${letras[0]}-nodered`}</Cmd>
+
+                <p>Ver erros do Node-RED de um grupo (Ctrl+C para sair):</p>
+                <Cmd>{`${entrar} && docker compose logs -f ${lab}-${letras[0]}-nodered`}</Cmd>
+
+                {tunel && (
+                    <>
+                        <p>Ver o túnel para o VPS:</p>
+                        <Cmd>{`${entrar} && docker compose logs -f tunel`}</Cmd>
+                    </>
+                )}
+
+                {runner && (
+                    <>
+                        <p>Ver o runner do CI:</p>
+                        <Cmd>{`${entrar} && docker compose logs -f gitea-runner`}</Cmd>
+                    </>
+                )}
+
+                <p>Mudou alguma opção? Gere de novo (as senhas são mantidas), recrie e reinicie Node-RED e MQTT:</p>
+                <Cmd>{`${gerar} && ${entrar} && docker compose up -d --build --remove-orphans && ${reiniciarLogin}`}</Cmd>
+
+                {gitea && (
+                    <>
+                        <p>Refazer usuários, organizações e secrets do Gitea:</p>
+                        <Cmd>{`${entrar} && docker compose run --rm gitea-init`}</Cmd>
+                    </>
+                )}
+
+                {runner && (
+                    <>
+                        <p>
+                            Token do Wokwi CI (vira o secret <code>WOKWI_CLI_TOKEN</code> de cada organização e fica
+                            guardado no <code>.segredos.json</code>):
+                        </p>
+                        <Cmd>{`${gerar} --wokwi-token SEU_TOKEN && ${entrar} && docker compose up -d && docker compose run --rm gitea-init`}</Cmd>
+                    </>
+                )}
+
+                <p>Atualizar as imagens:</p>
+                <Cmd>{`${entrar} && docker compose pull && docker compose build --pull && docker compose up -d`}</Cmd>
+
+                <p>Retirar os acessos dos repositórios dos grupos (fim do semestre):</p>
+                <Cmd>{`${entrar} && ${gitBash} publicar-acessos-github.sh --remover`}</Cmd>
+
+                <Admonition type="warning" title="Senhas novas para todos">
+                    <p>
+                        Invalida as senhas atuais de todos os grupos: depois, publique os acessos de novo (passo{" "}
+                        {tunel ? 7 : 6}).
+                    </p>
+                    <Cmd>{`${gerar} --novas-senhas && ${entrar} && docker compose up -d --build && ${reiniciarLogin} && docker compose run --rm gitea-init`}</Cmd>
+                </Admonition>
+
+                <Admonition type="danger" title="Apagar tudo">
+                    <p>
+                        Remove containers <b>e volumes</b> (Gitea, PostgreSQL, ntfy, MicroBin, MQTT) de toda a turma.
+                        Os fluxos em <code>data/</code> e as telas em <code>fuxa/</code> ficam na pasta.
+                    </p>
+                    <Cmd>{`${entrar} && docker compose down -v`}</Cmd>
+                </Admonition>
+            </details>
+        </>
+    );
+}
